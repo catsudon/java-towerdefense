@@ -1,37 +1,26 @@
 package drawing;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseButton;
+import main.Game;
 
-import java.util.ArrayList;
-import java.util.Random;
+import input.InputUtility;
 
-public class GameScreen extends Pane {
+public class GameScreen extends Canvas {
 	
-	private Random random;
+	private Game game;
 	
-	private Image image;
-	
-	private ArrayList<Image> sprites;
-	
-	public GameScreen(Image image) {
-		random = new Random();
+	public GameScreen(Game game, double width, double height) {
+		super(width, height);
 		
-		this.image = image;
-		sprites = new ArrayList<>();
-		loadSprites();
-	}
-	
-	public void loadSprites() {
-		for(int y = 0; y < 10; y++) {
-			for(int x = 0; x < 10; x++) {
-				sprites.add(getSubImage(image, 32 * x, 32 * y, 32, 32));
-			}
-		}
+		this.game = game;
+		
+		this.setVisible(true);
+		addListener();
 	}
 	
 	public void drawImage(GraphicsContext gc, Image image) {
@@ -39,43 +28,54 @@ public class GameScreen extends Pane {
 	
 		//gc.drawImage(getSubImage(image, 32 * 9, 32 * 1, 32, 32), 0, 0);
 	
-		gc.drawImage(sprites.get(8), 0, 0);
+		//gc.drawImage(sprites.get(8), 0, 0);
 	}
 	
 	public void paintComponent(GraphicsContext gc) {
-		for(int yIndex = 0; yIndex < 32; yIndex++) {
-			for(int xIndex = 0; xIndex < 32; xIndex++) {
-				gc.setFill(getRandomColor());
+		game.getRender().render(gc);
+	}
+	
+	public void addListener() {
+		this.setOnKeyPressed((KeyEvent event) -> {
+			InputUtility.setKeyPressed(event.getCode(), true);
+		});
 
-				int x = 32 * xIndex;
-				int y = 32 * yIndex;				
+		this.setOnKeyReleased((KeyEvent event) -> {
+			InputUtility.setKeyPressed(event.getCode(), false);
+		});
 
-				gc.drawImage(sprites.get(getRandomInt()), x, y);
-				
-				/*
-				gc.strokeRect(x, y, 32, 32);
-				gc.fillRect(x, y, 32, 32);
-				*/
+		this.setOnMousePressed((MouseEvent event) -> {
+			if (event.getButton() == MouseButton.PRIMARY) {
+				InputUtility.mouseLeftDown();
 			}
-		}
-	}
-	
-	private Image getSubImage(Image image, int x, int y, int w, int h) {
-		PixelReader pixelReader = image.getPixelReader();
-		WritableImage writableImage = new WritableImage(pixelReader, x, y, w, h);
+		});
 
-		return writableImage;
-	}
-	
-	private int getRandomInt() {
-		return random.nextInt(100);
-	}
-	
-	private Color getRandomColor() {
-		int r = random.nextInt(256);
-		int g = random.nextInt(256);
-		int b = random.nextInt(256);
-		
-		return Color.rgb(r, g, b);
+		this.setOnMouseReleased((MouseEvent event) -> {
+			if (event.getButton() == MouseButton.PRIMARY) {
+				InputUtility.mouseLeftRelease();
+			}
+		});
+
+		this.setOnMouseEntered((MouseEvent event) -> {
+			InputUtility.mouseOnScreen = true;
+		});
+
+		this.setOnMouseExited((MouseEvent event) -> {
+			InputUtility.mouseOnScreen = false;
+		});
+
+		this.setOnMouseMoved((MouseEvent event) -> {
+			if (InputUtility.mouseOnScreen) {
+				InputUtility.mouseX = event.getX();
+				InputUtility.mouseY = event.getY();
+			}
+		});
+
+		this.setOnMouseDragged((MouseEvent event) -> {
+			if (InputUtility.mouseOnScreen) {
+				InputUtility.mouseX = event.getX();
+				InputUtility.mouseY = event.getY();
+			}
+		});
 	}
 }
