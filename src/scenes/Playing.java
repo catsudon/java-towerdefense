@@ -5,6 +5,7 @@ import help.LoadSave;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import main.Game;
+import managers.EnemyManager;
 import managers.TileManager;
 import objects.Tile;
 import ui.ActionBar;
@@ -15,6 +16,7 @@ public class Playing extends GameScene implements SceneMethods {
 	private TileManager tileManager;
 	private ActionBar bottomBar;
 	private Tile selectedTile;
+	private EnemyManager enemyManager	;
 	
 	@SuppressWarnings("unused")
 	private int mouseX, mouseY;
@@ -28,6 +30,11 @@ public class Playing extends GameScene implements SceneMethods {
 		lvl = LevelBuilder.getLevelData();
 		tileManager = new TileManager();
 		bottomBar = new ActionBar(0, 640, 640, 100, this);
+		enemyManager = new EnemyManager(this);
+	}
+	
+	public void update() {
+		enemyManager.update();
 	}
 
 	@Override
@@ -35,6 +42,7 @@ public class Playing extends GameScene implements SceneMethods {
 		// TODO Auto-generated method stub
 		drawLevel(gc);
 		bottomBar.draw(gc);
+		enemyManager.draw(gc);
 	}
 	
 	private void drawLevel(GraphicsContext gc) {
@@ -60,11 +68,12 @@ public class Playing extends GameScene implements SceneMethods {
 		if(y >= 640) {
 			bottomBar.mouseClicked(x, y);
 		}
-		else if(selectedTile != null) {
-			changeTile(x, y);
+		else {
+			enemyManager.addEnemy(x, y);
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void changeTile(int x, int y) {
 		if(y >= 640) {
 			return ;

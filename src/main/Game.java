@@ -92,6 +92,19 @@ public class Game extends Application {
 	
 	private void updateGame() {
 		InputUtility.updateInputState();
+		
+		switch(GameState.gameState) {
+			case EDIT:
+				break;
+			case MENU:
+				break;
+			case PLAYING:
+				playing.update();
+			case SETTINGS:
+				break;
+			default:
+				break;
+		}
 	}
 	
 	private void createDefaultLevel() {
