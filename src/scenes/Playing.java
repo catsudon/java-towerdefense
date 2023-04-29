@@ -1,9 +1,7 @@
 package scenes;
 
-import help.LevelBuilder;
 import help.LoadSave;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import main.Game;
 import managers.EnemyManager;
 import managers.TileManager;
@@ -27,13 +25,14 @@ public class Playing extends GameScene implements SceneMethods {
 		
 		loadDefaultLevel();
 		
-		lvl = LevelBuilder.getLevelData();
+		lvl = LoadSave.GetLevelData("new_level");
 		tileManager = new TileManager();
 		bottomBar = new ActionBar(0, 640, 640, 100, this);
 		enemyManager = new EnemyManager(this);
 	}
 	
 	public void update() {
+		updateTick();
 		enemyManager.update();
 	}
 
@@ -49,13 +48,26 @@ public class Playing extends GameScene implements SceneMethods {
 		for (int y = 0; y < lvl.length; y++) {
 			for (int x = 0; x < lvl[y].length; x++) {
 				int id = lvl[y][x];
-				gc.drawImage(getSprite(id), x * 32, y * 32);
+				if(isAnimation(id)) {
+					gc.drawImage(getSprite(id, animationIndex), x * 32, y * 32);
+				}
+				else {
+					gc.drawImage(getSprite(id), x * 32, y * 32);
+				}
 			}
 		}
 	}
-
-	private Image getSprite(int spriteID) {
-		return game.getTileManager().getSprite(spriteID);
+	
+	public int getTileType(int x, int y) {
+		int xIndex = x / 32;
+		int yIndex = y / 32;
+		
+		if(xIndex < 0 || xIndex > 20 - 1 || yIndex < 0 || yIndex > 20 - 1) {
+			return 0;
+		}
+		
+		int id = lvl[y / 32][x / 32];
+		return game.getTileManager().getTile(id).getTileType();
 	}
 	
 	public void setSelectedTile(Tile tile) {
@@ -69,7 +81,7 @@ public class Playing extends GameScene implements SceneMethods {
 			bottomBar.mouseClicked(x, y);
 		}
 		else {
-			enemyManager.addEnemy(x, y);
+			enemyManager.addEnemy(x / 32 * 32, y / 32 * 32);
 		}
 	}
 	

@@ -2,7 +2,6 @@ package scenes;
 
 import help.LoadSave;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import main.Game;
 import objects.Tile;
 import ui.Toolbar;
@@ -14,10 +13,6 @@ public class Editing extends GameScene implements SceneMethods {
 	private int mouseX, mouseY;
 	private boolean drawSelect;
 	private Toolbar toolbar;
-	private int ANIMATION_SPEED = 12;
-	
-	private int animationIndex;
-	private int tick;
 
 	public Editing(Game game) {
 		super(game);
@@ -37,14 +32,6 @@ public class Editing extends GameScene implements SceneMethods {
 		toolbar.draw(gc);
 		drawSelectedTile(gc);
 	}
-	
-	private void updateTick() {
-		tick++;
-		if(tick >= ANIMATION_SPEED) {
-			tick = 0;
-			animationIndex = (animationIndex + 1) % 4;
-		}
-	}
 
 	private void drawLevel(GraphicsContext gc) {
 		for (int y = 0; y < lvl.length; y++) {
@@ -58,18 +45,6 @@ public class Editing extends GameScene implements SceneMethods {
 				}
 			}
 		}
-	}
-	
-	private boolean isAnimation(int spriteID) {
-		return game.getTileManager().isSpriteAnimation(spriteID);
-	}
-	
-	private Image getSprite(int spriteID, int animationIndex) {
-		return game.getTileManager().getAnimationSprite(spriteID, animationIndex);
-	}
-	
-	private Image getSprite(int spriteID) {
-		return game.getTileManager().getSprite(spriteID);
 	}
 
 	private void drawSelectedTile(GraphicsContext gc) {

@@ -6,19 +6,19 @@ public class Tile {
 
 	private Image[] sprite;
 	private int id;
-	private String name;
+	private int tileType;
 	
-	public Tile(Image sprite, int id, String name) {
+	public Tile(Image sprite, int id, int tileType) {
 		this.sprite = new Image[1];
 		this.sprite[0] = sprite;
 		this.id = id;
-		this.name = name;
+		this.tileType = tileType;
 	}
 	
-	public Tile(Image[] sprite, int id, String name) {
+	public Tile(Image[] sprite, int id, int tileType) {
 		this.sprite = sprite;
 		this.id = id;
-		this.name = name;
+		this.tileType = tileType;
 	}
 	
 	public Image getSprite(int animationIndex) {
@@ -37,7 +37,7 @@ public class Tile {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public int getTileType() {
+		return tileType;
 	}
 }
