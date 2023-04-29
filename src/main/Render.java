@@ -17,11 +17,14 @@ public class Render {
 			case MENU:
 				game.getMenu().render(gc);
 				break;
-				
 			case PLAYING:
 				game.getPlaying().render(gc);
 				break;
 			case SETTINGS:
+				game.getSettings().render(gc);
+				break;
+			case EDIT:
+				game.getEditing().render(gc);
 				break;
 		}
 	}

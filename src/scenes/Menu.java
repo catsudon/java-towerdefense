@@ -1,94 +1,114 @@
 package scenes;
 
-import java.util.ArrayList;
-import java.util.Random;
+import main.Game;
+import ui.MyButton;
+import static main.GameState.*;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import main.Game;
-import main.Render;
-import sharedObject.RenderableHolder;
 
 public class Menu extends GameScene implements SceneMethods {
-	
-	private Random random;
-	private ArrayList<Image> sprites = new ArrayList<>();
+
+	private MyButton bPlaying, bEdit, bSettings, bQuit;
 
 	public Menu(Game game) {
 		super(game);
-		// TODO Auto-generated constructor stub
-		this.random = new Random();
-		loadSprites();
+		initButtons();
+	}
+
+	private void initButtons() {
+
+		int w = 150;
+		int h = w / 3;
+		int x = 640 / 2 - w / 2;
+		int y = 150;
+		int yOffset = 100;
+
+		bPlaying = new MyButton("Play", x, y, w, h);
+		bEdit = new MyButton("Edit", x, y + yOffset, w, h);
+		bSettings = new MyButton("Settings", x, y + yOffset * 2, w, h);
+		bQuit = new MyButton("Quit", x, y + yOffset * 3, w, h);
+
 	}
 
 	@Override
 	public void render(GraphicsContext gc) {
-		// TODO Auto-generated method stub
-		for(int yIndex = 0; yIndex < 32; yIndex++) {
-			for(int xIndex = 0; xIndex < 32; xIndex++) {
-				gc.setFill(getRandomColor());
-
-				int x = 32 * xIndex;
-				int y = 32 * yIndex;				
-
-				gc.drawImage(sprites.get(getRandomInt()), x, y);
-				
-				/*
-				gc.strokeRect(x, y, 32, 32);
-				gc.fillRect(x, y, 32, 32);
-				*/
-			}
-		}
-	}
-	
-	public void loadSprites() {	
-		for(int y = 0; y < 10; y++) {
-			for(int x = 0; x < 10; x++) {
-				sprites.add(Render.getSubImage(RenderableHolder.mapSprite, 32 * x, 32 * y, 32, 32));
-			}
-		}
-	}
-	
-	private int getRandomInt() {
-		return random.nextInt(100);
-	}
-	
-	private Color getRandomColor() {
-		int r = random.nextInt(256);
-		int g = random.nextInt(256);
-		int b = random.nextInt(256);
+		gc.setFill(Color.WHITE);
+		gc.fillRect(0, 0, 640, 740);
 		
-		return Color.rgb(r, g, b);
+		drawButtons(gc);
+	}
+
+	private void drawButtons(GraphicsContext gc) {
+		bPlaying.draw(gc);
+		bEdit.draw(gc);
+		bSettings.draw(gc);
+		bQuit.draw(gc);
+
 	}
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		// TODO Auto-generated method stub
-		
+
+		if (bPlaying.getBounds().contains(x, y))
+			setGameState(PLAYING);
+		else if (bEdit.getBounds().contains(x, y))
+			setGameState(EDIT);
+		else if (bSettings.getBounds().contains(x, y))
+			setGameState(SETTINGS);
+		else if (bQuit.getBounds().contains(x, y))
+			System.exit(0);
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		bPlaying.setMouseOver(false);
+		bEdit.setMouseOver(false);
+		bSettings.setMouseOver(false);
+		bQuit.setMouseOver(false);
+
+		if (bPlaying.getBounds().contains(x, y))
+			bPlaying.setMouseOver(true);
+		else if (bEdit.getBounds().contains(x, y))
+			bEdit.setMouseOver(true);
+		else if (bSettings.getBounds().contains(x, y))
+			bSettings.setMouseOver(true);
+		else if (bQuit.getBounds().contains(x, y))
+			bQuit.setMouseOver(true);
+
 	}
 
 	@Override
 	public void mousePressed(int x, int y) {
-		// TODO Auto-generated method stub
-		
+
+		if (bPlaying.getBounds().contains(x, y))
+			bPlaying.setMousePressed(true);
+		else if (bEdit.getBounds().contains(x, y))
+			bEdit.setMousePressed(true);
+		else if (bSettings.getBounds().contains(x, y))
+			bSettings.setMousePressed(true);
+		else if (bQuit.getBounds().contains(x, y))
+			bQuit.setMousePressed(true);
+
 	}
 
 	@Override
 	public void mouseReleased(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		resetButtons();
+	}
+
+	private void resetButtons() {
+		bPlaying.resetBooleans();
+		bEdit.resetBooleans();
+		bSettings.resetBooleans();
+		bQuit.resetBooleans();
+
 	}
 
 	@Override
 	public void mouseDragged(int x, int y) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 }

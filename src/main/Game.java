@@ -1,10 +1,13 @@
 package main;
 
 import drawing.GameScreen;
+import help.LoadSave;
 import input.InputUtility;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import managers.TileManager;
+import scenes.Editing;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
@@ -33,6 +36,9 @@ public class Game extends Application {
 	private Menu menu;
 	private Playing playing;
 	private Settings settings;
+	private Editing editing;
+	
+	private TileManager tileManager;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -45,6 +51,7 @@ public class Game extends Application {
 		primaryStage.setScene(scene);
 		
 		initClasses();
+		createDefaultLevel();
 		
 		root.getChildren().add(gameScreen);
 		
@@ -87,12 +94,26 @@ public class Game extends Application {
 		InputUtility.updateInputState();
 	}
 	
+	private void createDefaultLevel() {
+		int[] arr = new int[400];
+		for (int i = 0; i < arr.length; i++)
+			arr[i] = 0;
+
+		LoadSave.CreateLevel("new_level", arr);
+
+	}
+	
 	private void initClasses() {
+		tileManager = new TileManager();
+		
 		gameScreen = new GameScreen(this, 640, 740);
 		render = new Render(this);
+		
 		menu = new Menu(this);
 		playing = new Playing(this);
 		settings = new Settings(this);
+		editing = new Editing(this);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -119,5 +140,13 @@ public class Game extends Application {
 
 	public Settings getSettings() {
 		return settings;
+	}
+
+	public Editing getEditing() {
+		return editing;
+	}
+
+	public TileManager getTileManager() {
+		return tileManager;
 	}
 }

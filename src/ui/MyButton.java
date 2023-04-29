@@ -54,8 +54,8 @@ public class MyButton {
 
 	private void drawBorder(GraphicsContext gc) {
 
-		gc.setFill(Color.BLACK);
-		gc.fillRect(x, y, width, height);
+		gc.setStroke(Color.BLACK);
+		gc.strokeRect(x, y, width, height);
 		if (mousePressed) {
 			gc.fillRect(x, width, id, height);
 			gc.fillRect(x + 2, y + 2, width - 4, height - 4);
@@ -79,7 +79,7 @@ public class MyButton {
 		
 		int w = (int) newText.getLayoutBounds().getWidth();
 		int h = (int) newText.getLayoutBounds().getHeight();
-		gc.fillText(text, x - w / 2 + width / 2, y + h / 2 + height / 2);
+		gc.strokeText(text, x - w / 2 + width / 2, y + h / 2 + height / 2);
 
 	}
 
