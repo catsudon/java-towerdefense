@@ -3,6 +3,8 @@ package input;
 import java.util.ArrayList;
 
 import javafx.scene.input.KeyCode;
+import main.Game;
+import main.GameState;
 
 public class InputUtility {
 	
@@ -30,13 +32,33 @@ public class InputUtility {
 		System.out.println(keyPressed);
 	}
 	
-	public static void mouseLeftDown() {
-		isLeftDown = true;
-		isLeftClickedLastTick = true;
+	public static void mouseLeftClicked(Game game, int x, int y) {
+		switch(GameState.gameState) {
+			case PLAYING:
+					game.getPlaying().mouseClicked(x, y);
+				break;
+		}
 	}
 	
-	public static void mouseLeftRelease() {
+	public static void mouseLeftDown(Game game, int x, int y) {
+		isLeftDown = true;
+		isLeftClickedLastTick = true;
+		
+		switch(GameState.gameState) {
+			case PLAYING:
+				game.getPlaying().mousePressed(x, y);
+				break;
+		}
+	}
+	
+	public static void mouseLeftRelease(Game game, int x, int y) {
 		isLeftDown = false;
+		
+		switch(GameState.gameState) {
+		case PLAYING:
+			game.getPlaying().mouseReleased(x, y);
+			break;
+		}
 	}
 	
 	public static boolean isLeftClickTriggered() {
@@ -45,5 +67,21 @@ public class InputUtility {
 	
 	public static void updateInputState() {
 		isLeftClickedLastTick = false;
+	}
+	
+	public static void mouseMoved(Game game, int x, int y) {
+		switch(GameState.gameState) {
+			case PLAYING:
+				game.getPlaying().mouseMoved(x, y);
+				break;
+		}
+	}
+	
+	public static void mouseDragged(Game game, int x, int y) {
+		switch(GameState.gameState) {
+			case PLAYING:
+				game.getPlaying().mouseDragged(x, y);
+				break;
+		}
 	}
 }

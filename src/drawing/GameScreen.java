@@ -43,16 +43,22 @@ public class GameScreen extends Canvas {
 		this.setOnKeyReleased((KeyEvent event) -> {
 			InputUtility.setKeyPressed(event.getCode(), false);
 		});
+		
+		this.setOnMouseClicked((MouseEvent event) -> {
+			if(event.getButton() == MouseButton.PRIMARY) {
+				InputUtility.mouseLeftClicked(game, (int)event.getX(), (int)event.getY());
+			}
+		});
 
 		this.setOnMousePressed((MouseEvent event) -> {
 			if (event.getButton() == MouseButton.PRIMARY) {
-				InputUtility.mouseLeftDown();
+				InputUtility.mouseLeftDown(game, (int)event.getX(), (int)event.getY());
 			}
 		});
 
 		this.setOnMouseReleased((MouseEvent event) -> {
 			if (event.getButton() == MouseButton.PRIMARY) {
-				InputUtility.mouseLeftRelease();
+				InputUtility.mouseLeftRelease(game, (int)event.getX(), (int)event.getY());
 			}
 		});
 
@@ -68,6 +74,7 @@ public class GameScreen extends Canvas {
 			if (InputUtility.mouseOnScreen) {
 				InputUtility.mouseX = event.getX();
 				InputUtility.mouseY = event.getY();
+				InputUtility.mouseMoved(game, (int)event.getX(), (int)event.getY());
 			}
 		});
 
@@ -75,6 +82,7 @@ public class GameScreen extends Canvas {
 			if (InputUtility.mouseOnScreen) {
 				InputUtility.mouseX = event.getX();
 				InputUtility.mouseY = event.getY();
+				InputUtility.mouseDragged(game, (int)event.getX(), (int)event.getY());
 			}
 		});
 	}

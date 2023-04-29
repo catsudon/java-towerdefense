@@ -14,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Game extends Application {
 	
-	private static final double FPS_SET = 1.0;
+	private static final double FPS_SET = 120.0;
 	private static final double UPS_SET = 60.0;
 	
 	private static final double timePerFrame = 1_000_000_000.0 / FPS_SET;
@@ -88,7 +88,7 @@ public class Game extends Application {
 	}
 	
 	private void initClasses() {
-		gameScreen = new GameScreen(this, 640, 640);
+		gameScreen = new GameScreen(this, 640, 740);
 		render = new Render(this);
 		menu = new Menu(this);
 		playing = new Playing(this);
