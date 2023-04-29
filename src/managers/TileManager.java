@@ -36,7 +36,7 @@ public class TileManager {
 		int id = 0;
 		
 		grass.add(GRASS = new Tile(getSprite(9, 0), id++, "Grass"));
-		water.add(WATER = new Tile(getSprite(0, 0), id++, "Water"));
+		water.add(WATER = new Tile(getAnimationSprites(0, 0, 4), id++, "Water"));
 
 		roadS.add(ROAD_LR = new Tile(getSprite(8, 0), id++, "Road_LR"));
 		roadS.add(ROAD_TB = new Tile(ImageFix.getRotatedImage(getSprite(8, 0), 90), id++, "TB_Road"));
@@ -47,20 +47,20 @@ public class TileManager {
 		roadC.add(ROAD_L_TO_T = new Tile(ImageFix.getRotatedImage(getSprite(7, 0), 180), id++, "Road_Left_To_Top"));
 		roadC.add(ROAD_T_TO_R = new Tile(ImageFix.getRotatedImage(getSprite(7, 0), 270), id++, "Road_Top_To_Right"));
 
-		corners.add(BL_WATER_CORNER = new Tile(ImageFix.buildImage(getImages(0, 0, 5, 0)), id++, "BL_Water_Corner"));
-		corners.add(TL_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 90, 1), id++, "TL_Water_Corner"));
-		corners.add(TR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 180, 1), id++, "TL_Water_Corner"));
-		corners.add(BR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 270, 1), id++, "TL_Water_Corner"));
+		corners.add(BL_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(5, 0), 0), id++, "BL_Water_Corner"));
+		corners.add(TL_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(5, 0), 90), id++, "TL_Water_Corner"));
+		corners.add(TR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(5, 0), 180), id++, "TL_Water_Corner"));
+		corners.add(BR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(5, 0), 270), id++, "TL_Water_Corner"));
 
-		beaches.add(T_WATER = new Tile(ImageFix.buildImage(getImages(0, 0, 6, 0)), id++, "T_Water"));
-		beaches.add(R_WATER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 6, 0), 90, 1), id++, "R_Water"));
-		beaches.add(B_WATER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 6, 0), 180, 1), id++, "B_Water"));
-		beaches.add(L_WATER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 6, 0), 270, 1), id++, "L_Water"));
+		beaches.add(T_WATER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(6, 0), 0), id++, "T_Water"));
+		beaches.add(R_WATER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(6, 0), 90), id++, "R_Water"));
+		beaches.add(B_WATER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(6, 0), 180), id++, "B_Water"));
+		beaches.add(L_WATER = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(6, 0), 270), id++, "L_Water"));
 
-		islands.add(TL_ISLE = new Tile(ImageFix.buildImage(getImages(0, 0, 4, 0)), id++, "TL_Isle"));
-		islands.add(TR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 4, 0), 90, 1), id++, "TR_Isle"));
-		islands.add(BR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 4, 0), 180, 1), id++, "BR_Isle"));
-		islands.add(BL_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 4, 0), 270, 1), id++, "BL_Isle"));
+		islands.add(TL_ISLE = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(4, 0), 0), id++, "TL_Isle"));
+		islands.add(TR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(4, 0), 90), id++, "TR_Isle"));
+		islands.add(BR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(4, 0), 180), id++, "BR_Isle"));
+		islands.add(BL_ISLE = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(4, 0), 270), id++, "BL_Isle"));
 	
 		tiles.addAll(grass);
 		tiles.addAll(water);
@@ -86,6 +86,19 @@ public class TileManager {
 	private Image getSprite(int xIndex, int yIndex) {
 		return Render.getSubImage(atlas, 32 * xIndex, 32 * yIndex, 32, 32);
 	}
+	
+	public Image getAnimationSprite(int id, int animationIndex) {
+		return tiles.get(id).getSprite(animationIndex); 
+	}
+	
+	private Image[] getAnimationSprites(int xIndex, int yIndex, int amount) {
+		Image[] images = new Image[amount];
+		
+		for(int i = 0; i < amount; i++) {
+			images[i] = getSprite(xIndex + i, yIndex);
+		}
+		return images;
+	}
 
 	public ArrayList<Tile> getTiles() {
 		return tiles;
@@ -109,5 +122,9 @@ public class TileManager {
 
 	public ArrayList<Tile> getIslands() {
 		return islands;
+	}
+
+	public boolean isSpriteAnimation(int spriteID) {
+		return tiles.get(spriteID).isAnimation();
 	}
 }

@@ -58,4 +58,26 @@ public class ImageFix {
 		
 		return stackedImage;
 	}
+	
+	// Rotate second image only + Animation
+	public static Image[] getBuildRotatedImage(Image[] images, Image secondImage, int rotateAngle) {
+		
+		Image[] stackedImages = new Image[images.length];
+		
+		for(int i = 0; i < images.length; i++) {
+			ArrayList <ImageView> imageViews = new ArrayList<>();
+			
+			imageViews.add(new ImageView(images[i]));
+			imageViews.add(new ImageView(getRotatedImage(secondImage, rotateAngle)));
+			
+			StackPane stackPane = new StackPane();
+			stackPane.getChildren().addAll(imageViews);
+			
+			Image stackedImage = stackPane.snapshot(null, null);
+			
+			stackedImages[i] = stackedImage;
+		}
+		
+		return stackedImages;
+	}
 }

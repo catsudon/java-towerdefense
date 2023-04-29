@@ -2,6 +2,7 @@ package scenes;
 
 import help.LoadSave;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import main.Game;
 import objects.Tile;
 import ui.Toolbar;
@@ -11,9 +12,12 @@ public class Editing extends GameScene implements SceneMethods {
 	private int[][] lvl;
 	private Tile selectedTile;
 	private int mouseX, mouseY;
-	private int lastTileX, lastTileY, lastTileId;
 	private boolean drawSelect;
 	private Toolbar toolbar;
+	private int ANIMATION_SPEED = 12;
+	
+	private int animationIndex;
+	private int tick;
 
 	public Editing(Game game) {
 		super(game);
@@ -27,18 +31,45 @@ public class Editing extends GameScene implements SceneMethods {
 	
 	@Override
 	public void render(GraphicsContext gc) {
+		updateTick();
+		
 		drawLevel(gc);
 		toolbar.draw(gc);
 		drawSelectedTile(gc);
+	}
+	
+	private void updateTick() {
+		tick++;
+		if(tick >= ANIMATION_SPEED) {
+			tick = 0;
+			animationIndex = (animationIndex + 1) % 4;
+		}
 	}
 
 	private void drawLevel(GraphicsContext gc) {
 		for (int y = 0; y < lvl.length; y++) {
 			for (int x = 0; x < lvl[y].length; x++) {
 				int id = lvl[y][x];
-				gc.drawImage(game.getTileManager().getSprite(id), x * 32, y * 32);
+				if(isAnimation(id)) {
+					gc.drawImage(getSprite(id, animationIndex), x * 32, y * 32);
+				}
+				else {
+					gc.drawImage(getSprite(id), x * 32, y * 32);
+				}
 			}
 		}
+	}
+	
+	private boolean isAnimation(int spriteID) {
+		return game.getTileManager().isSpriteAnimation(spriteID);
+	}
+	
+	private Image getSprite(int spriteID, int animationIndex) {
+		return game.getTileManager().getAnimationSprite(spriteID, animationIndex);
+	}
+	
+	private Image getSprite(int spriteID) {
+		return game.getTileManager().getSprite(spriteID);
 	}
 
 	private void drawSelectedTile(GraphicsContext gc) {
@@ -66,11 +97,7 @@ public class Editing extends GameScene implements SceneMethods {
 			int tileY = y / 32;
 
 			if (selectedTile.getId() == lvl[tileY][tileX])
-				return;
-
-			lastTileX = tileX;
-			lastTileY = tileY;
-			lastTileId = selectedTile.getId();
+				return ;
 
 			lvl[tileY][tileX] = selectedTile.getId();
 		}
