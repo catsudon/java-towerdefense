@@ -48,6 +48,9 @@ public class GameScreen extends Canvas {
 			if(event.getButton() == MouseButton.PRIMARY) {
 				InputUtility.mouseLeftClicked(game, (int)event.getX(), (int)event.getY());
 			}
+			else if(event.getButton() == MouseButton.SECONDARY) {
+				InputUtility.mouseRightClicked(game, (int)event.getX(), (int)event.getY());
+			}
 		});
 
 		this.setOnMousePressed((MouseEvent event) -> {
@@ -80,9 +83,11 @@ public class GameScreen extends Canvas {
 
 		this.setOnMouseDragged((MouseEvent event) -> {
 			if (InputUtility.mouseOnScreen) {
-				InputUtility.mouseX = event.getX();
-				InputUtility.mouseY = event.getY();
-				InputUtility.mouseDragged(game, (int)event.getX(), (int)event.getY());
+				if(event.getButton() == MouseButton.PRIMARY) {
+					InputUtility.mouseX = event.getX();
+					InputUtility.mouseY = event.getY();
+					InputUtility.mouseDragged(game, (int)event.getX(), (int)event.getY());
+				}
 			}
 		});
 	}

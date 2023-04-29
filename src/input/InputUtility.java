@@ -132,4 +132,21 @@ public class InputUtility {
 				break;
 		}
 	}
+	
+	public static void mouseRightClicked(Game game, int x, int y) {
+		switch(GameState.gameState) {
+			case MENU:
+				game.getMenu().mouseRightClicked(x, y);
+				break;
+			case PLAYING:
+				game.getPlaying().mouseRightClicked(x, y);
+				break;
+			case SETTINGS:
+				game.getSettings().mouseRightClicked(x, y);
+				break;
+			case EDIT:
+				game.getEditing().mouseRightClicked(x, y);
+				break;
+		}	
+	}
 }

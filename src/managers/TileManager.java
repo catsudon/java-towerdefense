@@ -19,6 +19,14 @@ public class TileManager {
 	private Image atlas;
 	public ArrayList<Tile> tiles = new ArrayList<>();
 	
+	public ArrayList<Tile> grass = new ArrayList<>();
+	public ArrayList<Tile> water = new ArrayList<>();
+	public ArrayList<Tile> roadS = new ArrayList<>();
+	public ArrayList<Tile> roadC = new ArrayList<>();
+	public ArrayList<Tile> corners = new ArrayList<>();
+	public ArrayList<Tile> beaches = new ArrayList<>();
+	public ArrayList<Tile> islands = new ArrayList<>();
+	
 	public TileManager() {
 		atlas = RenderableHolder.mapSprite;
 		createTiles();
@@ -27,36 +35,40 @@ public class TileManager {
 	private void createTiles() {
 		int id = 0;
 		
-		tiles.add(GRASS = new Tile(getSprite(9, 0), id++, "Grass"));
-		tiles.add(WATER = new Tile(getSprite(0, 0), id++, "Water"));
-		tiles.add(ROAD_LR = new Tile(getSprite(8, 0), id++, "Road_LR"));
+		grass.add(GRASS = new Tile(getSprite(9, 0), id++, "Grass"));
+		water.add(WATER = new Tile(getSprite(0, 0), id++, "Water"));
 
-//		tiles.add(ROAD_TB = new Tile(ImageFix.getRotImg(getSprite(8, 0), 90), id++, "TB_Road"));
-//		tiles.add(ROAD_B_TO_R = new Tile(getSprite(7, 0), id++, "Road_Bottom_To_Right"));
-//
-//		tiles.add(ROAD_L_TO_B = new Tile(ImageFix.getRotImg(getSprite(7, 0), 90), id++, "Road_Left_To_Bottom"));
-//		tiles.add(ROAD_L_TO_T = new Tile(ImageFix.getRotImg(getSprite(7, 0), 180), id++, "Road_Left_To_Top"));
-//		tiles.add(ROAD_T_TO_R = new Tile(ImageFix.getRotImg(getSprite(7, 0), 270), id++, "Road_Top_To_Right"));
+		roadS.add(ROAD_LR = new Tile(getSprite(8, 0), id++, "Road_LR"));
+		roadS.add(ROAD_TB = new Tile(ImageFix.getRotatedImage(getSprite(8, 0), 90), id++, "TB_Road"));
+		
+		roadC.add(ROAD_B_TO_R = new Tile(getSprite(7, 0), id++, "Road_Bottom_To_Right"));
+		
+		roadC.add(ROAD_L_TO_B = new Tile(ImageFix.getRotatedImage(getSprite(7, 0), 90), id++, "Road_Left_To_Bottom"));
+		roadC.add(ROAD_L_TO_T = new Tile(ImageFix.getRotatedImage(getSprite(7, 0), 180), id++, "Road_Left_To_Top"));
+		roadC.add(ROAD_T_TO_R = new Tile(ImageFix.getRotatedImage(getSprite(7, 0), 270), id++, "Road_Top_To_Right"));
 
-		tiles.add(BL_WATER_CORNER = new Tile(ImageFix.buildImage(getImages(0, 0, 5, 0)), id++, "BL_Water_Corner"));
-		tiles.add(
-				TL_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 90, 1), id++, "TL_Water_Corner"));
+		corners.add(BL_WATER_CORNER = new Tile(ImageFix.buildImage(getImages(0, 0, 5, 0)), id++, "BL_Water_Corner"));
+		corners.add(TL_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 90, 1), id++, "TL_Water_Corner"));
+		corners.add(TR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 180, 1), id++, "TL_Water_Corner"));
+		corners.add(BR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 270, 1), id++, "TL_Water_Corner"));
 
-		tiles.add(TR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 180, 1), id++,
-				"TL_Water_Corner"));
+		beaches.add(T_WATER = new Tile(ImageFix.buildImage(getImages(0, 0, 6, 0)), id++, "T_Water"));
+		beaches.add(R_WATER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 6, 0), 90, 1), id++, "R_Water"));
+		beaches.add(B_WATER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 6, 0), 180, 1), id++, "B_Water"));
+		beaches.add(L_WATER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 6, 0), 270, 1), id++, "L_Water"));
 
-		tiles.add(BR_WATER_CORNER = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 5, 0), 270, 1), id++,
-				"TL_Water_Corner"));
-
-		tiles.add(T_WATER = new Tile(ImageFix.buildImage(getImages(0, 0, 6, 0)), id++, "T_Water"));
-//		tiles.add(R_WATER = new Tile(ImageFix.getBuildRotatedImage(getImgs(0, 0, 6, 0), 90, 1), id++, "R_Water"));
-//		tiles.add(B_WATER = new Tile(ImageFix.getBuildRotatedImage(getImgs(0, 0, 6, 0), 180, 1), id++, "B_Water"));
-//		tiles.add(L_WATER = new Tile(ImageFix.getBuildRotatedImage(getImgs(0, 0, 6, 0), 270, 1), id++, "L_Water"));
-//
-//		tiles.add(TL_ISLE = new Tile(ImageFix.buildImage(getImgs(0, 0, 4, 0)), id++, "TL_Isle"));
-//		tiles.add(TR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImgs(0, 0, 4, 0), 90, 1), id++, "TR_Isle"));
-//		tiles.add(BR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImgs(0, 0, 4, 0), 180, 1), id++, "BR_Isle"));
-//		tiles.add(BL_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImgs(0, 0, 4, 0), 270, 1), id++, "BL_Isle"));
+		islands.add(TL_ISLE = new Tile(ImageFix.buildImage(getImages(0, 0, 4, 0)), id++, "TL_Isle"));
+		islands.add(TR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 4, 0), 90, 1), id++, "TR_Isle"));
+		islands.add(BR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 4, 0), 180, 1), id++, "BR_Isle"));
+		islands.add(BL_ISLE = new Tile(ImageFix.getBuildRotatedImage(getImages(0, 0, 4, 0), 270, 1), id++, "BL_Isle"));
+	
+		tiles.addAll(grass);
+		tiles.addAll(water);
+		tiles.addAll(roadS);
+		tiles.addAll(roadC);
+		tiles.addAll(corners);
+		tiles.addAll(beaches);
+		tiles.addAll(islands);
 	}
 	
 	private Image[] getImages(int firstX, int firstY, int secondX, int secondY) {
@@ -73,5 +85,29 @@ public class TileManager {
 	
 	private Image getSprite(int xIndex, int yIndex) {
 		return Render.getSubImage(atlas, 32 * xIndex, 32 * yIndex, 32, 32);
+	}
+
+	public ArrayList<Tile> getTiles() {
+		return tiles;
+	}
+
+	public ArrayList<Tile> getRoadS() {
+		return roadS;
+	}
+
+	public ArrayList<Tile> getRoadC() {
+		return roadC;
+	}
+
+	public ArrayList<Tile> getCorners() {
+		return corners;
+	}
+
+	public ArrayList<Tile> getBeaches() {
+		return beaches;
+	}
+
+	public ArrayList<Tile> getIslands() {
+		return islands;
 	}
 }

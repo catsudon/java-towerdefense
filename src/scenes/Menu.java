@@ -111,4 +111,10 @@ public class Menu extends GameScene implements SceneMethods {
 
 	}
 
+	@Override
+	public void mouseRightClicked(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

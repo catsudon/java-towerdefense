@@ -62,11 +62,10 @@ public class Editing extends GameScene implements SceneMethods {
 
 	private void changeTile(int x, int y) {
 		if (selectedTile != null) {
-
 			int tileX = x / 32;
 			int tileY = y / 32;
 
-			if (lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId())
+			if (selectedTile.getId() == lvl[tileY][tileX])
 				return;
 
 			lastTileX = tileX;
@@ -81,9 +80,11 @@ public class Editing extends GameScene implements SceneMethods {
 	public void mouseClicked(int x, int y) {
 		if (y >= 640) {
 			toolbar.mouseClicked(x, y);
+			drawSelect = false;
 		}
 		else {
 			changeTile(mouseX, mouseY);
+			drawSelect = true;
 		}
 
 	}
@@ -124,5 +125,16 @@ public class Editing extends GameScene implements SceneMethods {
 			changeTile(x, y);
 		}
 
+	}
+
+	@Override
+	public void mouseRightClicked(int x, int y) {
+		// TODO Auto-generated method stub
+		if(y >= 640) {
+			
+		}
+		else {
+			toolbar.rotateSprite();
+		}
 	}
 }

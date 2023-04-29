@@ -125,4 +125,10 @@ public class Playing extends GameScene implements SceneMethods {
 	public void setLevel(int[][] lvl) {
 		this.lvl = lvl;
 	}
+
+	@Override
+	public void mouseRightClicked(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 }
