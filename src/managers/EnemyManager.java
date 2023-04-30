@@ -60,11 +60,11 @@ public class EnemyManager {
 			setNewDirectionAndMove(enemy);
 		}
 		
-		int newX = (int)(enemy.getX() + getSpeedXandWidth(enemy.getLastDir()));
-		int newY = (int)(enemy.getY() + getSpeedYandHeight(enemy.getLastDir()));
+		int newX = (int)(enemy.getX() + getSpeedXandWidth(enemy.getLastDir(), enemy.getEnemyType()));
+		int newY = (int)(enemy.getY() + getSpeedYandHeight(enemy.getLastDir(), enemy.getEnemyType()));
 		
 		if(getTileType(newX, newY) == ROAD_TILE) {
-			enemy.move(speed, enemy.getLastDir());
+			enemy.move(getSpeed(enemy.getEnemyType()), enemy.getLastDir());
 		}
 		else if (isAtEnd(enemy)) {
 			System.out.println("Lives Lost!");
@@ -98,21 +98,21 @@ public class EnemyManager {
 		
 		// Not walk back
 		if(dir == LEFT || dir == RIGHT) {
-			int newY = (int)(enemy.getY() + getSpeedYandHeight(UP));
+			int newY = (int)(enemy.getY() + getSpeedYandHeight(UP, enemy.getEnemyType()));
 			if(getTileType((int)enemy.getX(), newY) == ROAD_TILE) {
-				enemy.move(speed, UP);
+				enemy.move(getSpeed(enemy.getEnemyType()), UP);
 			}
 			else {
-				enemy.move(speed, DOWN);
+				enemy.move(getSpeed(enemy.getEnemyType()), DOWN);
 			}
 		}
 		else {
-			int newX = (int)(enemy.getX() + getSpeedXandWidth(RIGHT));
+			int newX = (int)(enemy.getX() + getSpeedXandWidth(RIGHT, enemy.getEnemyType()));
 			if(getTileType(newX, (int)enemy.getY()) == ROAD_TILE) {
-				enemy.move(speed, RIGHT);
+				enemy.move(getSpeed(enemy.getEnemyType()), RIGHT);
 			}
 			else {
-				enemy.move(speed, LEFT);
+				enemy.move(getSpeed(enemy.getEnemyType()), LEFT);
 			}
 		}
 	}
@@ -150,26 +150,26 @@ public class EnemyManager {
 		return playing.getTileType(x, y);
 	}
 
-	private float getSpeedXandWidth(int dir) {
+	private float getSpeedXandWidth(int dir, int enemyType) {
 		// TODO Auto-generated method stub
 		if(dir == LEFT) {
-			return -speed;
+			return -getSpeed(enemyType);
 		}
 		// Dealing with sprite offset
 		else if(dir == RIGHT) {
-			return speed + 32;
+			return getSpeed(enemyType) + 32;
 		}
 		return 0;
 	}
 	
-	private float getSpeedYandHeight(int dir) {
+	private float getSpeedYandHeight(int dir, int enemyType) {
 		// TODO Auto-generated method stub
 		if(dir == UP) {
-			return -speed;
+			return -getSpeed(enemyType);
 		}
 		// Dealing with sprite offset
 		else if(dir == DOWN) {
-			return speed + 32;
+			return getSpeed(enemyType) + 32;
 		}
 		return 0;
 	}
