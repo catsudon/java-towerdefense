@@ -34,7 +34,7 @@ public class Menu extends GameScene implements SceneMethods {
 	@Override
 	public void render(GraphicsContext gc) {
 		gc.setFill(Color.WHITE);
-		gc.fillRect(0, 0, 640, 740);
+		gc.fillRect(0, 0, 640, 800);
 		
 		drawButtons(gc);
 	}

@@ -4,7 +4,7 @@ import javafx.scene.shape.Rectangle;
 
 import static help.Constants.Direction.*;	
 
-public class Enemy {
+public abstract class Enemy {
 	private float x, y;
 	private Rectangle bounds;
 	private int health;
@@ -18,7 +18,7 @@ public class Enemy {
 		this.ID = ID;
 		this.enemyType = enemyType;
 		bounds = new Rectangle((int)x, (int)y, 32, 32);
-		lastDir = RIGHT;
+		lastDir = -1;
 	}
 	
 	public void move(float speed, int dir) {

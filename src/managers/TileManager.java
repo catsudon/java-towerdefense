@@ -28,6 +28,9 @@ public class TileManager {
 	public ArrayList<Tile> corners = new ArrayList<>();
 	public ArrayList<Tile> beaches = new ArrayList<>();
 	public ArrayList<Tile> islands = new ArrayList<>();
+
+	public ArrayList<Tile> pathStart = new ArrayList<>();
+	public ArrayList<Tile> pathEnd = new ArrayList<>();
 	
 	public TileManager() {
 		atlas = RenderableHolder.mapSprite;
@@ -64,6 +67,9 @@ public class TileManager {
 		islands.add(BR_ISLE = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(4, 0), 180), id++, WATER_TILE));
 		islands.add(BL_ISLE = new Tile(ImageFix.getBuildRotatedImage(getAnimationSprites(0, 0, 4), getSprite(4, 0), 270), id++, WATER_TILE));
 	
+		pathStart.add(new Tile(getSprite(7, 2), -1, -1));
+		pathEnd.add(new Tile(getSprite(8, 2), -2, -1));
+		
 		tiles.addAll(grass);
 		tiles.addAll(water);
 		tiles.addAll(roadS);
@@ -71,6 +77,9 @@ public class TileManager {
 		tiles.addAll(corners);
 		tiles.addAll(beaches);
 		tiles.addAll(islands);
+		
+		tiles.addAll(pathStart);
+		tiles.addAll(pathEnd);
 	}
 	
 	/*

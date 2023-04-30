@@ -3,11 +3,17 @@ package managers;
 import java.util.ArrayList;
 
 import static help.Constants.Direction.*;
+import static help.Constants.Enemies.*;
 
+import entity.enemy.Bat;
 import entity.enemy.Enemy;
+import entity.enemy.Knight;
+import entity.enemy.Orc;
+import entity.enemy.Wolf;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import main.Render;
+import objects.PathPoint;
 import scenes.Playing;
 import sharedObject.RenderableHolder;
 
@@ -21,11 +27,18 @@ public class EnemyManager {
 	
 	private ArrayList<Enemy> enemies = new ArrayList<>();
 	private float speed = 0.5f;
+	private PathPoint start, end;
 	
-	public EnemyManager(Playing playing) {
+	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
+		this.start = start;
+		this.end = end;
+		
 		this.playing = playing;
 		enemyImages = new Image[4];
-		addEnemy(3 * 32, 8 * 32);
+		addEnemy(ORC);
+		addEnemy(BAT);
+		addEnemy(KNIGHT);
+		addEnemy(WOLF);
 		loadEnemyImages();
 	}
 	
@@ -38,14 +51,15 @@ public class EnemyManager {
 	
 	public void update() {
 		for(Enemy enemy : enemies) {
-			//enemy.move(0.5f, 0);
-			if(isNextTileRoad(enemy)) {
-				//enemy.move(speed, enemy.getLastDir());
-			}
+			updateEnemyMove(enemy);
 		}
 	}
 	
-	public boolean isNextTileRoad(Enemy enemy) {
+	public void updateEnemyMove(Enemy enemy) {
+		if(enemy.getLastDir() == -1) {
+			setNewDirectionAndMove(enemy);
+		}
+		
 		int newX = (int)(enemy.getX() + getSpeedXandWidth(enemy.getLastDir()));
 		int newY = (int)(enemy.getY() + getSpeedYandHeight(enemy.getLastDir()));
 		
@@ -53,17 +67,18 @@ public class EnemyManager {
 			enemy.move(speed, enemy.getLastDir());
 		}
 		else if (isAtEnd(enemy)) {
-			
+			System.out.println("Lives Lost!");
 		}
 		else {
 			setNewDirectionAndMove(enemy);
 		}
-	
-		return false;
 	}
 	
 	private boolean isAtEnd(Enemy enemy) {
 		// TODO Auto-generated method stub
+		if(enemy.getX() == 32 * end.getxIndex() && enemy.getY() == 32 * end.getyIndex()) {
+			return true;
+		}
 		return false;
 	}
 
@@ -76,6 +91,10 @@ public class EnemyManager {
 		int yIndex = (int)(enemy.getY() / 32);
 		
 		fixEnemyOffsetTile(enemy, dir, xIndex, yIndex);
+		
+		if(isAtEnd(enemy)) {
+			return ;
+		}
 		
 		// Not walk back
 		if(dir == LEFT || dir == RIGHT) {
@@ -155,8 +174,25 @@ public class EnemyManager {
 		return 0;
 	}
 
-	public void addEnemy(int x, int y) {
-		enemies.add(new Enemy(x, y, 0, 0));
+	public void addEnemy(int enemyType) {
+		
+		int x = 32 * start.getxIndex();
+		int y = 32 * start.getyIndex();
+		
+		switch(enemyType) {
+			case ORC:
+				enemies.add(new Orc(x, y, 0));
+			break;
+			case BAT:
+				enemies.add(new Bat(x, y, 0));
+			break;
+			case KNIGHT:
+				enemies.add(new Knight(x, y, 0));
+			break;
+			case WOLF:
+				enemies.add(new Wolf(x, y, 0));
+			break;
+		}
 	}
 	
 	public void draw(GraphicsContext gc) {
@@ -165,7 +201,7 @@ public class EnemyManager {
 		}
 	}
 	
-	private void drawEnemy(Enemy e, GraphicsContext gc) {
-		gc.drawImage(enemyImages[0], (int)e.getX(), (int)e.getY());
+	private void drawEnemy(Enemy enemy, GraphicsContext gc) {
+		gc.drawImage(enemyImages[enemy.getEnemyType()], (int)enemy.getX(), (int)enemy.getY());
 	}
 }

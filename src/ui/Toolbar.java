@@ -23,6 +23,9 @@ public class Toolbar extends Bar {
 	private Map<MyButton, ArrayList<Tile>> map = new HashMap<MyButton, ArrayList<Tile>>();
 
 	private MyButton bGrass, bWater, bRoadS, bRoadC, bWaterC, bWaterB, bWaterI;
+	private MyButton bPathStart, bPathEnd;
+	
+	private Image startPathImage, endPathImage;
 	
 	private MyButton currentButton;
 	private int currentIndex;
@@ -53,6 +56,11 @@ public class Toolbar extends Bar {
 		initMapButton(bWaterC, editing.getGame().getTileManager().corners, xStart, yStart, xOffset, w, h, id++);
 		initMapButton(bWaterB, editing.getGame().getTileManager().beaches, xStart, yStart, xOffset, w, h, id++);
 		initMapButton(bWaterI, editing.getGame().getTileManager().islands, xStart, yStart, xOffset, w, h, id++);
+		
+		initMapButton(bPathStart, editing.getGame().getTileManager().pathStart, xStart, yStart + xOffset, 0, w, h, id++);
+		initMapButton(bPathEnd, editing.getGame().getTileManager().pathEnd, xStart + xOffset, yStart + xOffset, 0, w, h, id++);
+		startPathImage = editing.getGame().getTileManager().pathStart.get(0).getSprite();
+		endPathImage = editing.getGame().getTileManager().pathEnd.get(0).getSprite();
 	}
 	
 	private void initMapButton(MyButton b, ArrayList<Tile> list, int x, int y, int xOffSet, int w, int h, int id) {
@@ -208,6 +216,14 @@ public class Toolbar extends Bar {
 		for(MyButton b : map.keySet()) {
 			b.resetBooleans();
 		}
+	}
+
+	public Image getStartPathImage() {
+		return startPathImage;
+	}
+
+	public Image getEndPathImage() {
+		return endPathImage;
 	}
 
 }

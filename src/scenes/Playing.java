@@ -5,16 +5,24 @@ import javafx.scene.canvas.GraphicsContext;
 import main.Game;
 import managers.EnemyManager;
 import managers.TileManager;
+import objects.PathPoint;
 import objects.Tile;
 import ui.ActionBar;
+
+import static help.Constants.Enemies.ORC;
+
+import java.util.ArrayList;
 
 public class Playing extends GameScene implements SceneMethods {
 
 	private int[][] lvl;
 	private TileManager tileManager;
-	private ActionBar bottomBar;
+	private ActionBar actionBar;
 	private Tile selectedTile;
-	private EnemyManager enemyManager	;
+	private EnemyManager enemyManager;
+	
+	private PathPoint start;
+	private PathPoint end;
 	
 	@SuppressWarnings("unused")
 	private int mouseX, mouseY;
@@ -27,8 +35,16 @@ public class Playing extends GameScene implements SceneMethods {
 		
 		lvl = LoadSave.GetLevelData("new_level");
 		tileManager = new TileManager();
-		bottomBar = new ActionBar(0, 640, 640, 100, this);
-		enemyManager = new EnemyManager(this);
+		actionBar = new ActionBar(0, 640, 640, 160, this);
+
+		enemyManager = new EnemyManager(this, start, end);
+	}
+	
+	private void loadDefaultLevel() {
+		lvl = LoadSave.GetLevelData("new_level");
+		ArrayList<PathPoint> points = LoadSave.getLevelPathPoints("new_level");
+		start = points.get(0);
+		end = points.get(1);
 	}
 	
 	public void update() {
@@ -40,7 +56,7 @@ public class Playing extends GameScene implements SceneMethods {
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		drawLevel(gc);
-		bottomBar.draw(gc);
+		actionBar.draw(gc);
 		enemyManager.draw(gc);
 	}
 	
@@ -78,10 +94,10 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseClicked(int x, int y) {
 		// TODO Auto-generated method stub
 		if(y >= 640) {
-			bottomBar.mouseClicked(x, y);
+			actionBar.mouseClicked(x, y);
 		}
 		else {
-			enemyManager.addEnemy(x / 32 * 32, y / 32 * 32);
+			enemyManager.addEnemy(ORC);
 		}
 	}
 	
@@ -105,7 +121,7 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseMoved(int x, int y) {
 		// TODO Auto-generated method stub
 		if(y >= 640) {
-			bottomBar.mouseMoved(x, y);
+			actionBar.mouseMoved(x, y);
 		}
 		else {
 			mouseX = (x / 32) * 32;
@@ -117,7 +133,7 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mousePressed(int x, int y) {
 		// TODO Auto-generated method stub
 		if(y >= 640) {
-			bottomBar.mousePressed(x, y);
+			actionBar.mousePressed(x, y);
 		}
 	}
 
@@ -125,7 +141,7 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseReleased(int x, int y) {
 		// TODO Auto-generated method stub
 		if(y >= 640) {
-			bottomBar.mouseReleased(x, y);
+			actionBar.mouseReleased(x, y);
 		}
 	}
 
@@ -136,11 +152,6 @@ public class Playing extends GameScene implements SceneMethods {
 
 	public TileManager getTileManager() {
 		return tileManager;
-	}
-	
-	private void loadDefaultLevel() {
-		lvl = LoadSave.GetLevelData("new_level");
-
 	}
 
 	public void setLevel(int[][] lvl) {

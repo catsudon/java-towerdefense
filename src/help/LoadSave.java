@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javafx.scene.image.Image;
+import objects.PathPoint;
 import sharedObject.RenderableHolder;
 
 public class LoadSave {
@@ -41,17 +42,23 @@ public class LoadSave {
 			catch (IOException e) {
 				e.printStackTrace();
 			}
-			WriteToFile(newLevel, idArr);
+			WriteToFile(newLevel, idArr, new PathPoint(0, 0), new PathPoint(0, 0));
 		}
 
 	}
 
-	private static void WriteToFile(File f, int[] idArr) {
+	private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end) {
 		try {
 			PrintWriter pw = new PrintWriter(f);
-			for (Integer i : idArr)
+			for (Integer i : idArr) {
 				pw.println(i);
-
+			}
+				
+			pw.println(start.getxIndex());
+			pw.println(start.getyIndex());
+			pw.println(end.getxIndex());
+			pw.println(end.getyIndex());
+			
 			pw.close();
 		}
 		catch (FileNotFoundException e) {
@@ -60,11 +67,11 @@ public class LoadSave {
 
 	}
 
-	public static void SaveLevel(String name, int[][] idArr) {
+	public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end) {
 		File levelFile = new File("res/" + name + ".txt");
 
 		if (levelFile.exists()) {
-			WriteToFile(levelFile, Utilz.TwoDto1DintArr(idArr));
+			WriteToFile(levelFile, Utilz.TwoDto1DintArr(idArr), start, end);
 		}
 		else {
 			System.out.println("File: " + name + " does not exists! ");
@@ -90,6 +97,23 @@ public class LoadSave {
 
 		return list;
 	}
+	
+	public static ArrayList<PathPoint> getLevelPathPoints(String name) {
+		File lvlFile = new File("res/" + name + ".txt");
+
+		if (lvlFile.exists()) {
+			ArrayList<Integer> list = ReadFromFile(lvlFile);
+			ArrayList<PathPoint> points = new ArrayList<>();
+			points.add(new PathPoint(list.get(400), list.get(401)));
+			points.add(new PathPoint(list.get(402), list.get(403)));
+			
+			return points;
+		}
+		else {
+			System.out.println("File: " + name + " does not exists! ");
+			return null;
+		}
+	}
 
 	public static int[][] GetLevelData(String name) {
 		File lvlFile = new File("res/" + name + ".txt");
@@ -98,7 +122,8 @@ public class LoadSave {
 			ArrayList<Integer> list = ReadFromFile(lvlFile);
 			return Utilz.ArrayListTo2Dint(list, 20, 20);
 
-		} else {
+		}
+		else {
 			System.out.println("File: " + name + " does not exists! ");
 			return null;
 		}

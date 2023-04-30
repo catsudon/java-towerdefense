@@ -119,7 +119,7 @@ public class Game extends Application {
 	private void initClasses() {
 		tileManager = new TileManager();
 		
-		gameScreen = new GameScreen(this, 640, 740);
+		gameScreen = new GameScreen(this, 640, 800);
 		render = new Render(this);
 		
 		menu = new Menu(this);
