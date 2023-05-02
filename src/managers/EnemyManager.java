@@ -12,6 +12,7 @@ import entity.enemy.Orc;
 import entity.enemy.Wolf;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import main.Render;
 import objects.PathPoint;
 import scenes.Playing;
@@ -26,7 +27,6 @@ public class EnemyManager {
 	private Image[] enemyImages;
 	
 	private ArrayList<Enemy> enemies = new ArrayList<>();
-	private float speed = 0.5f;
 	private PathPoint start, end;
 	
 	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
@@ -51,6 +51,9 @@ public class EnemyManager {
 	
 	public void update() {
 		for(Enemy enemy : enemies) {
+			if(!enemy.isAlive()) {
+				continue;
+			}
 			updateEnemyMove(enemy);
 		}
 	}
@@ -197,11 +200,33 @@ public class EnemyManager {
 	
 	public void draw(GraphicsContext gc) {
 		for(Enemy enemy : enemies) {
+			if(!enemy.isAlive()) {
+				continue;
+			}
 			drawEnemy(enemy, gc);
+			drawHealthBar(enemy, gc);
 		}
 	}
 	
+	private void drawHealthBar(Enemy enemy, GraphicsContext gc) {
+		// Full Health Bar
+		gc.setFill(Color.LIGHTGRAY);
+		gc.fillRect((int)enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int)enemy.getY() - 8, enemy.getBarWidth(), 3);
+		
+		// Health Bar
+		gc.setFill(Color.RED);
+		gc.fillRect((int)enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int)enemy.getY() - 8, (int)(getHealthPercentage(enemy) * enemy.getBarWidth()), 3);
+	}
+	
+	private float getHealthPercentage(Enemy enemy) {
+		return (float)enemy.getHealth() / enemy.getMaxHealth();
+	}
+
 	private void drawEnemy(Enemy enemy, GraphicsContext gc) {
 		gc.drawImage(enemyImages[enemy.getEnemyType()], (int)enemy.getX(), (int)enemy.getY());
+	}
+	
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
 	}
 }

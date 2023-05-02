@@ -81,11 +81,24 @@ public class ActionBar extends Bar {
 		gc.strokeRect(420, 650, 50, 50);
 		
 		gc.drawImage(playing.getTowerManager().getTowerImages()[displayedTower.getTowerType()], 420, 650, 50, 50);
+		drawSelectedColorBorder(gc);
 		
 		gc.setFill(Color.BLACK);
+		Font oldFont = gc.getFont();
 		gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 15));
-		gc.fillText("" + Towers.GetName(displayedTower.getTowerType()), 490, 660);
+		gc.fillText("" + Towers.getName(displayedTower.getTowerType()), 490, 660);
 		gc.fillText("ID: " + displayedTower.getId(), 490, 675);
+		
+		// setFont only set the font going forward
+		gc.setFont(oldFont);
+		
+		gc.setStroke(Color.WHITE);
+		gc.strokeOval(displayedTower.getX() + (32 / 2) - displayedTower.getRange(), displayedTower.getY() + (32 / 2) - displayedTower.getRange(), 2 * displayedTower.getRange(), 2 * displayedTower.getRange());
+	}
+
+	private void drawSelectedColorBorder(GraphicsContext gc) {
+		gc.setStroke(Color.CYAN);
+		gc.strokeRect(displayedTower.getX(), displayedTower.getY(), 32, 32);
 	}
 
 	public void mouseClicked(int x, int y) {

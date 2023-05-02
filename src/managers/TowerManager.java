@@ -6,11 +6,12 @@ import main.Render;
 import scenes.Playing;
 import sharedObject.RenderableHolder;
 
-import static help.Constants.Towers.*;
-
 import java.util.ArrayList;
 
+import entity.enemy.Enemy;
 import entity.tower.Tower;
+
+import help.Utilz;
 
 public class TowerManager {
 	
@@ -47,7 +48,28 @@ public class TowerManager {
 	}
 	
 	public void update() {
-		
+		attackEnemyIfInRange();
+	}
+
+	private void attackEnemyIfInRange() {
+		for(Tower tower : towers) {
+			for(Enemy enemy : playing.getEnemyManager().getEnemies()) {
+				if(!enemy.isAlive()) {
+					continue;
+				}
+				if(isEnemyInRange(tower, enemy)) {
+					enemy.hurt(1);
+				}
+				else {
+					
+				}
+			}
+		}
+	}
+
+	private boolean isEnemyInRange(Tower tower, Enemy enemy) {
+		int range = Utilz.getEuclideanDistance(tower.getX(), tower.getY(), enemy.getX(), enemy.getY());
+		return range <= tower.getRange();
 	}
 
 	public Image[] getTowerImages() {

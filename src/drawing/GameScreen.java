@@ -37,11 +37,11 @@ public class GameScreen extends Canvas {
 	
 	public void addListener() {
 		this.setOnKeyPressed((KeyEvent event) -> {
-			InputUtility.setKeyPressed(event.getCode(), true);
+			InputUtility.setKeyPressed(game, event.getCode(), true);
 		});
 
 		this.setOnKeyReleased((KeyEvent event) -> {
-			InputUtility.setKeyPressed(event.getCode(), false);
+			InputUtility.setKeyPressed(game, event.getCode(), false);
 		});
 		
 		this.setOnMouseClicked((MouseEvent event) -> {

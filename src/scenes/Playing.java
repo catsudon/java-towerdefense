@@ -2,6 +2,8 @@ package scenes;
 
 import help.LoadSave;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import main.Game;
 import managers.EnemyManager;
 import managers.TileManager;
@@ -75,8 +77,17 @@ public class Playing extends GameScene implements SceneMethods {
 		enemyManager.draw(gc);
 		towerManager.draw(gc);
 		drawSelectedTower(gc);	
+		drawHighlight(gc);
 	}
 	
+	private void drawHighlight(GraphicsContext gc) {
+		if(mouseY >= 640) {
+			return ;
+		}
+		gc.setStroke(Color.PINK);
+		gc.strokeRect(mouseX, mouseY, 32, 32);
+	}
+
 	private void drawSelectedTower(GraphicsContext gc) {
 		if(selectedTower == null) {
 			return ;
@@ -173,6 +184,8 @@ public class Playing extends GameScene implements SceneMethods {
 		// TODO Auto-generated method stub
 		if(y >= 640) {
 			actionBar.mouseMoved(x, y);
+			mouseX = x;
+			mouseY = y;
 		}
 		else {
 			mouseX = (x / 32) * 32;
@@ -214,8 +227,18 @@ public class Playing extends GameScene implements SceneMethods {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void keyPressed(KeyCode keyCode) {
+		if(keyCode == KeyCode.ESCAPE) {
+			setSelectedTower(null);
+		}
+	}
 
 	public TowerManager getTowerManager() {
 		return towerManager;
+	}
+	
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
 	}
 }

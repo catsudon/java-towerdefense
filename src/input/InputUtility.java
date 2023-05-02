@@ -23,14 +23,15 @@ public class InputUtility {
 		return keyPressed.contains(keycode);
 	}
 	
-	public static void setKeyPressed(KeyCode keycode, boolean pressed) {
+	public static void setKeyPressed(Game game, KeyCode keyCode, boolean pressed) {
 		if(pressed) {
-			if(!keyPressed.contains(keycode)) {
-				keyPressed.add(keycode);
+			if(!keyPressed.contains(keyCode)) {
+				keyPressed.add(keyCode);
+				game.getPlaying().keyPressed(keyCode);
 			}
 		}
 		else {
-			keyPressed.remove(keycode);
+			keyPressed.remove(keyCode);
 		}
 		System.out.println(keyPressed);
 	}
