@@ -4,17 +4,17 @@ public class Constants {
 	
 	public static class Projectiles {
 		public static final int ARROW = 0;
-		public static final int BOMB = 1;
-		public static final int CHAINS = 2;
+		public static final int CHAINS = 1;
+		public static final int BOMB = 2;
 		
 		public static float getSpeed(int projectileType) {
 			switch(projectileType) {
 				case ARROW:
 					return 3f;
-				case BOMB:
-					return 1f;
 				case CHAINS:
 					return 2f;
+				case BOMB:
+					return 1f;
 			}
 			return 0f;
 		}

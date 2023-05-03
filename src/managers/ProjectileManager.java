@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import entity.enemy.Enemy;
 import entity.tower.Tower;
-import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import main.Render;
@@ -46,12 +45,12 @@ public class ProjectileManager {
 		
 		int type = getProjectileType(tower);
 		
-		int xDist = (int)Math.abs(tower.getX() - enemy.getX());
-		int yDist = (int)Math.abs(tower.getY() - enemy.getY());
-		int totalDist = xDist + yDist;
+		int xDiff = (int)(tower.getX() - enemy.getX());
+		int yDiff = (int)(tower.getY() - enemy.getY());
+		int totalDist = Math.abs(xDiff) + Math.abs(yDiff);
 		
 		// Percent
-		float xPer = (float) xDist / totalDist;
+		float xPer = (float) Math.abs(xDiff) / totalDist;
 		float yPer = 1.0f - xPer;
 		
 		float xSpeed = xPer * help.Constants.Projectiles.getSpeed(type);
@@ -64,7 +63,14 @@ public class ProjectileManager {
 			ySpeed *= -1;
 		}
 		
-		projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, xSpeed, ySpeed, tower.getAtk(), projectile_ID++, type));
+		float arctan = (float)Math.atan((float)yDiff / xDiff);
+		float rotationAngle = (float)Math.toDegrees(arctan);
+		
+		if(xDiff < 0) {
+			rotationAngle += 180;
+		}
+		
+		projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, xSpeed, ySpeed, rotationAngle,tower.getAtk(), projectile_ID++, type));
 	}
 	
 	
@@ -96,7 +102,19 @@ public class ProjectileManager {
 			}
 		}
 		for(Projectile projectile : projectiles) {
-			gc.drawImage(projectileImages[projectile.getProjectileType()], (int)projectile.getPos().getX(), (int)projectile.getPos().getY());
+			if(!projectile.isActive()) {
+				continue;
+			}
+			
+			gc.translate(projectile.getPos().getX(), projectile.getPos().getY());
+			gc.rotate(projectile.getRotation());
+			
+			// -16, -16 is to use the center of the image to be axis of rotation
+			gc.drawImage(projectileImages[projectile.getProjectileType()], -16, -16); 
+			
+			// Restore 
+			gc.rotate(-projectile.getRotation()); // Can't swap order with translate
+			gc.translate(-projectile.getPos().getX(), -projectile.getPos().getY());
 		}
 	}
 	
