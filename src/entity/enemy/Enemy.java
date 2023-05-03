@@ -61,8 +61,15 @@ public abstract class Enemy {
 				this.y += speed;
 				break;
 		}
+		
+		updateHitbox();
 	}
 	
+	private void updateHitbox() {
+		bounds.setX( (int)x );
+		bounds.setY( (int)y );
+	}
+
 	public float getHealthBarFloat() {
 		return (float)health / maxHealth;
 	}

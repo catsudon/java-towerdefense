@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import main.Game;
 import managers.EnemyManager;
+import managers.ProjectileManager;
 import managers.TileManager;
 import managers.TowerManager;
 import objects.PathPoint;
@@ -14,6 +15,7 @@ import ui.ActionBar;
 
 import java.util.ArrayList;
 
+import entity.enemy.Enemy;
 import entity.tower.Tower;
 
 import static help.Constants.Tiles.*;
@@ -36,6 +38,8 @@ public class Playing extends GameScene implements SceneMethods {
 	
 	private Tower selectedTower;
 	
+	private ProjectileManager projectileManager;
+	
 	public Playing(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
@@ -49,6 +53,8 @@ public class Playing extends GameScene implements SceneMethods {
 		enemyManager = new EnemyManager(this, start, end);
 		
 		towerManager = new TowerManager(this);
+		
+		this.projectileManager = new ProjectileManager(this);
 	}
 	
 	private void loadDefaultLevel() {
@@ -62,6 +68,7 @@ public class Playing extends GameScene implements SceneMethods {
 		updateTick();
 		enemyManager.update();
 		towerManager.update();
+		projectileManager.update();
 	}
 	
 	public void setSelectedTower(Tower selectedTower) {
@@ -78,6 +85,7 @@ public class Playing extends GameScene implements SceneMethods {
 		towerManager.draw(gc);
 		drawSelectedTower(gc);	
 		drawHighlight(gc);
+		projectileManager.draw(gc);
 	}
 	
 	private void drawHighlight(GraphicsContext gc) {
@@ -240,5 +248,9 @@ public class Playing extends GameScene implements SceneMethods {
 	
 	public EnemyManager getEnemyManager() {
 		return enemyManager;
+	}
+
+	public void shootEnemy(Tower tower, Enemy enemy) {
+		projectileManager.newProjectile(tower, enemy);
 	}
 }

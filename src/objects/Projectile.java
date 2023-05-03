@@ -5,16 +5,22 @@ import javafx.geometry.Point2D;
 public class Projectile {
 	private Point2D pos;
 	private int id, projectileType;
-	private boolean active = true;
+	private boolean active;
+	private float xSpeed, ySpeed;
+	private int damage;
 	
-	public Projectile(float x, float y, int id, int projectileType) {
+	public Projectile(float x, float y, float xSpeed, float ySpeed, int damage, int id, int projectileType) {
 		pos = new Point2D(x, y);
+		this.xSpeed = xSpeed;
+		this.ySpeed = ySpeed;
+		this.damage = damage;
 		this.id = id;
+		this.active = true;
 		this.projectileType = projectileType;
 	}
 	
-	public void move(float x, float y) {
-		pos.add(x, y);
+	public void move() {
+		pos = pos.add(xSpeed, ySpeed);
 	}
 
 	public Point2D getPos() {
@@ -31,6 +37,14 @@ public class Projectile {
 
 	public boolean isActive() {
 		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public int getDamage() {
+		return damage;
 	}
 	
 	

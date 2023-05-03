@@ -199,10 +199,12 @@ public class EnemyManager {
 	}
 	
 	public void draw(GraphicsContext gc) {
-		for(Enemy enemy : enemies) {
-			if(!enemy.isAlive()) {
-				continue;
+		for(int i = enemies.size() - 1; i >= 0; i--) {
+			if(!enemies.get(i).isAlive()) {
+				enemies.remove(i);
 			}
+		}
+		for(Enemy enemy : enemies) {
 			drawEnemy(enemy, gc);
 			drawHealthBar(enemy, gc);
 		}
