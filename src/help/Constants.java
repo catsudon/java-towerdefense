@@ -66,54 +66,6 @@ public class Constants {
 		public static final int CANNON = 0;
 		public static final int ARCHER = 1;
 		public static final int WIZARD = 2;
-		
-		public static String getName(int towerType) {
-			switch(towerType) {
-				case CANNON:
-					return "Cannon";
-				case ARCHER:
-					return "Archer";
-				case WIZARD:
-					return "Wizard";
-			}
-			return "";
-		}
-		
-		public static int getATK(int towerType) {
-			switch(towerType) {
-				case CANNON:
-					return 25;
-				case ARCHER:
-					return 15;
-				case WIZARD:
-					return 5;
-			}
-			return 0;
-		}
-		
-		public static int getRange(int towerType) {
-			switch(towerType) {
-				case CANNON:
-					return 100;
-				case ARCHER:
-					return 100;
-				case WIZARD:
-					return 100;
-			}
-			return 0;
-		}
-		
-		public static int getCooldown(int towerType) {
-			switch(towerType) {
-				case CANNON:
-					return 10;
-				case ARCHER:
-					return 10;
-				case WIZARD:
-					return 10;
-			}
-			return 0;
-		}
 	}
 	
 	public static class Tiles {

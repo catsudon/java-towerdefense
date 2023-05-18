@@ -1,6 +1,7 @@
 package managers;
 
 import java.util.ArrayList;
+import help.LevelBuilder;
 
 import help.ImageFix;
 import javafx.scene.image.Image;

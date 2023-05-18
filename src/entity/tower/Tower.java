@@ -2,7 +2,7 @@ package entity.tower;
 
 import help.Constants;
 
-public class Tower {
+public abstract class Tower {
 	
 	private int x, y, id, towerType;
 	private int atk;
@@ -10,16 +10,16 @@ public class Tower {
 	
 	private int cooldownTick;
 	
-	public Tower(int x, int y, int id, int towerType) {
+	public Tower(int x, int y, int id, int towerType, int atk, int range, int cooldown) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 		this.towerType = towerType;
 		this.cooldownTick = 0;
 
-		this.atk = Constants.Towers.getATK(towerType);
-		this.range = Constants.Towers.getRange(towerType);
-		this.cooldown = Constants.Towers.getCooldown(towerType);
+		this.atk = atk;
+		this.range = range;
+		this.cooldown = cooldown;
 	}
 
 	public int getX() {
@@ -62,5 +62,19 @@ public class Tower {
 	public void resetCooldown() {
 		cooldownTick = 0;
 	}
+	
+	public void setX(int newX) {
+		x = newX;
+	}
+	
+	public void setY(int newY) {
+		y = newY;
+	}
+	
+	public void setId(int newId) {
+		id = newId;
+	}
+	
+	public abstract String getName();
 
 }

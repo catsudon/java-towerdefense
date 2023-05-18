@@ -21,65 +21,63 @@ import sharedObject.RenderableHolder;
 import static help.Constants.Tiles.*;
 
 public class EnemyManager {
-	
+
 	@SuppressWarnings("unused")
 	private Playing playing;
 	private Image[] enemyImages;
-	
+
 	private ArrayList<Enemy> enemies = new ArrayList<>();
 	private PathPoint start, end;
-	
+
 	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
 		this.start = start;
 		this.end = end;
-		
+
 		this.playing = playing;
 		enemyImages = new Image[4];
-		addEnemy(ORC);
-		addEnemy(BAT);
-		addEnemy(KNIGHT);
-		addEnemy(WOLF);
+		addEnemy(ORC, 2);
+		addEnemy(BAT, 10);
+		addEnemy(KNIGHT, 4);
+		addEnemy(WOLF, 10);
 		loadEnemyImages();
 	}
-	
+
 	private void loadEnemyImages() {
 		Image atlas = RenderableHolder.mapSprite;
-		for(int i = 0; i < 4; i++) {
-			enemyImages[i] = Render.getSubImage(atlas, 32 * i, 32 * 1, 32, 32);
+		for (int i = 0; i < enemyImages.length; ++i) {
+			enemyImages[i] = Render.getSubImage(atlas, 32 * enemies.get(i).getEnemyType(), 32 * 1, 32, 32);
 		}
 	}
-	
+
 	public void update() {
-		for(Enemy enemy : enemies) {
-			if(!enemy.isAlive()) {
+		for (Enemy enemy : enemies) {
+			if (!enemy.isAlive()) {
 				continue;
 			}
 			updateEnemyMove(enemy);
 		}
 	}
-	
+
 	public void updateEnemyMove(Enemy enemy) {
-		if(enemy.getLastDir() == -1) {
+		if (enemy.getLastDir() == -1) {
 			setNewDirectionAndMove(enemy);
 		}
-		
-		int newX = (int)(enemy.getX() + getSpeedXandWidth(enemy.getLastDir(), enemy.getEnemyType()));
-		int newY = (int)(enemy.getY() + getSpeedYandHeight(enemy.getLastDir(), enemy.getEnemyType()));
-		
-		if(getTileType(newX, newY) == ROAD_TILE) {
+
+		int newX = (int) (enemy.getX() + getSpeedXandWidth(enemy.getLastDir(), enemy.getEnemyType()));
+		int newY = (int) (enemy.getY() + getSpeedYandHeight(enemy.getLastDir(), enemy.getEnemyType()));
+
+		if (getTileType(newX, newY) == ROAD_TILE) {
 			enemy.move(getSpeed(enemy.getEnemyType()), enemy.getLastDir());
-		}
-		else if (isAtEnd(enemy)) {
+		} else if (isAtEnd(enemy)) {
 			System.out.println("Lives Lost!");
-		}
-		else {
+		} else {
 			setNewDirectionAndMove(enemy);
 		}
 	}
-	
+
 	private boolean isAtEnd(Enemy enemy) {
 		// TODO Auto-generated method stub
-		if(enemy.getX() == 32 * end.getxIndex() && enemy.getY() == 32 * end.getyIndex()) {
+		if (enemy.getX() == 32 * end.getxIndex() && enemy.getY() == 32 * end.getyIndex()) {
 			return true;
 		}
 		return false;
@@ -87,64 +85,61 @@ public class EnemyManager {
 
 	private void setNewDirectionAndMove(Enemy enemy) {
 		int dir = enemy.getLastDir();
-		
+
 		// move into the current tile 100%
-		
-		int xIndex = (int)(enemy.getX() / 32);
-		int yIndex = (int)(enemy.getY() / 32);
-		
+
+		int xIndex = (int) (enemy.getX() / 32);
+		int yIndex = (int) (enemy.getY() / 32);
+
 		fixEnemyOffsetTile(enemy, dir, xIndex, yIndex);
-		
-		if(isAtEnd(enemy)) {
-			return ;
+
+		if (isAtEnd(enemy)) {
+			return;
 		}
-		
+
 		// Not walk back
-		if(dir == LEFT || dir == RIGHT) {
-			int newY = (int)(enemy.getY() + getSpeedYandHeight(UP, enemy.getEnemyType()));
-			if(getTileType((int)enemy.getX(), newY) == ROAD_TILE) {
+		if (dir == LEFT || dir == RIGHT) {
+			int newY = (int) (enemy.getY() + getSpeedYandHeight(UP, enemy.getEnemyType()));
+			if (getTileType((int) enemy.getX(), newY) == ROAD_TILE) {
 				enemy.move(getSpeed(enemy.getEnemyType()), UP);
-			}
-			else {
+			} else {
 				enemy.move(getSpeed(enemy.getEnemyType()), DOWN);
 			}
-		}
-		else {
-			int newX = (int)(enemy.getX() + getSpeedXandWidth(RIGHT, enemy.getEnemyType()));
-			if(getTileType(newX, (int)enemy.getY()) == ROAD_TILE) {
+		} else {
+			int newX = (int) (enemy.getX() + getSpeedXandWidth(RIGHT, enemy.getEnemyType()));
+			if (getTileType(newX, (int) enemy.getY()) == ROAD_TILE) {
 				enemy.move(getSpeed(enemy.getEnemyType()), RIGHT);
-			}
-			else {
+			} else {
 				enemy.move(getSpeed(enemy.getEnemyType()), LEFT);
 			}
 		}
 	}
 
 	private void fixEnemyOffsetTile(Enemy enemy, int dir, int xIndex, int yIndex) {
-		switch(dir) {
-			// Left and Up not cause problems
+		switch (dir) {
+//		 Left and Up not cause problems
 //			case LEFT:
 //				if(xIndex > 0) {
 //					xIndex--;
 //				}
 //				break;	
-//			case UP:
-//				if(yIndex > 0) {
-//					yIndex--;
-//				}
+//		case UP:
+//			if (yIndex > 0) {
+//				yIndex--;
+//			}
 //			break;
-				
-			case RIGHT:
-				if(xIndex < 19) {
-					xIndex++;
-				}
-				break;
-				
-			case DOWN:
-				if(yIndex > 0) {
-					yIndex++;
-				}
-				break;
+
+		case RIGHT:
+			if (xIndex < 19) {
+				xIndex++;
+			}
+			break;
+
+		case DOWN:
+			if (yIndex > 0) {
+				yIndex++;
+			}
+			break;
 		}
 		enemy.setPos(32 * xIndex, 32 * yIndex);
 	}
@@ -155,79 +150,81 @@ public class EnemyManager {
 
 	private float getSpeedXandWidth(int dir, int enemyType) {
 		// TODO Auto-generated method stub
-		if(dir == LEFT) {
+		if (dir == LEFT) {
 			return -getSpeed(enemyType);
 		}
 		// Dealing with sprite offset
-		else if(dir == RIGHT) {
-			return getSpeed(enemyType) + 32;
-		}
-		return 0;
-	}
-	
-	private float getSpeedYandHeight(int dir, int enemyType) {
-		// TODO Auto-generated method stub
-		if(dir == UP) {
-			return -getSpeed(enemyType);
-		}
-		// Dealing with sprite offset
-		else if(dir == DOWN) {
+		else if (dir == RIGHT) {
 			return getSpeed(enemyType) + 32;
 		}
 		return 0;
 	}
 
-	public void addEnemy(int enemyType) {
-		
+	private float getSpeedYandHeight(int dir, int enemyType) {
+		// TODO Auto-generated method stub
+		if (dir == UP) {
+			return -getSpeed(enemyType);
+		}
+		// Dealing with sprite offset
+		else if (dir == DOWN) {
+			return getSpeed(enemyType) + 32;
+		}
+		return 0;
+	}
+
+	public void addEnemy(int enemyType, int reIncarnationCount) {
+
 		int x = 32 * start.getxIndex();
 		int y = 32 * start.getyIndex();
-		
-		switch(enemyType) {
-			case ORC:
-				enemies.add(new Orc(x, y, 0));
+
+		switch (enemyType) {
+		case ORC:
+			enemies.add(new Orc(x, y, 0, reIncarnationCount));
 			break;
-			case BAT:
-				enemies.add(new Bat(x, y, 0));
+		case BAT:
+			enemies.add(new Bat(x, y, 0, reIncarnationCount));
 			break;
-			case KNIGHT:
-				enemies.add(new Knight(x, y, 0));
+		case KNIGHT:
+			enemies.add(new Knight(x, y, 0, reIncarnationCount));
 			break;
-			case WOLF:
-				enemies.add(new Wolf(x, y, 0));
+		case WOLF:
+			enemies.add(new Wolf(x, y, 0, reIncarnationCount));
 			break;
 		}
 	}
-	
+
 	public void draw(GraphicsContext gc) {
-		for(int i = enemies.size() - 1; i >= 0; i--) {
-			if(!enemies.get(i).isAlive()) {
+		for (int i = enemies.size() - 1; i >= 0; i--) {
+			if (!enemies.get(i).isAlive()) {
 				enemies.remove(i);
 			}
 		}
-		for(Enemy enemy : enemies) {
+		for (Enemy enemy : enemies) {
 			drawEnemy(enemy, gc);
 			drawHealthBar(enemy, gc);
 		}
 	}
-	
+
 	private void drawHealthBar(Enemy enemy, GraphicsContext gc) {
 		// Full Health Bar
 		gc.setFill(Color.LIGHTGRAY);
-		gc.fillRect((int)enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int)enemy.getY() - 8, enemy.getBarWidth(), 3);
-		
+		gc.fillRect((int) enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int) enemy.getY() - 8, enemy.getBarWidth(),
+				3);
+
 		// Health Bar
 		gc.setFill(Color.RED);
-		gc.fillRect((int)enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int)enemy.getY() - 8, (int)(getHealthPercentage(enemy) * enemy.getBarWidth()), 3);
+		gc.fillRect((int) enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int) enemy.getY() - 8,
+				(int) (getHealthPercentage(enemy) * enemy.getBarWidth()), 3);
 	}
-	
+
 	private float getHealthPercentage(Enemy enemy) {
-		return (float)enemy.getHealth() / enemy.getMaxHealth();
+		return (float) enemy.getHealth() / enemy.getMaxHealth();
 	}
 
 	private void drawEnemy(Enemy enemy, GraphicsContext gc) {
-		gc.drawImage(enemyImages[enemy.getEnemyType()], (int)enemy.getX(), (int)enemy.getY());
+		gc.drawImage(enemyImages[enemy.getEnemyType()], (int) enemy.getX(), (int) enemy.getY());
 	}
-	
+
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}

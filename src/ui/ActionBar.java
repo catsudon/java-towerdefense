@@ -2,7 +2,7 @@ package ui;
 
 import static main.GameState.*;
 
-import entity.tower.Tower;
+import entity.tower.*;
 import help.Constants.Towers;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -86,7 +86,7 @@ public class ActionBar extends Bar {
 		gc.setFill(Color.BLACK);
 		Font oldFont = gc.getFont();
 		gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 15));
-		gc.fillText("" + Towers.getName(displayedTower.getTowerType()), 490, 660);
+		gc.fillText("" + displayedTower.getName(), 490, 660);
 		gc.fillText("ID: " + displayedTower.getId(), 490, 675);
 		
 		// setFont only set the font going forward
@@ -112,7 +112,10 @@ public class ActionBar extends Bar {
 					
 					b.setMouseOver(true);
 					
-					selectedTower = new Tower(0, 0, -1, b.getId());
+					int towerType = b.getId();
+					if(towerType == 0) selectedTower = new Cannon(0, 0, -1);
+					if(towerType == 1) selectedTower = new Archer(0, 0, -1);
+					if(towerType == 2) selectedTower = new Wizard(0, 0, -1);
 					playing.setSelectedTower(selectedTower);
 					return ;
 				}

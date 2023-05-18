@@ -251,6 +251,7 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 
 	public void shootEnemy(Tower tower, Enemy enemy) {
-		projectileManager.newProjectile(tower, enemy);
+		if(tower.getTowerType() == 2) projectileManager.mawarikougeki(tower);
+		else projectileManager.newProjectile(tower, enemy);
 	}
 }

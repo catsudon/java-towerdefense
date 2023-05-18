@@ -28,7 +28,7 @@ public class TowerManager {
 	}
 	
 	private void initTowers() {
-		//tower = new Tower(3 * 32, 6 * 32, 0, ARCHER);
+		//tower = new Archer(3 * 32, 6 * 32, 0);
 	}
 
 	private void loadTowerImages() {
@@ -82,7 +82,10 @@ public class TowerManager {
 
 	public void addTower(Tower selectedTower, int xIndex, int yIndex) {
 		// TODO Auto-generated method stub
-		towers.add(new Tower(32 * xIndex, 32 * yIndex, towerAmount++, selectedTower.getTowerType()));
+		selectedTower.setX(32 * xIndex);
+		selectedTower.setY(32 * yIndex);
+		selectedTower.setId(towerAmount++);
+		towers.add(selectedTower);
 	}
 
 	public Tower getTowerAt(int x, int y) {
