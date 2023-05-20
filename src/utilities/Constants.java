@@ -129,7 +129,7 @@ public class Constants {
 			case CHEF:
 				return "Chef";
 			case OWNER:
-				return "Shop Owner";
+				return "Owner";
 			}
 			return "";
 		}

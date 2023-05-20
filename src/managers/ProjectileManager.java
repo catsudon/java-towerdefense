@@ -87,12 +87,16 @@ public class ProjectileManager {
 							if (p.isActive()) {
 								p.move();
 								if (isProjectileHittingEnemy(p)) {
-									
 									if(p.getProjectileType() == CUPCAKE) {
 										explosions.add(new Explosion(p.getPos()));
 										explodeOnEnemies(p);
 									}
-									else p.setActive(false);
+									if(p.getProjectileType() == CROISSANT) {
+										p.setEnemy(null);
+									}
+									else {
+										p.setActive(false);
+									}
 								}
 								else if(isProjectileOutOfBounds(p)) {
 									p.setActive(false);
@@ -238,7 +242,7 @@ public class ProjectileManager {
 		
 		public void update() {
 			explosionTick++;
-			if(explosionTick >= 12) {
+			if(explosionTick >= 4) {
 				explosionTick = 0;
 				explosionIndex++;
 			}

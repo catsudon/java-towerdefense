@@ -38,7 +38,6 @@ public class Projectile {
 	public void move() {
         if(enemy != null && !enemy.isAlive()) {
             enemy = null;
-            this.active = false;
             return ;
         }
         if(enemy != null) {

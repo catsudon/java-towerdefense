@@ -13,6 +13,6 @@ public class Owner extends Tower {
 
 	@Override
 	public String getName() {
-		return "Shop Owner";
+		return "Owner";
 	}
 }
