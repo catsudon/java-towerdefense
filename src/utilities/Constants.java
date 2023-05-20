@@ -53,13 +53,13 @@ public class Constants {
 			int tmp = 8;
 			switch(enemyType) {
 				case ORC:
-					return tmp * 0.5f;
+					return tmp * 0.25f;
 				case BAT:
-					return tmp * 0.65f;
+					return tmp * 0.30f;
 				case KNIGHT:
-					return tmp * 0.3f;
+					return tmp * 0.15f;
 				case WOLF:
-					return tmp * 0.75f;
+					return tmp * 0.35f;
 			}
 			return 0;
 		}
@@ -87,9 +87,9 @@ public class Constants {
 		public static int getConstantStartDamage(int towerType) {
 			switch (towerType) {
 				case CANNON:
-					return 15;
+					return 300;
 				case ARCHER:
-					return 5;
+					return 10;
 				case WIZARD:
 					return 0;
 			}
@@ -104,7 +104,7 @@ public class Constants {
 				case ARCHER:
 					return 120;
 				case WIZARD:
-					return 100;
+					return 300;
 			}
 
 			return 0;

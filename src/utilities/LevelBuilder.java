@@ -111,9 +111,9 @@ public class LevelBuilder {
 		while(waterZone-- > 0) {
 			x = rand.nextInt(20);
 			y = rand.nextInt(20);
-			if(lvlRand[x][y] != 0) continue;
+//			if(lvlRand[x][y] != 0) continue;
 			if(lvlRand[x][y] == 0) {
-				size = rand.nextInt(8)+1;
+				size = rand.nextInt(6)+2;
 				q.add(new int[] {x,y,size});
 			}
 		}
@@ -128,10 +128,48 @@ public class LevelBuilder {
 				if(lvlRand[i][j] == 0) lvlRand[i][j] = 1;
 		}
 		
-		// make corner
+		// remove water with 3 open side
+		for(int i=0; i<20; ++i) for(int j=0; j<20; ++j)
+		{
+			int cnt = 0;
+			if(lvlRand[i][j] != 1) continue;
+			if(i > 0 && lvlRand[i-1][j] == 0) cnt++;
+			if(j > 0 && lvlRand[i][j-1] == 0) cnt++;
+			if(i < 19 && lvlRand[i+1][j] == 0) cnt++;
+			if(i < 19 && lvlRand[i][j+1] == 0) cnt++;
+			if(cnt >= 3) lvlRand[i][j] = 0;
+		}
 		
-//		for(int )
-
+		// make line
+		for(int i=0; i<20; ++i) for(int j=0; j<20; ++j)
+		{
+			if(lvlRand[i][j] == 1 && j > 0 && lvlRand[i][j-1] == 0) lvlRand[i][j] = 15;
+			if(lvlRand[i][j] == 1 && j < 19 && lvlRand[i][j+1] == 0) lvlRand[i][j] = 13;
+			if(lvlRand[i][j] == 1 && i > 0 && lvlRand[i-1][j] == 0) lvlRand[i][j] = 12;
+			if(lvlRand[i][j] == 1 && i < 19 && lvlRand[i+1][j] == 0) lvlRand[i][j] = 14;
+		}
+		
+		
+		// fix double line	
+		for(int i=0; i<20; ++i) for(int j=0; j<20; ++j) {
+			if(lvlRand[i][j] == 12) {
+				if (j > 0 && lvlRand[i][j-1] == 0) lvlRand[i][j] = 9;
+				if (j < 19 && lvlRand[i][j+1] == 0) lvlRand[i][j] = 10;
+			}
+			if(lvlRand[i][j] == 13) {
+				if (i > 0 && lvlRand[i-1][j] == 0) lvlRand[i][j] = 10;
+				if (i < 19 && lvlRand[i+1][j] == 0) lvlRand[i][j] = 11;
+			}
+			if(lvlRand[i][j] == 14) {
+				if (j > 0 && lvlRand[i][j-1] == 0) lvlRand[i][j] = 8;
+				if (j < 19 && lvlRand[i][j+1] == 0) lvlRand[i][j] = 11;
+			}
+			if(lvlRand[i][j] == 15) {
+				if (i > 0 && lvlRand[i-1][j] == 0) lvlRand[i][j] = 9;
+				if (i < 19 && lvlRand[i+1][j] == 0) lvlRand[i][j] = 8;
+			}
+		}
+			
 		return lvlRand;
 	}
 }

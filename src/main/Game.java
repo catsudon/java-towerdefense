@@ -85,8 +85,7 @@ public class Game extends Application {
 					displayFPSUPS();
 					lastCheckedTime = now;
 					if (GameState.gameState == main.GameState.PLAYING) {
-						wallet.updateMoney(1);
-						System.out.println(wallet.getMoney());
+						wallet.updateMoney(5);
 					}
 				}
 				gameScreen.requestFocus();

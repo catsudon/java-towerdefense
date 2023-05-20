@@ -79,7 +79,7 @@ public class ActionBar extends Bar {
 	public void draw(GraphicsContext gc) {
 
 		// Background
-		gc.setFill(Color.rgb(220, 123, 15));
+		gc.setFill(Color.rgb(193, 225, 193));
 		gc.fillRect(x, y, width, height);
 
 		// Buttons

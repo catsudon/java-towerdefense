@@ -11,8 +11,6 @@ import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import main.GameState;
-import main.Render;
 import objects.Projectile;
 import scenes.Playing;
 import sharedObject.RenderableHolder;
@@ -54,9 +52,6 @@ public class ProjectileManager {
 	public void mawarikougeki(Tower tower) {
 
 		int type = getProjectileType(tower);
-
-		float xSpeed = (float) (0.5 * utilities.Constants.Projectiles.getConstantSpeed(type));
-		float ySpeed = (float) (0.5 * utilities.Constants.Projectiles.getConstantSpeed(type));
 
 		for (int i = -50; i <= 50; ++i) {
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, i, (float) Math.sin(i), 0,
@@ -162,11 +157,6 @@ public class ProjectileManager {
 					playing.rewardPlayer(e.getEnemyType());
 					
 					playing.getEnemyManager().getEnemies().remove(e);
-					if(e.getReincarnateLeft() > 0) {
-						playing.getEnemyManager().addEnemy(e.getEnemyType(), e.getReincarnateLeft() - 1);
-						if (e.getReincarnateLeft() % 10 == 0)
-							playing.getEnemyManager().addEnemy(e.getEnemyType(), e.getReincarnateLeft() - 8);
-					}
 
 				}
 				else {
