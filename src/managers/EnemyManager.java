@@ -14,7 +14,6 @@ import entity.enemy.Wolf;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import main.Render;
 import objects.PathPoint;
 import scenes.Playing;
 import sharedObject.RenderableHolder;

@@ -2,7 +2,6 @@ package managers;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import main.Render;
 import scenes.Playing;
 import sharedObject.RenderableHolder;
 import utilities.ImageFix;

@@ -8,8 +8,6 @@ import javafx.scene.image.Image;
 import objects.Tile;
 import sharedObject.RenderableHolder;
 import utilities.ImageFix;
-import utilities.LevelBuilder;
-import main.Render;
 
 public class TileManager {
 	
