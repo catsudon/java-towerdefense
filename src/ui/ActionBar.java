@@ -38,8 +38,8 @@ public class ActionBar extends Bar {
 		super(x, y, width, height);
 		this.playing = playing;
 		this.decimalFormatter = new DecimalFormat("0.0");
-		this.gold = 1000;
-		this.lives = 1;
+		this.gold = 100;
+		this.lives = 25;
 		initButtons();
 	}
 	
@@ -232,12 +232,14 @@ public class ActionBar extends Bar {
 	}
 
 	private void sellTowerClicked() {
+		playing.getSoundPlayer().sell();
 		playing.getTowerManager().removeTower(displayedTower);
 		addGold(displayedTower.getSellPrice());
 		displayedTower = null;
 	}
 	
 	private void upgradeTowerClicked() {
+		playing.getSoundPlayer().lvlUp();
 		playing.getTowerManager().upgradeTower(displayedTower);
 		decreaseGold(displayedTower.getUpgradeCost());
 	}

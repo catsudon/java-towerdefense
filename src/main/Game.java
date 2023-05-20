@@ -49,7 +49,7 @@ public class Game extends Application {
 
 		Scene scene = new Scene(root);
 
-		primaryStage.setTitle("Tower Defence Tutorial");
+		primaryStage.setTitle("พี่โตจ้องจะเล่นคุณ");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 
@@ -60,6 +60,8 @@ public class Game extends Application {
 
 		primaryStage.show();
 		Money wallet = new Money(0);
+		
+		playing.getSoundPlayer().bgm();
 
 		AnimationTimer animationTimer = new AnimationTimer() {
 

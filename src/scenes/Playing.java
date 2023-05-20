@@ -9,6 +9,7 @@ import managers.ProjectileManager;
 import managers.TileManager;
 import managers.TowerManager;
 import managers.WaveManager;
+import media.SoundPlayer;
 import objects.PathPoint;
 import objects.Tile;
 import ui.ActionBar;
@@ -48,6 +49,8 @@ public class Playing extends GameScene implements SceneMethods {
 	private int goldTick;
 
 	private boolean gamePaused;
+	
+	private SoundPlayer soundPlayer = new SoundPlayer();
 	
 	public Playing(Game game) {
 		super(game);
@@ -336,6 +339,10 @@ public class Playing extends GameScene implements SceneMethods {
 
 	public WaveManager getWaveManager() {
 		return waveManager;
+	}
+	
+	public SoundPlayer getSoundPlayer() {
+		return soundPlayer;
 	}
 	
 	public void rewardPlayer(int enemyType) {

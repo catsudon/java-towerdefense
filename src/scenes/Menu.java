@@ -5,6 +5,7 @@ import ui.MyButton;
 import static main.GameState.*;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Menu extends GameScene implements SceneMethods {
@@ -33,8 +34,9 @@ public class Menu extends GameScene implements SceneMethods {
 
 	@Override
 	public void render(GraphicsContext gc) {
-		gc.setFill(Color.WHITE);
-		gc.fillRect(0, 0, 640, 800);
+//		gc.setFill(Color.WHITE);
+		gc.drawImage(new Image(ClassLoader.getSystemResource("images/title.jpg").toString()), 0, 0, 640, 800);
+
 		
 		drawButtons(gc);
 	}
@@ -50,8 +52,10 @@ public class Menu extends GameScene implements SceneMethods {
 	@Override
 	public void mouseClicked(int x, int y) {
 
-		if (bPlaying.getBounds().contains(x, y))
+		if (bPlaying.getBounds().contains(x, y)) {
+			game.getPlaying().getSoundPlayer().gameStart();
 			setGameState(PLAYING);
+		}
 		else if (bEdit.getBounds().contains(x, y))
 			setGameState(EDIT);
 		else if (bSettings.getBounds().contains(x, y))

@@ -53,7 +53,7 @@ public class ProjectileManager {
 
 		int type = getProjectileType(tower);
 
-		for (int i = -50; i <= 50; i+=2) {
+		for (int i = -50; i <= 50; i+=4) {
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, i, (float) Math.sin(i), 0,
 					tower.getAtk(), projectile_ID++, type));
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, (float) Math.sin(i), i, 0,
@@ -91,7 +91,13 @@ public class ProjectileManager {
 										explosions.add(new Explosion(p.getPos()));
 										explodeOnEnemies(p);
 									}
+									
+									if(p.getProjectileType() == MACARONS) {
+										playing.getSoundPlayer().shoot();
+									}
+									
 									if(p.getProjectileType() == CROISSANT) {
+										playing.getSoundPlayer().whoosh();
 										p.setEnemy(null);
 									}
 									else {
@@ -121,6 +127,7 @@ public class ProjectileManager {
 	}
 
 	private void explodeOnEnemies(Projectile p) {
+		playing.getSoundPlayer().boom();
 		for(Enemy e : playing.getEnemyManager().getEnemies()) {
 			if(!e.isAlive()) {
 				continue ;
