@@ -1,18 +1,18 @@
 package entity.tower;
 
-import static utilities.Constants.Towers.ARCHER;
+import static utilities.Constants.Towers.OWNER;
 import static utilities.Constants.Towers.getConstantDefaultCooldown;
 import static utilities.Constants.Towers.getConstantDefaultRange;
 import static utilities.Constants.Towers.getConstantStartDamage;
 
-public class Archer extends Tower {
+public class Owner extends Tower {
 	
-	public Archer(int x, int y, int id) {
-		super(x, y, id, ARCHER, getConstantStartDamage(ARCHER), getConstantDefaultRange(ARCHER), getConstantDefaultCooldown(ARCHER));
+	public Owner(int x, int y, int id) {
+		super(x, y, id, OWNER, getConstantStartDamage(OWNER), getConstantDefaultRange(OWNER), getConstantDefaultCooldown(OWNER));
 	}
 
 	@Override
 	public String getName() {
-		return "Archer";
+		return "Shop Owner";
 	}
 }

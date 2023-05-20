@@ -97,17 +97,17 @@ public abstract class Tower {
 		this.tier++;
 		
 		switch(towerType) {
-			case CANNON:
+			case PRINCESS:
 				this.atk += 5;
 				this.range += 20;
 				this.cooldown -= 15;
 				break;
-			case ARCHER:
+			case CHEF:
 				this.atk += 2;
 				this.range += 20;
 				this.cooldown -= 5;
 				break;
-			case WIZARD:
+			case OWNER:
 				this.range += 20;
 				this.cooldown -= 10;
 				break;

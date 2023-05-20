@@ -3,18 +3,18 @@ package utilities;
 public class Constants {
 
 	public static class Projectiles {
-		public static final int ARROW = 0;
-		public static final int CHAINS = 1;
-		public static final int BOMB = 2;
+		public static final int CROISSANT = 0;
+		public static final int MACARONS = 1;
+		public static final int CUPCAKE = 2;
 
 		public static float getConstantSpeed(int type) {
 			float tmp = 1f;
 			switch (type) {
-				case BOMB:
+				case CUPCAKE:
 					return tmp * 6f;
-				case ARROW:
+				case CROISSANT:
 					return tmp * 8f;
-				case CHAINS:
+				case MACARONS:
 					return tmp * 3f;
 			}
 			return 0f;
@@ -79,17 +79,17 @@ public class Constants {
 	}
 
 	public static class Towers {
-		public static final int CANNON = 0;
-		public static final int ARCHER = 1;
-		public static final int WIZARD = 2;
+		public static final int PRINCESS = 0;
+		public static final int CHEF = 1;
+		public static final int OWNER = 2;
 
 		public static int getConstantStartDamage(int towerType) {
 			switch (towerType) {
-			case CANNON:
-				return 100;
-			case ARCHER:
-				return 50;
-			case WIZARD:
+			case PRINCESS:
+				return 30;
+			case CHEF:
+				return 60;
+			case OWNER:
 				return 1;
 			}
 
@@ -98,11 +98,11 @@ public class Constants {
 
 		public static float getConstantDefaultRange(int towerType) {
 			switch (towerType) {
-			case CANNON:
+			case PRINCESS:
 				return 300;
-			case ARCHER:
+			case CHEF:
 				return 300;
-			case WIZARD:
+			case OWNER:
 				return 300;
 			}
 
@@ -111,11 +111,11 @@ public class Constants {
 
 		public static float getConstantDefaultCooldown(int towerType) {
 			switch (towerType) {
-			case CANNON:
+			case PRINCESS:
 				return 100;
-			case ARCHER:
+			case CHEF:
 				return 35;
-			case WIZARD:
+			case OWNER:
 				return 50;
 			}
 
@@ -124,23 +124,23 @@ public class Constants {
 
 		public static String getConstantTowerName(int towerType) {
 			switch (towerType) {
-			case CANNON:
-				return "Cannon";
-			case ARCHER:
-				return "Archer";
-			case WIZARD:
-				return "Wizard";
+			case PRINCESS:
+				return "Princess";
+			case CHEF:
+				return "Chef";
+			case OWNER:
+				return "Shop Owner";
 			}
 			return "";
 		}
 
 		public static int getConstantTowerCost(int towerType) {
 			switch (towerType) {
-			case CANNON:
+			case PRINCESS:
 				return 60;
-			case ARCHER:
+			case CHEF:
 				return 30;
-			case WIZARD:
+			case OWNER:
 				return 30;
 			}
 			return 0;

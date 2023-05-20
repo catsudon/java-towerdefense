@@ -16,7 +16,7 @@ import utilities.Constants;
 import utilities.LoadSave;
 
 import static utilities.Constants.Tiles.*;
-import static utilities.Constants.Towers.WIZARD;
+import static utilities.Constants.Towers.OWNER;
 
 import java.util.ArrayList;
 
@@ -317,7 +317,7 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 
 	public void shootEnemy(Tower tower, Enemy enemy) {
-		if(tower.getTowerType() == WIZARD) projectileManager.mawarikougeki(tower);
+		if(tower.getTowerType() == OWNER) projectileManager.mawarikougeki(tower);
 		else projectileManager.newProjectile(tower, enemy);
 	}
 

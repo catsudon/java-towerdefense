@@ -1,6 +1,6 @@
 package objects;
 
-import static utilities.Constants.Projectiles.ARROW;
+import static utilities.Constants.Projectiles.CROISSANT;
 
 import entity.enemy.Enemy;
 import javafx.geometry.Point2D;
@@ -65,7 +65,7 @@ public class Projectile {
 			
 			this.rotationAngle = 0;
 
-			if(projectileType == ARROW) {
+			if(projectileType == CROISSANT) {
 				float arctan = (float) Math.atan((float) yDiff / xDiff);
 				this.rotationAngle = (float) Math.toDegrees(arctan);
 				if (xDiff < 0) {

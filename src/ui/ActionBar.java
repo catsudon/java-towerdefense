@@ -286,14 +286,14 @@ public class ActionBar extends Bar {
 					}
 					
 					switch (towerType) {
-						case CANNON:
-							selectedTower = new Cannon(0, 0, -1);
+						case PRINCESS:
+							selectedTower = new Princess(0, 0, -1);
 							break;
-						case ARCHER:
-							selectedTower = new Archer(0, 0, -1);
+						case CHEF:
+							selectedTower = new Chef(0, 0, -1);
 							break;
-						case WIZARD:
-							selectedTower = new Wizard(0, 0, -1);
+						case OWNER:
+							selectedTower = new Owner(0, 0, -1);
 							break;
 						default:
 							selectedTower = null;

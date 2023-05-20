@@ -87,11 +87,12 @@ public class ProjectileManager {
 							if (p.isActive()) {
 								p.move();
 								if (isProjectileHittingEnemy(p)) {
-									p.setActive(false);
-									if(p.getProjectileType() == BOMB) {
+									
+									if(p.getProjectileType() == CUPCAKE) {
 										explosions.add(new Explosion(p.getPos()));
 										explodeOnEnemies(p);
 									}
+									else p.setActive(false);
 								}
 								else if(isProjectileOutOfBounds(p)) {
 									p.setActive(false);
@@ -160,7 +161,7 @@ public class ProjectileManager {
 
 				}
 				else {
-					if(p.getProjectileType() == CHAINS) {
+					if(p.getProjectileType() == MACARONS) {
 						e.slow();
 					}
 				}
@@ -174,7 +175,7 @@ public class ProjectileManager {
 
 		Thread thread = new Thread(() -> {
 			try {
-				Thread.sleep(50);
+				Thread.sleep(10);
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
@@ -196,7 +197,7 @@ public class ProjectileManager {
 			if (!p.isActive()) {
 				continue;
 			}
-			if (p.getProjectileType() == ARROW) {
+			if (p.getProjectileType() == CROISSANT) {
 				gc.translate(p.getPos().getX(), p.getPos().getY());
 				gc.rotate(p.getRotationAngle());
 	
@@ -216,12 +217,12 @@ public class ProjectileManager {
 
 	private int getProjectileType(Tower tower) {
 		switch (tower.getTowerType()) {
-		case ARCHER:
-			return ARROW;
-		case CANNON:
-			return BOMB;
-		case WIZARD:
-			return CHAINS;
+		case CHEF:
+			return CROISSANT;
+		case PRINCESS:
+			return CUPCAKE;
+		case OWNER:
+			return MACARONS;
 		}
 		return 0;
 	}
