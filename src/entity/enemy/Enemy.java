@@ -1,31 +1,26 @@
 package entity.enemy;
 
+import static utilities.Constants.Direction.*;
+
 import javafx.scene.shape.Rectangle;
-import main.Game;
-import managers.EnemyManager;
-import scenes.Playing;
-
-import static help.Constants.Direction.*;
-import static help.Constants.Enemies.BAT;
-import static help.Constants.Enemies.KNIGHT;
-import static help.Constants.Enemies.ORC;
-import static help.Constants.Enemies.WOLF;
-
-import help.Constants;
+import utilities.Constants;
 
 public abstract class Enemy {
+
 	private float x, y;
-	private Rectangle bounds;
-	private int health;
 	private int ID;
 	private int enemyType;
-	private int lastDir;
 	private int reincarnateLeft;
-
-	private int maxHealth;
-	private int barWidth;
-
 	private boolean alive;
+	private int maxHealth;
+	private int health;
+	
+	private int barWidth;
+	private Rectangle bounds;
+	private int lastDir;
+	
+	protected int slowTick = 2 * 60;
+	protected int slowTickLimit = 2 * 60;
 
 	public Enemy(float x, float y, int ID, int enemyType, int reincarnateCount) {
 		this.x = x;
@@ -34,13 +29,11 @@ public abstract class Enemy {
 		this.enemyType = enemyType;
 		this.reincarnateLeft = reincarnateCount;
 		this.alive = true;
-
-		this.maxHealth = Constants.Enemies.getStartHealth(enemyType);
+		this.maxHealth = Constants.Enemies.getConstantStartHealth(enemyType);
 		this.health = this.maxHealth;
 		this.barWidth = 20;
-
-		bounds = new Rectangle((int) x, (int) y, 32, 32);
-		lastDir = -1;
+		this.bounds = new Rectangle((int) x, (int) y, 32, 32);
+		this.lastDir = -1;
 	}
 
 	public void hurt(int damage) {
@@ -51,42 +44,59 @@ public abstract class Enemy {
 	}
 
 	public void move(float speed, int dir) {
-		lastDir = dir;
-		switch (dir) {
-
-		case LEFT:
-			this.x -= speed;
-			break;
-
-		case RIGHT:
-			this.x += speed;
-			break;
-
-		case UP:
-			this.y -= speed;
-			break;
-
-		case DOWN:
-			this.y += speed;
-			break;
+		this.lastDir = dir;
+		
+		if(isSlowed()) {
+			slowTick++;
+			speed *= 0.5f;
 		}
-
+		
+		switch (dir) {
+			case LEFT:
+				this.x -= speed;
+				break;
+			case RIGHT:
+				this.x += speed;
+				break;
+			case UP:
+				this.y -= speed;
+				break;
+			case DOWN:
+				this.y += speed;
+				break;
+		}
 		updateHitbox();
 	}
 
 	private void updateHitbox() {
-		bounds.setX((int) x);
-		bounds.setY((int) y);
+		this.bounds.setX((int)x);
+		this.bounds.setY((int)y);
 	}
 
-	public float getHealthBarFloat() {
-		return (float) health / maxHealth;
+	public void slow() {
+		this.slowTick = 0;
 	}
-
+	
+	public void kill() {
+		this.alive = false;
+	}
+	
 	public void setPos(int x, int y) {
 		// Don't use this one for move, this is for position fix.
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	
+	public boolean isSlowed() {
+		return slowTick < slowTickLimit;
+	}
+	
+	public float getHealthBarFloat() {
+		return (float) health / maxHealth;
 	}
 
 	public float getX() {
@@ -97,14 +107,6 @@ public abstract class Enemy {
 		return y;
 	}
 
-	public Rectangle getBounds() {
-		return bounds;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
 	public int getID() {
 		return ID;
 	}
@@ -113,27 +115,39 @@ public abstract class Enemy {
 		return enemyType;
 	}
 
-	public int getLastDir() {
-		return lastDir;
+	public int getReincarnateLeft() {
+		return reincarnateLeft;
+	}
+
+	public boolean isAlive() {
+		return alive;
 	}
 
 	public int getMaxHealth() {
 		return maxHealth;
 	}
 
-	public int getReincarnateLeft() {
-		return reincarnateLeft;
+	public int getHealth() {
+		return health;
 	}
 
 	public int getBarWidth() {
 		return barWidth;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
+	public Rectangle getBounds() {
+		return bounds;
 	}
 
-	public boolean isAlive() {
-		return alive;
+	public int getLastDir() {
+		return lastDir;
+	}
+
+	public int getSlowTick() {
+		return slowTick;
+	}
+
+	public int getSlowTickLimit() {
+		return slowTickLimit;
 	}
 }

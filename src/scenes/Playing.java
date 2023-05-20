@@ -1,6 +1,5 @@
 package scenes;
 
-import help.LoadSave;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -9,24 +8,33 @@ import managers.EnemyManager;
 import managers.ProjectileManager;
 import managers.TileManager;
 import managers.TowerManager;
+import managers.WaveManager;
 import objects.PathPoint;
 import objects.Tile;
 import ui.ActionBar;
+import utilities.Constants;
+import utilities.LoadSave;
+
+import static utilities.Constants.Tiles.*;
+import static utilities.Constants.Towers.WIZARD;
 
 import java.util.ArrayList;
 
 import entity.enemy.Enemy;
-import entity.tower.Tower;
-
-import static help.Constants.Tiles.*;
+import entity.tower.Tower; 
 
 public class Playing extends GameScene implements SceneMethods {
 
 	private int[][] lvl;
+	
 	private TileManager tileManager;
+	private EnemyManager enemyManager;
+	private TowerManager towerManager;
+	private ProjectileManager projectileManager;
+	private WaveManager waveManager;
+	
 	private ActionBar actionBar;
 	private Tile selectedTile;
-	private EnemyManager enemyManager;
 	
 	private PathPoint start;
 	private PathPoint end;
@@ -34,11 +42,11 @@ public class Playing extends GameScene implements SceneMethods {
 	@SuppressWarnings("unused")
 	private int mouseX, mouseY;
 	
-	private TowerManager towerManager;
-	
 	private Tower selectedTower;
-	
-	private ProjectileManager projectileManager;
+
+	private int goldTick;
+
+	private boolean gamePaused;
 	
 	public Playing(Game game) {
 		super(game);
@@ -47,14 +55,17 @@ public class Playing extends GameScene implements SceneMethods {
 		loadDefaultLevel();
 		
 		lvl = LoadSave.GetLevelData("new_level");
-		tileManager = new TileManager();
+		
 		actionBar = new ActionBar(0, 640, 640, 160, this);
 
-		enemyManager = new EnemyManager(this, start, end);
-		
-		towerManager = new TowerManager(this);
-		
+		this.tileManager = new TileManager();
+		this.enemyManager = new EnemyManager(this, start, end);
+		this.towerManager = new TowerManager(this);
 		this.projectileManager = new ProjectileManager(this);
+		this.waveManager = new WaveManager(this);
+		
+		this.mouseX = 320;
+		this.mouseY = 690;
 	}
 	
 	private void loadDefaultLevel() {
@@ -65,10 +76,68 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 	
 	public void update() {
+		if(gamePaused) {
+			return ;
+		}
 		updateTick();
+		waveManager.update();
+		
+		// Gold Tick
+		goldTick++;
+		if(goldTick % (60 * 3) == 0) {
+			actionBar.addGold(1);
+			goldTick = 0;
+		}
+		
+		if(isAllEnemiesDead()) {
+			if(isThereMoreWaves()) {
+				waveManager.startWaveTimer();
+				// Check Timer
+				if(isWaveTimerOver()) {
+					// Increase Wave Index 
+					waveManager.increaseWaveIndex();
+					waveManager.resetEnemyIndex();
+				}
+				
+				
+			}
+		}
+		
+		if(isTimeForNewEnemy()) {
+			spawnEnemy();
+		}
+		
 		enemyManager.update();
 		towerManager.update();
 		projectileManager.update();
+	}
+	
+	private boolean isWaveTimerOver() {
+		return waveManager.isWaveTimerOver();
+	}
+
+	private boolean isThereMoreWaves() {
+		return waveManager.isThereMoreWaves();
+	}
+
+	private boolean isAllEnemiesDead() {
+		if(waveManager.isThereEnemyLeftInWave()) {
+			return false;
+		}
+		return enemyManager.getEnemies().size() == 0;
+	}
+	
+	private void spawnEnemy() {
+		enemyManager.spawnEnemy(this.getWaveManager().getNextEnemy(), 0);
+	}
+
+	private boolean isTimeForNewEnemy() {
+		if(this.getWaveManager().isTimeForNewEnemy()) {
+			if(this.getWaveManager().isThereEnemyLeftInWave()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void setSelectedTower(Tower selectedTower) {
@@ -80,14 +149,14 @@ public class Playing extends GameScene implements SceneMethods {
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		drawLevel(gc);
-		actionBar.draw(gc);
+		projectileManager.draw(gc);
 		enemyManager.draw(gc);
 		towerManager.draw(gc);
 		drawSelectedTower(gc);	
 		drawHighlight(gc);
-		projectileManager.draw(gc);
+		actionBar.draw(gc);
 	}
-	
+
 	private void drawHighlight(GraphicsContext gc) {
 		if(mouseY >= 640) {
 			return ;
@@ -144,22 +213,27 @@ public class Playing extends GameScene implements SceneMethods {
 			if(!isTileGrass(mouseX, mouseY)) {
 				return ;
 			}
-			int xIndex = x / 32;
-			int yIndex = y / 32;
+			int xIndex = mouseX / 32;
+			int yIndex = mouseY / 32;
 			if(getTowerAt(32 * xIndex, 32 * yIndex) != null) {
 				return ;
 			}
+			decreaseGold(selectedTower.getCost());
 			towerManager.addTower(selectedTower, xIndex, yIndex);
 			selectedTower = null;
 		}
 		else {
-			int xIndex = x / 32;
-			int yIndex = y / 32;
+			int xIndex = mouseX / 32;
+			int yIndex = mouseY / 32;
 			Tower tower = getTowerAt(32 * xIndex, 32 * yIndex);
 			actionBar.displayTower(tower);
 		}
 	}
 	
+	private void decreaseGold(int towerCost) {
+		actionBar.decreaseGold(towerCost);
+	}
+
 	private Tower getTowerAt(int x, int y) {
 		// TODO Auto-generated method stub
 		return towerManager.getTowerAt(x, y);
@@ -242,6 +316,11 @@ public class Playing extends GameScene implements SceneMethods {
 		}
 	}
 
+	public void shootEnemy(Tower tower, Enemy enemy) {
+		if(tower.getTowerType() == WIZARD) projectileManager.mawarikougeki(tower);
+		else projectileManager.newProjectile(tower, enemy);
+	}
+
 	public TowerManager getTowerManager() {
 		return towerManager;
 	}
@@ -250,8 +329,40 @@ public class Playing extends GameScene implements SceneMethods {
 		return enemyManager;
 	}
 
-	public void shootEnemy(Tower tower, Enemy enemy) {
-		if(tower.getTowerType() == 2) projectileManager.mawarikougeki(tower);
-		else projectileManager.newProjectile(tower, enemy);
+	public WaveManager getWaveManager() {
+		return waveManager;
+	}
+	
+	public void rewardPlayer(int enemyType) {
+		actionBar.addGold(Constants.Enemies.getConstantReward(enemyType));
+	}
+
+	public boolean isGamePaused() {
+		return gamePaused;
+	}
+
+	public void setGamePaused(boolean gamePaused) {
+		this.gamePaused = gamePaused;
+	}
+
+	public void removeOneLife() {
+		actionBar.removeOneLife();
+	}
+
+	public void resetEverything() {
+		actionBar.resetEverything();
+
+		// managers
+		enemyManager.reset();
+		towerManager.reset();
+		projectileManager.reset();
+		waveManager.reset();
+
+		mouseX = 0;
+		mouseY = 0;
+
+		selectedTower = null;
+		goldTick = 0;
+		gamePaused = false;
 	}
 }

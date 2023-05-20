@@ -1,16 +1,17 @@
 package main;
 
 import drawing.GameScreen;
-import help.LoadSave;
 import input.InputUtility;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import managers.TileManager;
 import scenes.Editing;
+import scenes.GameOver;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
+import utilities.LoadSave;
 import money.Money;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -19,7 +20,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Game extends Application {
 
 	private static final double FPS_SET = 120.0;
-	private static final double UPS_SET = 60.0;
+	private static final double UPS_SET = 120.0;
 
 	private static final double timePerFrame = 1_000_000_000.0 / FPS_SET;
 	private static final double updatesPerFrame = 1_000_000_000.0 / UPS_SET;
@@ -40,6 +41,7 @@ public class Game extends Application {
 	private Editing editing;
 
 	private TileManager tileManager;
+	private GameOver gameOver;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -100,16 +102,16 @@ public class Game extends Application {
 		InputUtility.updateInputState();
 
 		switch (GameState.gameState) {
-		case EDIT:
-			break;
-		case MENU:
-			break;
-		case PLAYING:
-			playing.update();
-		case SETTINGS:
-			break;
-		default:
-			break;
+			case EDIT:
+				break;
+			case MENU:
+				break;
+			case PLAYING:
+				playing.update();
+			case SETTINGS:
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -132,7 +134,7 @@ public class Game extends Application {
 		playing = new Playing(this);
 		settings = new Settings(this);
 		editing = new Editing(this);
-
+		gameOver = new GameOver(this);
 	}
 
 	public static void main(String[] args) {
@@ -167,5 +169,9 @@ public class Game extends Application {
 
 	public TileManager getTileManager() {
 		return tileManager;
+	}
+
+	public GameOver getGameOver() {
+		return gameOver;
 	}
 }

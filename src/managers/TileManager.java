@@ -1,16 +1,15 @@
 package managers;
 
-import java.util.ArrayList;
-import help.LevelBuilder;
+import static utilities.Constants.Tiles.*;
 
-import help.ImageFix;
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 import objects.Tile;
 import sharedObject.RenderableHolder;
-
+import utilities.ImageFix;
+import utilities.LevelBuilder;
 import main.Render;
-
-import static help.Constants.Tiles.*;
 
 public class TileManager {
 	
@@ -98,7 +97,7 @@ public class TileManager {
 	}
 	
 	private Image getSprite(int xIndex, int yIndex) {
-		return Render.getSubImage(atlas, 32 * xIndex, 32 * yIndex, 32, 32);
+		return ImageFix.getSubImage(atlas, 32 * xIndex, 32 * yIndex, 32, 32);
 	}
 	
 	public Image getAnimationSprite(int id, int animationIndex) {

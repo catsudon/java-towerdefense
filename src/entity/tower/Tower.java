@@ -1,6 +1,6 @@
 package entity.tower;
 
-import help.Constants;
+import static utilities.Constants.Towers.*;
 
 public abstract class Tower {
 	
@@ -9,8 +9,9 @@ public abstract class Tower {
 	private float range, cooldown;
 	
 	private int cooldownTick;
+	private int tier;
 	
-	public Tower(int x, int y, int id, int towerType, int atk, int range, int cooldown) {
+	public Tower(int x, int y, int id, int towerType, int atk, float range, float cooldown) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
@@ -20,6 +21,8 @@ public abstract class Tower {
 		this.atk = atk;
 		this.range = range;
 		this.cooldown = cooldown;
+		
+		this.tier = 1;
 	}
 
 	public int getX() {
@@ -76,5 +79,43 @@ public abstract class Tower {
 	}
 	
 	public abstract String getName();
+
+	public int getCost() {
+		return getConstantTowerCost(towerType);
+	}
+
+	public int getUpgradeCost() {
+		return (int)(getConstantTowerCost(towerType) * 0.3f);
+	}
+	
+	public int getSellPrice() {
+		int upgradedPrice = (getTier() - 1) * getUpgradeCost();
+		return (getConstantTowerCost(towerType) / 2) + upgradedPrice;
+	}
+
+	public void upgradeTower() {
+		this.tier++;
+		
+		switch(towerType) {
+			case CANNON:
+				this.atk += 5;
+				this.range += 20;
+				this.cooldown -= 15;
+				break;
+			case ARCHER:
+				this.atk += 2;
+				this.range += 20;
+				this.cooldown -= 5;
+				break;
+			case WIZARD:
+				this.range += 20;
+				this.cooldown -= 10;
+				break;
+		}
+	}
+	
+	public int getTier() {
+		return tier;
+	}
 
 }

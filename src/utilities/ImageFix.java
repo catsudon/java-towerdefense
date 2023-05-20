@@ -1,17 +1,26 @@
-package help;
+package utilities;
 
 import java.util.ArrayList;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 public class ImageFix {
 	
-	// Rotate
+	// Get Sub Image
+	public static Image getSubImage(Image image, int x, int y, int w, int h) {
+		PixelReader pixelReader = image.getPixelReader();
+		WritableImage writableImage = new WritableImage(pixelReader, x, y, w, h);
+		
+		return writableImage;
+	}
 	
+	// Rotate
 	public static Image getRotatedImage(Image image, int rotateAngle) {
 		ImageView imageView = new ImageView(image);
 		imageView.setRotate(rotateAngle);

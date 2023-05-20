@@ -50,6 +50,9 @@ public class InputUtility {
 			case EDIT:
 				game.getEditing().mouseClicked(x, y);
 				break;
+			case GAME_OVER:
+				game.getGameOver().mouseClicked(x, y);
+				break;
 		}
 	}
 	
@@ -70,6 +73,9 @@ public class InputUtility {
 			case EDIT:
 				game.getEditing().mousePressed(x, y);
 				break;
+			case GAME_OVER:
+				game.getGameOver().mousePressed(x, y);
+				break;
 		}
 	}
 	
@@ -88,6 +94,9 @@ public class InputUtility {
 				break;
 			case EDIT:
 				game.getEditing().mouseReleased(x, y);
+				break;
+			case GAME_OVER:
+				game.getGameOver().mouseReleased(x, y);
 				break;
 		}
 	}
@@ -114,6 +123,9 @@ public class InputUtility {
 			case EDIT:
 				game.getEditing().mouseMoved(x, y);
 				break;
+			case GAME_OVER:
+				game.getGameOver().mouseMoved(x, y);
+				break;
 		}
 	}
 	
@@ -131,6 +143,9 @@ public class InputUtility {
 			case EDIT:
 				game.getEditing().mouseDragged(x, y);
 				break;
+			case GAME_OVER:
+				game.getGameOver().mouseDragged(x, y);
+				break;
 		}
 	}
 	
@@ -147,6 +162,9 @@ public class InputUtility {
 				break;
 			case EDIT:
 				game.getEditing().mouseRightClicked(x, y);
+				break;
+			case GAME_OVER:
+				game.getGameOver().mouseRightClicked(x, y);
 				break;
 		}	
 	}

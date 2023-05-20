@@ -26,13 +26,9 @@ public class Render {
 			case EDIT:
 				game.getEditing().render(gc);
 				break;
+			case GAME_OVER:
+				game.getGameOver().render(gc);
+				break;
 		}
-	}
-	
-	public static Image getSubImage(Image image, int x, int y, int w, int h) {
-		PixelReader pixelReader = image.getPixelReader();
-		WritableImage writableImage = new WritableImage(pixelReader, x, y, w, h);
-		
-		return writableImage;
 	}
 }

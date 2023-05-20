@@ -1,4 +1,4 @@
-package help;
+package utilities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +22,8 @@ public class LoadSave {
 
 		try {
 			txtFile.createNewFile();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -33,10 +34,12 @@ public class LoadSave {
 		if (newLevel.exists()) {
 			System.out.println("File: " + name + " already exists!");
 			return;
-		} else {
+		}
+		else {
 			try {
 				newLevel.createNewFile();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			WriteToFile(newLevel, idArr, new PathPoint(0, 0), new PathPoint(0, 0));
@@ -57,7 +60,8 @@ public class LoadSave {
 			pw.println(end.getyIndex());
 
 			pw.close();
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
@@ -67,8 +71,9 @@ public class LoadSave {
 		File levelFile = new File("res/" + name + ".txt");
 
 		if (levelFile.exists()) {
-			WriteToFile(levelFile, Utilz.TwoDto1DintArr(idArr), start, end);
-		} else {
+			WriteToFile(levelFile, Utility.TwoDto1DintArr(idArr), start, end);
+		}
+		else {
 			System.out.println("File: " + name + " does not exists! ");
 			return;
 		}
@@ -86,7 +91,8 @@ public class LoadSave {
 
 			sc.close();
 
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
@@ -101,30 +107,15 @@ public class LoadSave {
 			ArrayList<PathPoint> points = new ArrayList<>();
 			points.add(new PathPoint(list.get(400), list.get(401)));
 			points.add(new PathPoint(list.get(402), list.get(403)));
-
-//			points.add(new PathPoint(2, 19));
-//			points.add(new PathPoint(19, 0));
-
 			return points;
-		} else {
+		}
+		else {
 			System.out.println("File: " + name + " does not exists! ");
 			return null;
 		}
 	}
 
 	public static int[][] GetLevelData(String name) {
-//		File lvlFile = new File("res/" + name + ".txt");
-//
-//		if (lvlFile.exists()) {
-//			ArrayList<Integer> list = ReadFromFile(lvlFile);
-//			return Utilz.ArrayListTo2Dint(list, 20, 20);
-//
-//		}
-//		else {
-//			System.out.println("File: " + name + " does not exists! ");
-//			return null;
-//		}
 		return LevelBuilder.getLevelData();
-
 	}
 }

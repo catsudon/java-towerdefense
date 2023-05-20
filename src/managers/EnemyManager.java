@@ -1,9 +1,10 @@
 package managers;
 
-import java.util.ArrayList;
+import static utilities.Constants.Direction.*;
+import static utilities.Constants.Enemies.*;
+import static utilities.Constants.Tiles.*;
 
-import static help.Constants.Direction.*;
-import static help.Constants.Enemies.*;
+import java.util.ArrayList;
 
 import entity.enemy.Bat;
 import entity.enemy.Enemy;
@@ -17,8 +18,7 @@ import main.Render;
 import objects.PathPoint;
 import scenes.Playing;
 import sharedObject.RenderableHolder;
-
-import static help.Constants.Tiles.*;
+import utilities.ImageFix;
 
 public class EnemyManager {
 
@@ -28,6 +28,8 @@ public class EnemyManager {
 
 	private ArrayList<Enemy> enemies = new ArrayList<>();
 	private PathPoint start, end;
+	
+	private Image slowEffectImage;
 
 	public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
 		this.start = start;
@@ -35,17 +37,19 @@ public class EnemyManager {
 
 		this.playing = playing;
 		enemyImages = new Image[4];
-		addEnemy(ORC, 2);
-		addEnemy(BAT, 10);
-		addEnemy(KNIGHT, 4);
-		addEnemy(WOLF, 10);
+		
+		loadEffectImages();
 		loadEnemyImages();
+	}
+
+	private void loadEffectImages() {
+		slowEffectImage = ImageFix.getSubImage(RenderableHolder.mapSprite, 32 * 9, 32 * 2, 32, 32);
 	}
 
 	private void loadEnemyImages() {
 		Image atlas = RenderableHolder.mapSprite;
 		for (int i = 0; i < enemyImages.length; ++i) {
-			enemyImages[i] = Render.getSubImage(atlas, 32 * enemies.get(i).getEnemyType(), 32 * 1, 32, 32);
+			enemyImages[i] = ImageFix.getSubImage(atlas, 32 * i, 32 * 1, 32, 32);
 		}
 	}
 
@@ -58,20 +62,23 @@ public class EnemyManager {
 		}
 	}
 
-	public void updateEnemyMove(Enemy enemy) {
-		if (enemy.getLastDir() == -1) {
-			setNewDirectionAndMove(enemy);
+	public void updateEnemyMove(Enemy e) {
+		if (e.getLastDir() == -1) {
+			setNewDirectionAndMove(e);
 		}
 
-		int newX = (int) (enemy.getX() + getSpeedXandWidth(enemy.getLastDir(), enemy.getEnemyType()));
-		int newY = (int) (enemy.getY() + getSpeedYandHeight(enemy.getLastDir(), enemy.getEnemyType()));
+		int newX = (int) (e.getX() + getSpeedXandWidth(e.getLastDir(), e.getEnemyType()));
+		int newY = (int) (e.getY() + getSpeedYandHeight(e.getLastDir(), e.getEnemyType()));
 
 		if (getTileType(newX, newY) == ROAD_TILE) {
-			enemy.move(getSpeed(enemy.getEnemyType()), enemy.getLastDir());
-		} else if (isAtEnd(enemy)) {
-			System.out.println("Lives Lost!");
-		} else {
-			setNewDirectionAndMove(enemy);
+			e.move(getConstantSpeed(e.getEnemyType()), e.getLastDir());
+		} 
+		else if (isAtEnd(e)) {
+			e.kill();
+			playing.removeOneLife();
+		}
+		else {
+			setNewDirectionAndMove(e);
 		}
 	}
 
@@ -101,16 +108,16 @@ public class EnemyManager {
 		if (dir == LEFT || dir == RIGHT) {
 			int newY = (int) (enemy.getY() + getSpeedYandHeight(UP, enemy.getEnemyType()));
 			if (getTileType((int) enemy.getX(), newY) == ROAD_TILE) {
-				enemy.move(getSpeed(enemy.getEnemyType()), UP);
+				enemy.move(getConstantSpeed(enemy.getEnemyType()), UP);
 			} else {
-				enemy.move(getSpeed(enemy.getEnemyType()), DOWN);
+				enemy.move(getConstantSpeed(enemy.getEnemyType()), DOWN);
 			}
 		} else {
 			int newX = (int) (enemy.getX() + getSpeedXandWidth(RIGHT, enemy.getEnemyType()));
 			if (getTileType(newX, (int) enemy.getY()) == ROAD_TILE) {
-				enemy.move(getSpeed(enemy.getEnemyType()), RIGHT);
+				enemy.move(getConstantSpeed(enemy.getEnemyType()), RIGHT);
 			} else {
-				enemy.move(getSpeed(enemy.getEnemyType()), LEFT);
+				enemy.move(getConstantSpeed(enemy.getEnemyType()), LEFT);
 			}
 		}
 	}
@@ -151,11 +158,11 @@ public class EnemyManager {
 	private float getSpeedXandWidth(int dir, int enemyType) {
 		// TODO Auto-generated method stub
 		if (dir == LEFT) {
-			return -getSpeed(enemyType);
+			return -getConstantSpeed(enemyType);
 		}
 		// Dealing with sprite offset
 		else if (dir == RIGHT) {
-			return getSpeed(enemyType) + 32;
+			return getConstantSpeed(enemyType) + 32;
 		}
 		return 0;
 	}
@@ -163,11 +170,11 @@ public class EnemyManager {
 	private float getSpeedYandHeight(int dir, int enemyType) {
 		// TODO Auto-generated method stub
 		if (dir == UP) {
-			return -getSpeed(enemyType);
+			return -getConstantSpeed(enemyType);
 		}
 		// Dealing with sprite offset
 		else if (dir == DOWN) {
-			return getSpeed(enemyType) + 32;
+			return getConstantSpeed(enemyType) + 32;
 		}
 		return 0;
 	}
@@ -199,9 +206,16 @@ public class EnemyManager {
 				enemies.remove(i);
 			}
 		}
-		for (Enemy enemy : enemies) {
-			drawEnemy(enemy, gc);
-			drawHealthBar(enemy, gc);
+		for (Enemy e : enemies) {
+			drawEnemy(e, gc);
+			drawHealthBar(e, gc);
+			drawEffects(e, gc);
+		}
+	}
+	
+	private void drawEffects(Enemy e, GraphicsContext gc) {
+		if(e.isSlowed()) {
+			gc.drawImage(slowEffectImage, (int)e.getX(), (int)e.getY());
 		}
 	}
 
@@ -227,5 +241,17 @@ public class EnemyManager {
 
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
+	}
+
+	public void spawnEnemy(int nextEnemy, int reincarnationCount) {
+		addEnemy(nextEnemy, reincarnationCount);
+	}
+
+	public int getAmountOfAliveEnemies() {
+		return getEnemies().size();
+	}
+
+	public void reset() {
+		enemies.clear();
 	}
 }

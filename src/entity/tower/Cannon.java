@@ -1,10 +1,11 @@
 package entity.tower;
 
+import static utilities.Constants.Towers.*;
+
 public class Cannon extends Tower {
-	
-	
+
 	public Cannon(int x, int y, int id) {
-		super(x, y, id, 0, 250, 100, 50);
+		super(x, y, id, CANNON, getConstantStartDamage(CANNON), getConstantDefaultRange(CANNON), getConstantDefaultCooldown(CANNON));
 	}
 
 	@Override

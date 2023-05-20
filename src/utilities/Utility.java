@@ -1,8 +1,8 @@
-package help;
+package utilities;
 
 import java.util.ArrayList;
 
-public class Utilz {
+public class Utility {
 
 	public static int[][] ArrayListTo2Dint(ArrayList<Integer> list, int ySize, int xSize) {
 		int[][] newArr = new int[ySize][xSize];

@@ -1,6 +1,6 @@
 package entity.enemy;
 
-import static help.Constants.Enemies.ORC;
+import static utilities.Constants.Enemies.ORC;
 
 public class Orc extends Enemy {
 	

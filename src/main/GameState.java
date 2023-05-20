@@ -1,10 +1,12 @@
 package main;
 
 public enum GameState {
-	MENU,
-	EDIT,
+	
 	PLAYING,
-	SETTINGS;
+	MENU,
+	SETTINGS,
+	EDIT,
+	GAME_OVER;
 
 	public static GameState gameState = MENU;
 	

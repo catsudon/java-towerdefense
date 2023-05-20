@@ -2,10 +2,10 @@ package drawing;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
+
 import main.Game;
 
 import input.InputUtility;
@@ -20,15 +20,8 @@ public class GameScreen extends Canvas {
 		this.game = game;
 		
 		this.setVisible(true);
+
 		addListener();
-	}
-	
-	public void drawImage(GraphicsContext gc, Image image) {
-		//gc.drawImage(image, 0, 0, null);
-	
-		//gc.drawImage(getSubImage(image, 32 * 9, 32 * 1, 32, 32), 0, 0);
-	
-		//gc.drawImage(sprites.get(8), 0, 0);
 	}
 	
 	public void paintComponent(GraphicsContext gc) {

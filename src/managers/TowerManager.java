@@ -5,13 +5,13 @@ import javafx.scene.image.Image;
 import main.Render;
 import scenes.Playing;
 import sharedObject.RenderableHolder;
+import utilities.ImageFix;
+import utilities.Utility;
 
 import java.util.ArrayList;
 
 import entity.enemy.Enemy;
 import entity.tower.Tower;
-
-import help.Utilz;
 
 public class TowerManager {
 	
@@ -36,7 +36,7 @@ public class TowerManager {
 		towerImages = new Image[3];
 		
 		for(int i = 0; i < 3; i++) {
-			towerImages[i] = Render.getSubImage(atlas, 32 * (4 + i), 32 * 1, 32, 32);
+			towerImages[i] = ImageFix.getSubImage(atlas, 32 * (4 + i), 32 * 1, 32, 32);
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class TowerManager {
 	}
 
 	private boolean isEnemyInRange(Tower tower, Enemy enemy) {
-		int range = Utilz.getEuclideanDistance(tower.getX(), tower.getY(), enemy.getX(), enemy.getY());
+		int range = Utility.getEuclideanDistance(tower.getX(), tower.getY(), enemy.getX(), enemy.getY());
 		return range <= tower.getRange();
 	}
 
@@ -87,6 +87,10 @@ public class TowerManager {
 		selectedTower.setId(towerAmount++);
 		towers.add(selectedTower);
 	}
+	
+	public void removeTower(Tower tower) {
+		towers.remove(tower);
+	}
 
 	public Tower getTowerAt(int x, int y) {
 		for(Tower tower : towers) {
@@ -95,5 +99,14 @@ public class TowerManager {
 			}
 		}
 		return null;
+	}
+
+	public void upgradeTower(Tower tower) {
+		tower.upgradeTower();
+	}
+
+	public void reset() {
+		towers.clear();
+		towerAmount = 0;
 	}
 }

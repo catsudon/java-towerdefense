@@ -79,7 +79,9 @@ public class MyButton {
 		
 		int w = (int) newText.getLayoutBounds().getWidth();
 		int h = (int) newText.getLayoutBounds().getHeight();
+		gc.setFill(Color.BLACK);
 		gc.strokeText(text, x - w / 2 + width / 2, y + h / 2 + height / 2);
+		gc.fillText(text, x - w / 2 + width / 2, y + h / 2 + height / 2);
 
 	}
 
