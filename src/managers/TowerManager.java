@@ -15,7 +15,7 @@ import entity.tower.Tower;
 public class TowerManager {
 	
 	private Playing playing;
-	private Image[] towerImages;
+	private Image[][] towerImages;
 	private ArrayList<Tower> towers = new ArrayList<>();
 	private int towerAmount;
 	
@@ -32,17 +32,18 @@ public class TowerManager {
 
 	private void loadTowerImages() {
 		Image atlas = RenderableHolder.mapSprite;
-		towerImages = new Image[3];
+		towerImages = new Image[3][2];
 		
 		for(int i = 0; i < 3; i++) {
-			towerImages[i] = ImageFix.getSubImage(atlas, 32 * (4 + i), 32 * 1, 32, 32);
+			towerImages[i][0] = ImageFix.getSubImage(atlas, 32 * (i * 2), 96 * 1, 32, 32);
+			towerImages[i][1] = ImageFix.getSubImage(atlas, 32 * (i * 2 + 1), 96 * 1, 32, 32);
 		}
 	}
 	
 	public void draw(GraphicsContext gc) {
 		
 		for(Tower tower : towers) {
-			gc.drawImage(towerImages[tower.getTowerType()], tower.getX(), tower.getY());
+			gc.drawImage(towerImages[tower.getTowerType()][tower.getAnimationStatus()], tower.getX(), tower.getY());
 		}
 	}
 	
@@ -62,6 +63,7 @@ public class TowerManager {
 				if(tower.isCooldownOver()) {
 					playing.shootEnemy(tower, enemy);
 					tower.resetCooldown();
+					tower.toggleAnimationStatus();
 				}
 			}
 			else {
@@ -75,7 +77,7 @@ public class TowerManager {
 		return range <= tower.getRange();
 	}
 
-	public Image[] getTowerImages() {
+	public Image[][] getTowerImages() {
 		return towerImages;
 	}
 

@@ -6,6 +6,9 @@ public class Constants {
 		public static final int CROISSANT = 0;
 		public static final int MACARONS = 1;
 		public static final int CUPCAKE = 2;
+		public static final int BLUEMACARONS = 3;
+		public static final int YELLOWMACARONS = 4;
+		
 
 		public static float getConstantSpeed(int type) {
 			float tmp = 1f;
@@ -14,8 +17,6 @@ public class Constants {
 					return tmp * 6f;
 				case CROISSANT:
 					return tmp * 8f;
-				case MACARONS:
-					return tmp * 3f;
 			}
 			return 0f;
 		}

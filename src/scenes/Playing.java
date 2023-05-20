@@ -173,7 +173,7 @@ public class Playing extends GameScene implements SceneMethods {
 		if(selectedTower == null) {
 			return ;
 		}
-		gc.drawImage(towerManager.getTowerImages()[selectedTower.getTowerType()], mouseX, mouseY);
+		gc.drawImage(towerManager.getTowerImages()[selectedTower.getTowerType()][0], mouseX, mouseY);
 	}
 	
 	private void drawLevel(GraphicsContext gc) {

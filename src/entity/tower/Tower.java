@@ -10,6 +10,7 @@ public abstract class Tower {
 	
 	private int cooldownTick;
 	private int tier;
+	private int animationStatus = 0;
 	
 	public Tower(int x, int y, int id, int towerType, int atk, float range, float cooldown) {
 		this.x = x;
@@ -116,6 +117,15 @@ public abstract class Tower {
 	
 	public int getTier() {
 		return tier;
+	}
+
+	public int getAnimationStatus() {
+		return animationStatus;
+	}
+
+	public void toggleAnimationStatus() {
+		if(animationStatus == 1) animationStatus = 0;
+		else animationStatus = 1;
 	}
 
 }

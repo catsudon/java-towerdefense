@@ -70,7 +70,7 @@ public class ActionBar extends Bar {
 		for(MyButton b : towerButtons) {
 			gc.setFill(Color.GRAY);
 			gc.fillRect(b.x, b.y, b.width, b.height);
-			gc.drawImage(playing.getTowerManager().getTowerImages()[b.getId()], b.x, b.y, b.width, b.height);
+			gc.drawImage(playing.getTowerManager().getTowerImages()[b.getId()][0], b.x, b.y, b.width, b.height);
 		
 			drawButtonFeedback(gc, b);
 		}
@@ -185,7 +185,7 @@ public class ActionBar extends Bar {
 		gc.strokeRect(410, 645, 220, 85);
 		gc.strokeRect(420, 650, 50, 50);
 		
-		gc.drawImage(playing.getTowerManager().getTowerImages()[displayedTower.getTowerType()], 420, 650, 50, 50);
+		gc.drawImage(playing.getTowerManager().getTowerImages()[displayedTower.getTowerType()][0], 420, 650, 50, 50);
 		drawSelectedColorBorder(gc);
 		
 		gc.setFill(Color.BLACK);

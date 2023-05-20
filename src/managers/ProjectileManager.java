@@ -4,6 +4,7 @@ import static utilities.Constants.Projectiles.*;
 import static utilities.Constants.Towers.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import entity.enemy.Enemy;
 import entity.tower.Tower;
@@ -35,12 +36,15 @@ public class ProjectileManager {
 
 	private void importImages() {
 		Image atlas = RenderableHolder.mapSprite;
-		projectileImages = new Image[3];
+		projectileImages = new Image[5];
 
 		for (int i = 0; i < 3; i++) {
 			projectileImages[i] = ImageFix.getSubImage(atlas, 32 * (7 + i), 32 * 1, 32, 32);
 		}
 		
+		projectileImages[3] = ImageFix.getSubImage(atlas, 32 * (7), 32 * 3, 32, 32);
+		projectileImages[4] = ImageFix.getSubImage(atlas, 32 * (8), 32 * 3, 32, 32);
+
 		explosionImages = new Image[7];
 		
 		for(int i = 0; i < 7; i++) {
@@ -51,17 +55,23 @@ public class ProjectileManager {
 
 	public void mawarikougeki(Tower tower) {
 
-		int type = getProjectileType(tower);
+		int index;
+		int[] typeList = {1,3,4};
+		Random rand = new Random();
 
 		for (int i = -50; i <= 50; i+=4) {
+			index = typeList[rand.nextInt(3)];
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, i, (float) Math.sin(i), 0,
-					tower.getAtk(), projectile_ID++, type));
+					tower.getAtk(), projectile_ID++, index));
+			index = typeList[rand.nextInt(3)];
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, (float) Math.sin(i), i, 0,
-					tower.getAtk(), projectile_ID++, type));
+					tower.getAtk(), projectile_ID++, index));
+			index = typeList[rand.nextInt(3)];
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, -i, (float) Math.sin(i), 0,
-					tower.getAtk(), projectile_ID++, type));
+					tower.getAtk(), projectile_ID++, index));
+			index = typeList[rand.nextInt(3)];
 			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, -(float) Math.sin(i), i, 0,
-					tower.getAtk(), projectile_ID++, type));
+					tower.getAtk(), projectile_ID++, index));
 		}
 
 	}
