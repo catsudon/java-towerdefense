@@ -100,7 +100,7 @@ public class Constants {
 		public static float getConstantDefaultRange(int towerType) {
 			switch (towerType) {
 				case CANNON:
-					return 75;
+					return 400;
 				case ARCHER:
 					return 120;
 				case WIZARD:
