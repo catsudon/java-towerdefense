@@ -66,11 +66,11 @@ public class EnemyManager {
 			setNewDirectionAndMove(e);
 		}
 
-		int newX = (int) (e.getX() + getSpeedXandWidth(e.getLastDir(), e.getEnemyType()));
-		int newY = (int) (e.getY() + getSpeedYandHeight(e.getLastDir(), e.getEnemyType()));
+		int newX = (int) (e.getX() + getSpeedXandWidth(e.getLastDir(), e));
+		int newY = (int) (e.getY() + getSpeedYandHeight(e.getLastDir(), e));
 
 		if (getTileType(newX, newY) == ROAD_TILE) {
-			e.move(getConstantSpeed(e.getEnemyType()), e.getLastDir());
+			e.move(e.getLastDir());
 		} 
 		else if (isAtEnd(e)) {
 			e.kill();
@@ -105,18 +105,18 @@ public class EnemyManager {
 
 		// Not walk back
 		if (dir == LEFT || dir == RIGHT) {
-			int newY = (int) (enemy.getY() + getSpeedYandHeight(UP, enemy.getEnemyType()));
+			int newY = (int) (enemy.getY() + getSpeedYandHeight(UP, enemy));
 			if (getTileType((int) enemy.getX(), newY) == ROAD_TILE) {
-				enemy.move(getConstantSpeed(enemy.getEnemyType()), UP);
+				enemy.move(UP);
 			} else {
-				enemy.move(getConstantSpeed(enemy.getEnemyType()), DOWN);
+				enemy.move(DOWN);
 			}
 		} else {
-			int newX = (int) (enemy.getX() + getSpeedXandWidth(RIGHT, enemy.getEnemyType()));
+			int newX = (int) (enemy.getX() + getSpeedXandWidth(RIGHT, enemy));
 			if (getTileType(newX, (int) enemy.getY()) == ROAD_TILE) {
-				enemy.move(getConstantSpeed(enemy.getEnemyType()), RIGHT);
+				enemy.move(RIGHT);
 			} else {
-				enemy.move(getConstantSpeed(enemy.getEnemyType()), LEFT);
+				enemy.move(LEFT);
 			}
 		}
 	}
@@ -154,47 +154,47 @@ public class EnemyManager {
 		return playing.getTileType(x, y);
 	}
 
-	private float getSpeedXandWidth(int dir, int enemyType) {
+	private float getSpeedXandWidth(int dir, Enemy e) {
 		// TODO Auto-generated method stub
 		if (dir == LEFT) {
-			return -getConstantSpeed(enemyType);
+			return -e.getSpeed();
 		}
 		// Dealing with sprite offset
 		else if (dir == RIGHT) {
-			return getConstantSpeed(enemyType) + 32;
+			return e.getSpeed() + 32;
 		}
 		return 0;
 	}
 
-	private float getSpeedYandHeight(int dir, int enemyType) {
+	private float getSpeedYandHeight(int dir, Enemy e) {
 		// TODO Auto-generated method stub
 		if (dir == UP) {
-			return -getConstantSpeed(enemyType);
+			return -e.getSpeed();
 		}
 		// Dealing with sprite offset
 		else if (dir == DOWN) {
-			return getConstantSpeed(enemyType) + 32;
+			return e.getSpeed() + 32;
 		}
 		return 0;
 	}
 
-	public void addEnemy(int enemyType, int reIncarnationCount) {
+	public void addEnemy(int enemyType, int waveIndex) {
 
 		int x = 32 * start.getxIndex();
 		int y = 32 * start.getyIndex();
 
 		switch (enemyType) {
 		case ORC:
-			enemies.add(new Orc(x, y, 0, reIncarnationCount));
+			enemies.add(new Orc(x, y, 0, waveIndex));
 			break;
 		case BAT:
-			enemies.add(new Bat(x, y, 0, reIncarnationCount));
+			enemies.add(new Bat(x, y, 0, waveIndex));
 			break;
 		case KNIGHT:
-			enemies.add(new Knight(x, y, 0, reIncarnationCount));
+			enemies.add(new Knight(x, y, 0, waveIndex));
 			break;
 		case WOLF:
-			enemies.add(new Wolf(x, y, 0, reIncarnationCount));
+			enemies.add(new Wolf(x, y, 0, waveIndex));
 			break;
 		}
 	}
@@ -214,19 +214,19 @@ public class EnemyManager {
 	
 	private void drawEffects(Enemy e, GraphicsContext gc) {
 		if(e.isSlowed()) {
-			gc.drawImage(slowEffectImage, (int)e.getX(), (int)e.getY());
+			gc.drawImage(slowEffectImage, (int)e.getX(), (int)e.getY() - 6);
 		}
 	}
 
 	private void drawHealthBar(Enemy enemy, GraphicsContext gc) {
 		// Full Health Bar
 		gc.setFill(Color.LIGHTGRAY);
-		gc.fillRect((int) enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int) enemy.getY() - 8, enemy.getBarWidth(),
+		gc.fillRect((int) enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int) enemy.getY() - 8 - 6, enemy.getBarWidth(),
 				3);
 
 		// Health Bar
 		gc.setFill(Color.RED);
-		gc.fillRect((int) enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int) enemy.getY() - 8,
+		gc.fillRect((int) enemy.getX() + 16 - (enemy.getBarWidth() / 2), (int) enemy.getY() - 8 - 6,
 				(int) (getHealthPercentage(enemy) * enemy.getBarWidth()), 3);
 	}
 
@@ -235,15 +235,15 @@ public class EnemyManager {
 	}
 
 	private void drawEnemy(Enemy enemy, GraphicsContext gc) {
-		gc.drawImage(enemyImages[enemy.getEnemyType()], (int) enemy.getX(), (int) enemy.getY());
+		gc.drawImage(enemyImages[enemy.getEnemyType()], (int) enemy.getX(), (int) enemy.getY() - 6);
 	}
 
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
 
-	public void spawnEnemy(int nextEnemy, int reincarnationCount) {
-		addEnemy(nextEnemy, reincarnationCount);
+	public void spawnEnemy(int nextEnemy, int waveIndex) {
+		addEnemy(nextEnemy, waveIndex);
 	}
 
 	public int getAmountOfAliveEnemies() {

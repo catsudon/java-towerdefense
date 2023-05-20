@@ -10,10 +10,11 @@ public abstract class Enemy {
 	private float x, y;
 	private int ID;
 	private int enemyType;
-	private int reincarnateLeft;
+	private int waveIndex;
 	private boolean alive;
 	private int maxHealth;
 	private int health;
+	private float speed;
 	
 	private int barWidth;
 	private Rectangle bounds;
@@ -22,18 +23,25 @@ public abstract class Enemy {
 	protected int slowTick = 2 * 60;
 	protected int slowTickLimit = 2 * 60;
 
-	public Enemy(float x, float y, int ID, int enemyType, int reincarnateCount) {
+	public Enemy(float x, float y, int ID, int enemyType, int waveIndex) {
 		this.x = x;
 		this.y = y;
 		this.ID = ID;
 		this.enemyType = enemyType;
-		this.reincarnateLeft = reincarnateCount;
+		this.waveIndex = waveIndex;
 		this.alive = true;
-		this.maxHealth = Constants.Enemies.getConstantStartHealth(enemyType);
+		
+		this.maxHealth = Constants.Enemies.getConstantStartHealth(enemyType) + 50 * waveIndex;
+		this.speed = Constants.Enemies.getConstantSpeed(enemyType) + 0.1f * waveIndex;
+		
 		this.health = this.maxHealth;
 		this.barWidth = 20;
 		this.bounds = new Rectangle((int) x, (int) y, 32, 32);
 		this.lastDir = -1;
+	}
+
+	public float getSpeed() {
+		return speed;
 	}
 
 	public void hurt(int damage) {
@@ -43,26 +51,28 @@ public abstract class Enemy {
 		}
 	}
 
-	public void move(float speed, int dir) {
+	public void move(int dir) {
 		this.lastDir = dir;
+		
+		float currentSpeed = speed;
 		
 		if(isSlowed()) {
 			slowTick++;
-			speed *= 0.5f;
+			currentSpeed *= 0.5f;
 		}
 		
 		switch (dir) {
 			case LEFT:
-				this.x -= speed;
+				this.x -= currentSpeed;
 				break;
 			case RIGHT:
-				this.x += speed;
+				this.x += currentSpeed;
 				break;
 			case UP:
-				this.y -= speed;
+				this.y -= currentSpeed;
 				break;
 			case DOWN:
-				this.y += speed;
+				this.y += currentSpeed;
 				break;
 		}
 		updateHitbox();
@@ -115,8 +125,8 @@ public abstract class Enemy {
 		return enemyType;
 	}
 
-	public int getReincarnateLeft() {
-		return reincarnateLeft;
+	public int getWaveIndex() {
+		return waveIndex;
 	}
 
 	public boolean isAlive() {

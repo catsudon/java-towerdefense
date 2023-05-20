@@ -2,6 +2,7 @@ package managers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import events.Wave;
 import scenes.Playing;
@@ -19,9 +20,14 @@ public class WaveManager {
 	private int waveTick = 0;
 	private boolean waveStartTimer;
 	private boolean waveTickTimerOver;
+	private int waveSize;
+	
+	Random random;
 	
 	public WaveManager(Playing playing) {
 		this.playing  = playing;
+		this.waveSize = 5;
+		this.random = new Random();
 		createWaves();
 	}
 	
@@ -43,6 +49,8 @@ public class WaveManager {
 		waveTick = 0;
 		waveTickTimerOver = false;
 		waveStartTimer = false;
+		waveSize += random.nextInt(3);
+		createWaves();
 	}
 	
 	public int getNextEnemy() {
@@ -51,17 +59,11 @@ public class WaveManager {
 	}
 
 	private void createWaves() {
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 0, 0))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 0, 0, 0, 0, 0, 0, 0, 1))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3, 2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3, 2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
-		waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3, 2, 3, 0, 3, 0, 3, 2, 2, 0, 1, 3, 3, 3, 3, 3, 3))));
+		ArrayList<Integer> wave = new ArrayList<>();
+		for(int i = 0; i < waveSize; i++) {
+			wave.add(random.nextInt(3));
+		}
+		waves.add(new Wave(wave));
 	}
 
 	public ArrayList<Wave> getWaves() {
@@ -77,7 +79,8 @@ public class WaveManager {
 	}
 
 	public boolean isThereMoreWaves() {
-		return waveIndex + 1 < waves.size();
+		return true;
+		//return waveIndex + 1 < waves.size();
 	}
 
 	public void startWaveTimer() {
@@ -114,5 +117,6 @@ public class WaveManager {
 		waveTickTimerOver = false;
 		waveTick = 0;
 		enemySpawnTick = enemySpawnTickLimit;
+		waveSize = 5;
 	}
 }

@@ -129,7 +129,7 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 	
 	private void spawnEnemy() {
-		enemyManager.spawnEnemy(this.getWaveManager().getNextEnemy(), 0);
+		enemyManager.spawnEnemy(this.getWaveManager().getNextEnemy(), this.getWaveManager().getWaveIndex());
 	}
 
 	private boolean isTimeForNewEnemy() {

@@ -1,6 +1,7 @@
 package objects;
 
 import static utilities.Constants.Projectiles.CROISSANT;
+import static utilities.Constants.Projectiles.CUPCAKE;
 
 import entity.enemy.Enemy;
 import javafx.geometry.Point2D;
@@ -45,8 +46,7 @@ public class Projectile {
             int yDiff = (int) (this.getPos().getY() - (enemy.getY() + 16));
             int totalDist = Math.abs(xDiff) + Math.abs(yDiff);
             if(Math.hypot(xDiff, yDiff) <= 16) {
-                enemy = null;
-                this.pos = this.pos.add(xSpeed, ySpeed);
+                this.enemy = null;
                 return ;
             }
             
@@ -72,6 +72,9 @@ public class Projectile {
                 if (xDiff < 0) {
                     this.rotationAngle += 180;
                 }
+            }
+            if(projectileType == CUPCAKE) {
+            	enemy = null;
             }
         }
         if(xSpeed == 0 && ySpeed == 0) {
