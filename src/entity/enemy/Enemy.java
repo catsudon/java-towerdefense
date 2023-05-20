@@ -32,7 +32,7 @@ public abstract class Enemy {
 		this.maxHealth = Constants.Enemies.getConstantStartHealth(enemyType);
 		this.health = this.maxHealth;
 		this.barWidth = 20;
-		this.bounds = new Rectangle((int) x, (int) y, 32, 32);
+		this.bounds = new Rectangle((int) x, (int) y, 32 + 16, 32 + 16);
 		this.lastDir = -1;
 	}
 
