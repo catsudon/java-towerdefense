@@ -66,8 +66,6 @@ public class LevelBuilder {
 		pre = -1;
 		x = 19; y = 0;
 		for (int[] it : q) {
-			System.out.println(Integer.toString(it[0]) + "   " + Integer.toString(it[1]));
-			System.out.println(Integer.toString(x) + " ;  " + Integer.toString(y));
 
 			int dis = it[0];
 			int dir = it[1];
@@ -106,7 +104,7 @@ public class LevelBuilder {
 		
 		// generate water
 		q = new ArrayList<int[]>();
-		int waterZone = 7;
+		int waterZone = 20;
 		while(waterZone-- > 0) {
 			x = rand.nextInt(20);
 			y = rand.nextInt(20);
