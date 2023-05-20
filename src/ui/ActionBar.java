@@ -39,7 +39,7 @@ public class ActionBar extends Bar {
 		this.playing = playing;
 		this.decimalFormatter = new DecimalFormat("0.0");
 		this.gold = 100;
-		this.lives = 25;
+		this.lives = 10;
 		initButtons();
 	}
 	
@@ -421,10 +421,7 @@ public class ActionBar extends Bar {
 	}
 
 	public void resetEverything() {
-		lives = 25;
-		
-		//towerCostType = 0;
-		
+		lives = 10;	
 		showTowerCost = false;
 		gold = 100;
 		selectedTower = null;

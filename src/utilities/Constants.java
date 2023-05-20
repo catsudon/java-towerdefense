@@ -14,7 +14,7 @@ public class Constants {
 			float tmp = 1f;
 			switch (type) {
 				case CUPCAKE:
-					return tmp * 6f;
+					return tmp * 7f;
 				case CROISSANT:
 					return tmp * 8f;
 			}
@@ -33,7 +33,7 @@ public class Constants {
 		public static final int ORC = 0;
 		public static final int BAT = 1;
 		public static final int KNIGHT = 2;
-		public static final int WOLF = 3;
+		public static final int DRAGON = 3;
 
 		public static int getConstantReward(int enemyType) {
 			switch (enemyType) {
@@ -43,7 +43,7 @@ public class Constants {
 				return 5;
 			case KNIGHT:
 				return 25;
-			case WOLF:
+			case DRAGON:
 				return 10;
 			}
 			return 0;
@@ -58,7 +58,7 @@ public class Constants {
 				return tmp * 0.20f;
 			case KNIGHT:
 				return tmp * 0.30f;
-			case WOLF:
+			case DRAGON:
 				return tmp * 0.35f;
 			}
 			return 0;
@@ -72,7 +72,7 @@ public class Constants {
 				return 500;
 			case KNIGHT:
 				return 650;
-			case WOLF:
+			case DRAGON:
 				return 850;
 			}
 			return 0;
@@ -87,9 +87,9 @@ public class Constants {
 		public static int getConstantStartDamage(int towerType) {
 			switch (towerType) {
 			case PRINCESS:
-				return 30;
+				return 80;
 			case CHEF:
-				return 60;
+				return 30;
 			case OWNER:
 				return 1;
 			}
@@ -115,7 +115,7 @@ public class Constants {
 			case PRINCESS:
 				return 100;
 			case CHEF:
-				return 35;
+				return 50;
 			case OWNER:
 				return 50;
 			}
@@ -140,9 +140,9 @@ public class Constants {
 			case PRINCESS:
 				return 60;
 			case CHEF:
-				return 30;
+				return 40;
 			case OWNER:
-				return 30;
+				return 800;
 			}
 			return 0;
 		}

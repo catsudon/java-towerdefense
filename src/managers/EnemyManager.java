@@ -10,7 +10,7 @@ import entity.enemy.Bat;
 import entity.enemy.Enemy;
 import entity.enemy.Knight;
 import entity.enemy.Orc;
-import entity.enemy.Wolf;
+import entity.enemy.Dragon;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -193,8 +193,8 @@ public class EnemyManager {
 		case KNIGHT:
 			enemies.add(new Knight(x, y, 0, waveIndex));
 			break;
-		case WOLF:
-			enemies.add(new Wolf(x, y, 0, waveIndex));
+		case DRAGON:
+			enemies.add(new Dragon(x, y, 0, waveIndex));
 			break;
 		}
 	}
