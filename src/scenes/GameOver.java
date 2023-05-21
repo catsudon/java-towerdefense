@@ -37,10 +37,15 @@ public class GameOver extends GameScene implements SceneMethods {
 		gc.drawImage(new Image(ClassLoader.getSystemResource("images/gameover.jpg").toString()), 0, 0, 640, 800);
 
 		// game over text
-		gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 50));
+		gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 100));
 		gc.setFill(Color.RED);
-		gc.fillText("Game Over!", 180, 80);
-
+		gc.fillText("Game Over!", 40, 170);
+		gc.setStroke(Color.BLACK);
+		double originalWidth = gc.getLineWidth();
+		gc.setLineWidth(3);
+		gc.strokeText("Game Over!", 40, 170);
+		gc.setLineWidth(originalWidth);
+		
 		// buttons
 		
 		gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 12));

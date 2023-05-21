@@ -21,7 +21,7 @@ public class Menu extends GameScene implements SceneMethods {
 		int w = 150;
 		int h = w / 3;
 		int x = 640 / 2 - w / 2;
-		int y = 360;
+		int y = 400;
 		int yOffset = 100;
 
 		bPlaying = new MyButton("Play", x, y, w, h);
@@ -32,7 +32,6 @@ public class Menu extends GameScene implements SceneMethods {
 
 	@Override
 	public void render(GraphicsContext gc) {
-//		gc.setFill(Color.WHITE);
 		gc.drawImage(new Image(ClassLoader.getSystemResource("images/title.jpg").toString()), 0, 0, 640, 800);
 
 		

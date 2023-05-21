@@ -153,9 +153,8 @@ public class ActionBar extends Bar {
 
 	private void drawWavesLeftInfo(GraphicsContext gc) {
 		int current = playing.getWaveManager().getWaveIndex();
-		int numberOfWaves = playing.getWaveManager().getWaves().size();
 		
-		gc.fillText("Wave " + (current + 1) + " / " + numberOfWaves, 425, 770);
+		gc.fillText("Wave: " + (current + 1), 425, 770);
 	}
 
 	private void drawEnemiesLeftInfo(GraphicsContext gc) {
