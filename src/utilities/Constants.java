@@ -29,20 +29,20 @@ public class Constants {
 	}
 
 	public static class Enemies {
-		public static final int ORC = 0;
-		public static final int BAT = 1;
-		public static final int KNIGHT = 2;
-		public static final int DRAGON = 3;
+		public static final int CORN = 0;
+		public static final int TOMATO = 1;
+		public static final int CABBAGE = 2;
+		public static final int ONION = 3;
 
 		public static int getConstantReward(int enemyType) {
 			switch (enemyType) {
-			case ORC:
+			case CORN:
 				return 5;
-			case BAT:
+			case TOMATO:
 				return 5;
-			case KNIGHT:
+			case CABBAGE:
 				return 25;
-			case DRAGON:
+			case ONION:
 				return 10;
 			}
 			return 0;
@@ -50,13 +50,13 @@ public class Constants {
 
 		public static float getConstantSpeed(int enemyType) {
 			switch (enemyType) {
-			case ORC:
+			case CORN:
 				return 1.2f;
-			case BAT:
+			case TOMATO:
 				return 1.6f;
-			case KNIGHT:
+			case CABBAGE:
 				return 2.4f;
-			case DRAGON:
+			case ONION:
 				return 2.8f;
 			}
 			return 0;
@@ -64,13 +64,13 @@ public class Constants {
 
 		public static int getConstantStartHealth(int enemyType) {
 			switch (enemyType) {
-			case ORC:
+			case CORN:
 				return 300;
-			case BAT:
+			case TOMATO:
 				return 500;
-			case KNIGHT:
+			case CABBAGE:
 				return 650;
-			case DRAGON:
+			case ONION:
 				return 850;
 			}
 			return 0;

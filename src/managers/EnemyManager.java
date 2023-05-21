@@ -6,11 +6,11 @@ import static utilities.Constants.Tiles.*;
 
 import java.util.ArrayList;
 
-import entity.enemy.Bat;
+import entity.enemy.Tomato;
 import entity.enemy.Enemy;
-import entity.enemy.Knight;
-import entity.enemy.Orc;
-import entity.enemy.Dragon;
+import entity.enemy.Cabbage;
+import entity.enemy.Corn;
+import entity.enemy.Onion;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -178,17 +178,17 @@ public class EnemyManager {
 		int y = 32 * start.getyIndex();
 
 		switch (enemyType) {
-		case ORC:
-			enemies.add(new Orc(x, y, 0, waveIndex));
+		case CORN:
+			enemies.add(new Corn(x, y, 0, waveIndex));
 			break;
-		case BAT:
-			enemies.add(new Bat(x, y, 0, waveIndex));
+		case TOMATO:
+			enemies.add(new Tomato(x, y, 0, waveIndex));
 			break;
-		case KNIGHT:
-			enemies.add(new Knight(x, y, 0, waveIndex));
+		case CABBAGE:
+			enemies.add(new Cabbage(x, y, 0, waveIndex));
 			break;
-		case DRAGON:
-			enemies.add(new Dragon(x, y, 0, waveIndex));
+		case ONION:
+			enemies.add(new Onion(x, y, 0, waveIndex));
 			break;
 		}
 	}
