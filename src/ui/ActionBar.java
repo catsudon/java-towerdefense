@@ -209,21 +209,6 @@ public class ActionBar extends Bar {
 			gc.fillText("Sell for: " + displayedTower.getSellPrice() + "g", 480, 690);
 			gc.setFont(oldFont);
 		}
-		
-		/*
-			if(false) {
-				// Upgrade
-				bUpgradeTower.draw(gc);
-				drawButtonFeedback(gc, bUpgradeTower);
-				if(bUpgradeTower.isMouseOver()) {
-					gc.setFill(Color.SPRINGGREEN);
-					gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 15));
-					gc.fillText("Upgrade for: " + displayedTower.getUpgradeCost() + "g", 480, 690);
-					gc.setFont(oldFont);
-				}
-			}
-		*/
-		
 	}
 
 	private void drawSelectedColorBorder(GraphicsContext gc) {

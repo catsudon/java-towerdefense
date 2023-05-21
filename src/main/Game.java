@@ -85,7 +85,6 @@ public class Game extends Application {
 				}
 
 				if (now - lastCheckedTime >= 1_000_000_000) {
-					displayFPSUPS();
 					lastCheckedTime = now;
 					if (GameState.gameState == main.GameState.PLAYING) {
 						wallet.updateMoney(5);
@@ -134,7 +133,7 @@ public class Game extends Application {
 	}
 
 	private void displayFPSUPS() {
-		//System.out.println("FPS: " + frames + " | " + "UPS: " + updates);
+		System.out.println("FPS: " + frames + " | " + "UPS: " + updates);
 		frames = 0;
 		updates = 0;
 	}

@@ -91,6 +91,14 @@ public abstract class Enemy {
 		this.alive = false;
 	}
 	
+	public boolean isSlowed() {
+		return slowTick < slowTickLimit;
+	}
+	
+	public float getHealthBarFloat() {
+		return (float) health / maxHealth;
+	}
+	
 	public void setPos(int x, int y) {
 		// Don't use this one for move, this is for position fix.
 		this.x = x;
@@ -99,14 +107,6 @@ public abstract class Enemy {
 	
 	public void setHealth(int health) {
 		this.health = health;
-	}
-	
-	public boolean isSlowed() {
-		return slowTick < slowTickLimit;
-	}
-	
-	public float getHealthBarFloat() {
-		return (float) health / maxHealth;
 	}
 
 	public float getX() {

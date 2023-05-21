@@ -80,7 +80,6 @@ public class WaveManager {
 
 	public boolean isThereMoreWaves() {
 		return true;
-		//return waveIndex + 1 < waves.size();
 	}
 
 	public void startWaveTimer() {

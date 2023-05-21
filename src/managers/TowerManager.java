@@ -23,11 +23,6 @@ public class TowerManager {
 		this.playing = playing;
 		
 		loadTowerImages();
-		initTowers();
-	}
-	
-	private void initTowers() {
-		//tower = new Archer(3 * 32, 6 * 32, 0);
 	}
 
 	private void loadTowerImages() {

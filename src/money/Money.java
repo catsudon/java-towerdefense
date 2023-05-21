@@ -9,7 +9,7 @@ public class Money {
 	}
 
 	public void updateMoney(int quantity) {
-		money = Math.max(0, money+quantity);
+		money = Math.max(0, money + quantity);
 	}
 	
 	public int getMoney() {

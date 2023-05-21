@@ -80,12 +80,6 @@ public class TileManager {
 		tiles.addAll(pathEnd);
 	}
 	
-	/*
-	private Image[] getImages(int firstX, int firstY, int secondX, int secondY) {
-		return new Image[] {getSprite(firstX, firstY), getSprite(secondX, secondY)};
-	}
-	*/
-	
 	public Tile getTile(int id) {
 		return tiles.get(id);
 	}

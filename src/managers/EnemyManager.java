@@ -129,18 +129,6 @@ public class EnemyManager {
 
 	private void fixEnemyOffsetTile(Enemy enemy, int dir, int xIndex, int yIndex) {
 		switch (dir) {
-//		 Left and Up not cause problems
-//			case LEFT:
-//				if(xIndex > 0) {
-//					xIndex--;
-//				}
-//				break;	
-//		case UP:
-//			if (yIndex > 0) {
-//				yIndex--;
-//			}
-//			break;
-
 		case RIGHT:
 			if (xIndex < 19) {
 				xIndex++;
