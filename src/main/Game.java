@@ -50,7 +50,7 @@ public class Game extends Application {
 
 		Scene scene = new Scene(root);
 
-		primaryStage.setTitle("Croissant VS Salad");
+		primaryStage.setTitle("Croissant VS Salad (Candy Chronicles)");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 
