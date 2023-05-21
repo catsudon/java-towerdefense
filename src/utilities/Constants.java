@@ -115,7 +115,7 @@ public class Constants {
 			case CHEF:
 				return 50;
 			case OWNER:
-				return 50;
+				return 5 * 60;
 			}
 
 			return 0;

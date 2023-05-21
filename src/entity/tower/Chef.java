@@ -22,8 +22,9 @@ public class Chef extends Tower {
 	@Override
 	public void attack(ProjectileManager pm, Enemy e) {
 		pm.newProjectile(this, e, 1);
-		if(this.getTier() >= 2) {
+		if(this.getTier() >= 2 && isUltimateCooldownOver()) {
 			perfromUltimate(pm, e);
+			resetUltimateCooldown();
 		}
 	}
 	

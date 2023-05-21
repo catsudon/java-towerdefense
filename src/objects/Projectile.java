@@ -20,8 +20,8 @@ public class Projectile {
 	
 	public Projectile(float x, float y, float xSpeed, float ySpeed, float rotationAngle, int damage, int id, int projectileType) {
 		pos = new Point2D(x, y);
-		this.xSpeed = xSpeed;
-		this.ySpeed = ySpeed;
+		this.xSpeed = xSpeed * 3;
+		this.ySpeed = ySpeed * 3;
 		this.rotationAngle = rotationAngle;
 		this.damage = damage;
 		this.id = id;

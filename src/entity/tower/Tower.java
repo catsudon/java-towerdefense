@@ -14,13 +14,15 @@ public abstract class Tower {
 	private int cooldownTick;
 	private int tier;
 	private int animationStatus = 0;
+	private int ultimateCooldownTick;
 	
 	public Tower(int x, int y, int id, int towerType, int atk, float range, float cooldown) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 		this.towerType = towerType;
-		this.cooldownTick = 0;
+		this.cooldownTick = (int)cooldown - 60;
+		this.ultimateCooldownTick = 5 * 60;
 
 		this.atk = atk;
 		this.range = range;
@@ -59,15 +61,26 @@ public abstract class Tower {
 
 	public boolean isCooldownOver() {
 		// TODO Auto-generated method stub
-		return cooldownTick >= cooldown;
+		return cooldownTick >= this.cooldown;
+	}
+	
+
+	public boolean isUltimateCooldownOver() {
+		// TODO Auto-generated method stub
+		return ultimateCooldownTick >= 5 * 60;
 	}
 
 	public void update() {
 		cooldownTick++;
+		ultimateCooldownTick++;
 	}
 
 	public void resetCooldown() {
 		cooldownTick = 0;
+	}
+	
+	public void resetUltimateCooldown() {
+		ultimateCooldownTick = 0;
 	}
 	
 	public void setX(int newX) {
@@ -134,5 +147,4 @@ public abstract class Tower {
 		if(animationStatus == 1) animationStatus = 0;
 		else animationStatus = 1;
 	}
-
 }
