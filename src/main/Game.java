@@ -132,6 +132,7 @@ public class Game extends Application {
 		launch(args);
 	}
 
+	@SuppressWarnings("unused")
 	private void displayFPSUPS() {
 		System.out.println("FPS: " + frames + " | " + "UPS: " + updates);
 		frames = 0;

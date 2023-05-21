@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 
 public class Menu extends GameScene implements SceneMethods {
 
-	private MyButton bPlaying, bEdit, bSettings, bQuit;
+	private MyButton bPlaying, bEdit, bQuit;
 
 	public Menu(Game game) {
 		super(game);
@@ -21,12 +21,11 @@ public class Menu extends GameScene implements SceneMethods {
 		int w = 150;
 		int h = w / 3;
 		int x = 640 / 2 - w / 2;
-		int y = 275;
+		int y = 360;
 		int yOffset = 100;
 
 		bPlaying = new MyButton("Play", x, y, w, h);
 		bEdit = new MyButton("Edit", x, y + yOffset, w, h);
-		bSettings = new MyButton("Settings", x, y + yOffset * 1, w, h);
 		bQuit = new MyButton("Quit", x, y + yOffset * 2, w, h);
 
 	}
@@ -64,15 +63,12 @@ public class Menu extends GameScene implements SceneMethods {
 	public void mouseMoved(int x, int y) {
 		bPlaying.setMouseOver(false);
 		bEdit.setMouseOver(false);
-		bSettings.setMouseOver(false);
 		bQuit.setMouseOver(false);
 
 		if (bPlaying.getBounds().contains(x, y))
 			bPlaying.setMouseOver(true);
 		else if (bEdit.getBounds().contains(x, y))
 			bEdit.setMouseOver(true);
-		else if (bSettings.getBounds().contains(x, y))
-			bSettings.setMouseOver(true);
 		else if (bQuit.getBounds().contains(x, y))
 			bQuit.setMouseOver(true);
 
@@ -85,8 +81,6 @@ public class Menu extends GameScene implements SceneMethods {
 			bPlaying.setMousePressed(true);
 		else if (bEdit.getBounds().contains(x, y))
 			bEdit.setMousePressed(true);
-		else if (bSettings.getBounds().contains(x, y))
-			bSettings.setMousePressed(true);
 		else if (bQuit.getBounds().contains(x, y))
 			bQuit.setMousePressed(true);
 
@@ -100,7 +94,6 @@ public class Menu extends GameScene implements SceneMethods {
 	private void resetButtons() {
 		bPlaying.resetBooleans();
 		bEdit.resetBooleans();
-		bSettings.resetBooleans();
 		bQuit.resetBooleans();
 
 	}

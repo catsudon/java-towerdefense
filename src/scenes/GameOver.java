@@ -5,6 +5,7 @@ import ui.MyButton;
 import static main.GameState.*;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -33,9 +34,8 @@ public class GameOver extends GameScene implements SceneMethods {
 
 	@Override
 	public void render(GraphicsContext gc) {
-		gc.setFill(Color.WHITE);
-		gc.fillRect(0, 0, 640, 800);
-		
+		gc.drawImage(new Image(ClassLoader.getSystemResource("images/gameover.jpg").toString()), 0, 0, 640, 800);
+
 		// game over text
 		gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 50));
 		gc.setFill(Color.RED);
