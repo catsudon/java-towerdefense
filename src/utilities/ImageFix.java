@@ -12,7 +12,9 @@ import javafx.scene.paint.Color;
 
 public class ImageFix {
 	
-	// Get Sub Image
+	/*
+	 * Get a subimage from the provided image.
+	 */
 	public static Image getSubImage(Image image, int x, int y, int w, int h) {
 		PixelReader pixelReader = image.getPixelReader();
 		WritableImage writableImage = new WritableImage(pixelReader, x, y, w, h);
@@ -20,7 +22,9 @@ public class ImageFix {
 		return writableImage;
 	}
 	
-	// Rotate
+	/*
+	 * Rotate the provided image by the specified angle.
+	 */
 	public static Image getRotatedImage(Image image, int rotateAngle) {
 		ImageView imageView = new ImageView(image);
 		imageView.setRotate(rotateAngle);
@@ -31,11 +35,13 @@ public class ImageFix {
 		return rotatedImage;
 	}
 	
-	// Image Layer Build
+	/*
+	 * Build an image by stacking multiple images on top of each other.
+	 */
 	public static Image buildImage(Image[] images) {
-		ArrayList <ImageView> imageViews = new ArrayList<>();
+		ArrayList<ImageView> imageViews = new ArrayList<>();
 		
-		for(Image image : images) {
+		for (Image image : images) {
 			imageViews.add(new ImageView(image));
 		}
 		
@@ -47,15 +53,16 @@ public class ImageFix {
 		return stackedImage;
 	}
 	
-	// Rotate second image only
+	/*
+	 * Build an image by stacking multiple images on top of each other, with the option to rotate a specific image.
+	 */
 	public static Image getBuildRotatedImage(Image[] images, int rotateAngle, int rotateAtIndex) {
-		ArrayList <ImageView> imageViews = new ArrayList<>();
+		ArrayList<ImageView> imageViews = new ArrayList<>();
 		
-		for(int i = 0; i < images.length; i++) {
-			if(rotateAtIndex == i) {
+		for (int i = 0; i < images.length; i++) {
+			if (rotateAtIndex == i) {
 				imageViews.add(new ImageView(getRotatedImage(images[i], rotateAngle)));
-			}
-			else {
+			} else {
 				imageViews.add(new ImageView(images[i]));
 			}
 		}
@@ -68,13 +75,15 @@ public class ImageFix {
 		return stackedImage;
 	}
 	
-	// Rotate second image only + Animation
+	/*
+	 * Build an array of stacked images by rotating a specific image in each frame.
+	 */
 	public static Image[] getBuildRotatedImage(Image[] images, Image secondImage, int rotateAngle) {
 		
 		Image[] stackedImages = new Image[images.length];
 		
-		for(int i = 0; i < images.length; i++) {
-			ArrayList <ImageView> imageViews = new ArrayList<>();
+		for (int i = 0; i < images.length; i++) {
+			ArrayList<ImageView> imageViews = new ArrayList<>();
 			
 			imageViews.add(new ImageView(images[i]));
 			imageViews.add(new ImageView(getRotatedImage(secondImage, rotateAngle)));

@@ -13,21 +13,48 @@ import java.util.ArrayList;
 
 public class Editing extends GameScene implements SceneMethods {
 
+	/*
+	 * level grids.
+	 */
 	private int[][] lvl;
+	/*
+	 * selected tile.
+	 */
 	private Tile selectedTile;
+	/*
+	 * mouse positions
+	 */
 	private int mouseX, mouseY;
+	/*
+	 * a boolean which determine if we have to draw the selected.
+	 */
 	private boolean drawSelect;
+	/*
+	 * toolbar class object.
+	 */
 	private Toolbar toolbar;
 	
+	/*
+	 * start point.
+	 */
 	private PathPoint start;
+	/*
+	 * end point.
+	 */
 	private PathPoint end;
 
+	/*
+	 * Initialize fields.
+	 */
 	public Editing(Game game) {
 		super(game);
 		loadDefaultLevel();
 		toolbar = new Toolbar(0, 640, 640, 160, this);
 	}
 
+	/*
+	 * load level.
+	 */
 	private void loadDefaultLevel() {
 		lvl = LoadSave.getLevelData("new_level");
 		
@@ -37,6 +64,9 @@ public class Editing extends GameScene implements SceneMethods {
 	}
 	
 	@Override
+	/*
+	 * render the level.
+	 */
 	public void render(GraphicsContext gc) {
 		updateTick();
 		
@@ -45,7 +75,9 @@ public class Editing extends GameScene implements SceneMethods {
 		drawSelectedTile(gc);
 		drawPathPoints(gc);
 	}
-
+	/*
+	 * draw paths.
+	 */
 	private void drawPathPoints(GraphicsContext gc) {
 		if(start != null) {
 			gc.drawImage(toolbar.getStartPathImage(), 32 * start.getxIndex(), 32 * start.getyIndex(), 32, 32);
@@ -55,7 +87,9 @@ public class Editing extends GameScene implements SceneMethods {
 			gc.drawImage(toolbar.getEndPathImage(), 32 * end.getxIndex(), 32 * end.getyIndex(), 32, 32);
 		}
 	}
-
+	/*
+	 * draw level.
+	 */
 	private void drawLevel(GraphicsContext gc) {
 		for (int y = 0; y < lvl.length; y++) {
 			for (int x = 0; x < lvl[y].length; x++) {
@@ -70,25 +104,34 @@ public class Editing extends GameScene implements SceneMethods {
 		}
 	}
 
+	/*
+	 * draw the selected tile.
+	 */
 	private void drawSelectedTile(GraphicsContext gc) {
 		if (selectedTile != null && drawSelect) {
 			gc.drawImage(selectedTile.getSprite(), mouseX, mouseY, 32, 32);
 		}
 
 	}
-
+	/*
+	 * save the level to a file.
+	 */
 	public void saveLevel() {
 
 		LoadSave.saveLevel("new_level", lvl, start, end	);
 		game.getPlaying().setLevel(lvl);
 
 	}
-
+	/*
+	 * setter for selectedTile.
+	 */
 	public void setSelectedTile(Tile tile) {
 		this.selectedTile = tile;
 		drawSelect = true;
 	}
-
+	/*
+	 * change selected tile.
+	 */
 	private void changeTile(int x, int y) {
 		if (selectedTile != null) {
 			int tileX = x / 32;
@@ -115,6 +158,9 @@ public class Editing extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse click.
+	 */
 	public void mouseClicked(int x, int y) {
 		if (y >= 640) {
 			toolbar.mouseClicked(x, y);
@@ -128,6 +174,9 @@ public class Editing extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse move.
+	 */
 	public void mouseMoved(int x, int y) {
 
 		if (y >= 640) {
@@ -143,18 +192,27 @@ public class Editing extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle moude press.
+	 */
 	public void mousePressed(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	/*
+	 * handle moude release/
+	 */
 	public void mouseReleased(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	/*
+	 * handle mouse drag.
+	 */
 	public void mouseDragged(int x, int y) {
 		if (y >= 640) {
 
@@ -166,6 +224,9 @@ public class Editing extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse right click.
+	 */
 	public void mouseRightClicked(int x, int y) {
 		// TODO Auto-generated method stub
 		if(y >= 640) {

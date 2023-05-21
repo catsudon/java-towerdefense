@@ -6,17 +6,54 @@ import entity.enemy.Enemy;
 import javafx.geometry.Point2D;
 
 public class Projectile {
+	/*
+	 * position of projectile.
+	 */
 	private Point2D pos;
-	private int id, projectileType;
+	/*
+	 * projectile id.
+	 */
+	private int id;
+	/*
+	 * projectile type.
+	 */
+	private int projectileType;
+	/*
+	 * projectile active status.
+	 */
 	private boolean active;
-	private float xSpeed, ySpeed;
+	/*
+	 * projectile speed in x axis.
+	 */
+	private float xSpeed;
+	/*
+	 * projectile speed in y axis.
+	 */
+	private float ySpeed;
+	/*
+	 * projectile rotation angle.
+	 */
 	private float rotationAngle;
+	/*
+	 * projectile damage.
+	 */
 	private int damage;
+	/*
+	 * enemy the projectile is aiming.
+	 */
 	private Enemy enemy;
+	/*
+	 * last enemy projectile hit.
+	 */
 	private Enemy lastEnemy;
-	
+	/*
+	 * speed multiplier for projectile speed.
+	 */
 	private float speedMultiplier;
 	
+	/*
+	 * intialize fields for projectile with rotation angle.
+	 */
 	public Projectile(float x, float y, float xSpeed, float ySpeed, float rotationAngle, int damage, int id, int projectileType) {
 		pos = new Point2D(x, y);
 		this.xSpeed = xSpeed * 3;
@@ -29,7 +66,9 @@ public class Projectile {
 		this.enemy = null;
 		this.speedMultiplier = 1;
 	}
-	
+	/*
+	 * initialize field for normal projectile.
+	 */
 	public Projectile(float x, float y, int damage, int id, int projectileType, Enemy enemy) {
 		pos = new Point2D(x, y);
 		this.damage = damage;
@@ -39,7 +78,9 @@ public class Projectile {
 		this.enemy = enemy;
 		this.speedMultiplier = 1;
 	}
-	
+	/*
+	 * move projectile.
+	 */
 	public void move() {
 		Thread thread = new Thread(() -> {
 	        if(enemy != null && !enemy.isAlive()) {
@@ -82,63 +123,93 @@ public class Projectile {
 		});
 		thread.start();
     }
-
+	/*
+	 * getter for projectile pos.
+	 */
 	public Point2D getPos() {
 		return pos;
 	}
-
+	/*
+	 * getter for projectile id.
+	 */
 	public int getId() {
 		return id;
 	}
-
+	/*
+	 * getter for projectile type.
+	 */
 	public int getProjectileType() {
 		return projectileType;
 	}
-
+	/*
+	 * getter for projectile active status.
+	 */
 	public boolean isActive() {
 		return active;
 	}
-
+	/*
+	 * setter for projectile active status.
+	 */
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
+	/*
+	 * getter for projectile damage.
+	 */
 	public int getDamage() {
 		return damage;
 	}
-
+	/*
+	 * getter for projectile rotation angle.
+	 */
 	public float getRotationAngle() {
 		return rotationAngle;
 	}
-
+	/*
+	 * set the enemy projectile is aiming.
+	 */
 	public void setEnemy(Enemy enemy) {
 		this.enemy = enemy;
 	}
-
+	/*
+	 * getter for projectile x speed.
+	 */
 	public float getxSpeed() {
 		return xSpeed;
 	}
-
+	/*
+	 * setter for projectile x speed.
+	 */
 	public void setxSpeed(float xSpeed) {
 		this.xSpeed = xSpeed;
 	}
-
+	/*
+	 * getter for projectile y speed.
+	 */
 	public float getySpeed() {
 		return ySpeed;
 	}
-
+	/*
+	 * setter for projectile y speed.
+	 */
 	public void setySpeed(float ySpeed) {
 		this.ySpeed = ySpeed;
 	}
-	
+	/*
+	 * setter for speed multiplier
+	 */
 	public void setSpeedMultiplier(float speed) {
 		this.speedMultiplier = speed;
 	}
-
+	/*
+	 * get the last enemy projectile hit.
+	 */
 	public Enemy getLastEnemy() {
 		return lastEnemy;
 	}
-
+	/*
+	 * set the last enemy projectile hit.
+	 */
 	public void setLastEnemy(Enemy lastEnemy) {
 		this.lastEnemy = lastEnemy;
 	}

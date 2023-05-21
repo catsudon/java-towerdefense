@@ -11,10 +11,16 @@ import objects.PathPoint;
 
 public class LoadSave {
 
+	/*
+	 * Retrieves the map sprite.
+	 */
 	public static Image getMapSprite() {
 		return SpritesHolder.getMapSprite();
 	}
 
+	/*
+	 * Writes the level data to a file.
+	 */
 	private static void writeToFile(File f, int[] idArr, PathPoint start, PathPoint end) {
 		try {
 			PrintWriter pw = new PrintWriter(f);
@@ -33,6 +39,9 @@ public class LoadSave {
 		}
 	}
 
+	/*
+	 * Saves the level data.
+	 */
 	public static void saveLevel(String name, int[][] idArr, PathPoint start, PathPoint end) {
 		File levelFile = new File("res/" + name + ".txt");
 
@@ -40,11 +49,14 @@ public class LoadSave {
 			writeToFile(levelFile, Utility.twoDto1DintArr(idArr), start, end);
 		}
 		else {
-			System.out.println("File: " + name + " does not exists! ");
+			System.out.println("File: " + name + " does not exist!");
 			return;
 		}
 	}
 
+	/*
+	 * Reads level data from a file.
+	 */
 	private static ArrayList<Integer> readFromFile(File file) {
 		ArrayList<Integer> list = new ArrayList<>();
 
@@ -65,6 +77,9 @@ public class LoadSave {
 		return list;
 	}
 
+	/*
+	 * Retrieves the path points for a specific level.
+	 */
 	public static ArrayList<PathPoint> getLevelPathPoints(String name) {
 		File lvlFile = new File("res/" + name + ".txt");
 
@@ -76,11 +91,14 @@ public class LoadSave {
 			return points;
 		}
 		else {
-			System.out.println("File: " + name + " does not exists! ");
+			System.out.println("File: " + name + " does not exist!");
 			return null;
 		}
 	}
-	
+
+	/*
+	 * Retrieves the level data for a specific level.
+	 */
 	public static int[][] getLevelData(String name) {
 		File lvlFile = new File("res/" + name + ".txt");
 
@@ -89,11 +107,14 @@ public class LoadSave {
 			return utilities.Utility.arrayListTo2Dint(list, 20, 20);
 
 		} else {
-			System.out.println("File: " + name + " does not exists! ");
+			System.out.println("File: " + name + " does not exist!");
 			return null;
 		}
 	}
 
+	/*
+	 * Retrieves random level data.
+	 */
 	public static int[][] getRandomLevelData(String name) {
 		saveLevel("new_level", LevelBuilder.getRandomLevelData(), LevelBuilder.getStartPoint(), LevelBuilder.getEndPoint());
 		return getLevelData("new_level");

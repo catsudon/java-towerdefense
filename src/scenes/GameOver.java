@@ -12,13 +12,26 @@ import javafx.scene.text.FontWeight;
 
 public class GameOver extends GameScene implements SceneMethods {
 
-	private MyButton bReplay, bMenu;
+	/*
+	 * replay button.
+	 */
+	private MyButton bReplay;
+	/*
+	 * back to menu button.
+	 */
+	private MyButton bMenu;
 
+	/*
+	 * initialize fields.
+	 */
 	public GameOver(Game game) {
 		super(game);
 		initButtons();
 	}
 
+	/*
+	 * initialize buttons.
+	 */
 	private void initButtons() {
 
 		int w = 150;
@@ -33,6 +46,9 @@ public class GameOver extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * render gameover page.
+	 */
 	public void render(GraphicsContext gc) {
 		gc.drawImage(new Image(ClassLoader.getSystemResource("images/gameover.jpg").toString()), 0, 0, 640, 800);
 
@@ -53,6 +69,9 @@ public class GameOver extends GameScene implements SceneMethods {
 		bReplay.draw(gc);
 	}
 
+	/*
+	 * restart the game.
+	 */
 	private void replayGame() {
 		// reset everything
 		resetAll();
@@ -62,11 +81,17 @@ public class GameOver extends GameScene implements SceneMethods {
 
 	}
 
+	/*
+	 * resert everything.
+	 */
 	private void resetAll() {
 		game.getPlaying().resetEverything();
 	}
 
 	@Override
+	/*
+	 * handle mouse click.
+	 */
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			setGameState(MENU);
@@ -76,6 +101,9 @@ public class GameOver extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse move.
+	 */
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
 		bReplay.setMouseOver(false);
@@ -87,6 +115,9 @@ public class GameOver extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse press.
+	 */
 	public void mousePressed(int x, int y) {
 		if (bMenu.getBounds().contains(x, y))
 			bMenu.setMousePressed(true);
@@ -96,6 +127,9 @@ public class GameOver extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse release.
+	 */
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
 		bReplay.resetBooleans();
@@ -103,12 +137,18 @@ public class GameOver extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse drag.
+	 */
 	public void mouseDragged(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	/*
+	 * handle mouse right click.
+	 */
 	public void mouseRightClicked(int x, int y) {
 		// TODO Auto-generated method stub
 		

@@ -14,28 +14,58 @@ import objects.Tile;
 import scenes.Editing;
 
 public class Toolbar extends Bar {
+
+	/*
+	 * Editor class object.
+	 */
 	private Editing editing;
+	/*
+	 * buttons class object.
+	 */
 	private MyButton bMenu, bSave;
+	/*
+	 * selected tile class object.
+	 */
 	private Tile selectedTile;
 
 	//private ArrayList<MyButton> tileButtons = new ArrayList<>();
-	
+	/*
+	 * a Hashmap for matching button to tiles type.
+	 */
 	private Map<MyButton, ArrayList<Tile>> map = new HashMap<MyButton, ArrayList<Tile>>();
-
+	/*
+	 * buttons for each type of tiles.
+	 */
 	private MyButton bGrass, bWater, bRoadS, bRoadC, bWaterC, bWaterB, bWaterI;
+	/*
+	 * buttons for start and end tile.
+	 */
 	private MyButton bPathStart, bPathEnd;
-	
+	/*
+	 * image for start path and end path.
+	 */
 	private Image startPathImage, endPathImage;
-	
+	/*
+	 * current button the player is selecting.
+	 */
 	private MyButton currentButton;
+	/*
+	 * current tiles type index.
+	 */
 	private int currentIndex;
 	
+	/*
+	 * initialize fields.
+	 */
 	public Toolbar(int x, int y, int width, int height, Editing editing) {
 		super(x, y, width, height);
 		this.editing = editing;
 		initButtons();
 	}
 
+	/*
+	 * initialize buttons.
+	 */
 	private void initButtons() {
 
 		bMenu = new MyButton("Menu", 2, 642, 100, 30);
@@ -62,12 +92,16 @@ public class Toolbar extends Bar {
 		startPathImage = editing.getGame().getTileManager().getPathStart().get(0).getSprite();
 		endPathImage = editing.getGame().getTileManager().getPathEnd().get(0).getSprite();
 	}
-	
+	/*
+	 * initialize map buttons.
+	 */
 	private void initMapButton(MyButton b, ArrayList<Tile> list, int x, int y, int xOffSet, int w, int h, int id) {
 		b = new MyButton("", x + xOffSet * id, y, w, h, id);
 		map.put(b, list);
 	}
-	
+	/*
+	 * rotate the tile sprite player is selecting.
+	 */
 	public void rotateSprite() {
 		if(currentButton == null) {
 			return ;
@@ -76,11 +110,15 @@ public class Toolbar extends Bar {
 		selectedTile = map.get(currentButton).get(currentIndex);
 		editing.setSelectedTile(selectedTile);
 	}
-
+	/*
+	 * save level user has created.
+	 */
 	private void saveLevel() {
 		editing.saveLevel();
 	}
-
+	/*
+	 * draw background then draw buttons.
+	 */
 	public void draw(GraphicsContext gc) {
 
 		// Background
@@ -90,7 +128,9 @@ public class Toolbar extends Bar {
 		// Buttons
 		drawButtons(gc);
 	}
-
+	/*
+	 * draw buttons.
+	 */
 	private void drawButtons(GraphicsContext gc) {
 		bMenu.draw(gc);
 		bSave.draw(gc);
@@ -99,7 +139,9 @@ public class Toolbar extends Bar {
 		drawSelectedTile(gc);
 
 	}
-
+	/*
+	 * draw buttons choice for player to choose.
+	 */
 	private void drawMapButtons(GraphicsContext gc) {
 		for (Map.Entry<MyButton, ArrayList<Tile>> entry : map.entrySet()) {
 			MyButton b = entry.getKey();
@@ -108,7 +150,9 @@ public class Toolbar extends Bar {
 			drawButtonFeedback(gc, b);
 		}
 	}
-	
+	/*
+	 * draw the selected tile.
+	 */
 	private void drawSelectedTile(GraphicsContext gc) {
 
 		if (selectedTile != null) {
@@ -118,11 +162,15 @@ public class Toolbar extends Bar {
 		}
 
 	}
-
+	/*
+	 * get button image.
+	 */
 	public Image getButtImg(int id) {
 		return editing.getGame().getTileManager().getSprite(id);
 	}
-
+	/*
+	 * handle mouseclick.
+	 */
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			bMenu.resetBooleans();
@@ -144,7 +192,9 @@ public class Toolbar extends Bar {
 		}
 
 	}
-
+	/*
+	 * handle mouse move.
+	 */
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
 		bSave.setMouseOver(false);
@@ -165,7 +215,9 @@ public class Toolbar extends Bar {
 			}
 		}
 	}
-
+	/*
+	 * handle moude press.
+	 */
 	public void mousePressed(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			bMenu.setMousePressed(true);
@@ -183,7 +235,9 @@ public class Toolbar extends Bar {
 		}
 
 	}
-
+	/*
+	 * handle moude release.
+	 */
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
 		bSave.resetBooleans();
@@ -191,11 +245,15 @@ public class Toolbar extends Bar {
 			b.resetBooleans();
 		}
 	}
-
+	/*
+	 * getter for startPathImage.
+	 */
 	public Image getStartPathImage() {
 		return startPathImage;
 	}
-
+	/*
+	 * getter for endPathImage.
+	 */
 	public Image getEndPathImage() {
 		return endPathImage;
 	}

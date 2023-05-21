@@ -5,8 +5,25 @@ import javafx.scene.paint.Color;
 
 public class Bar {
 
-	protected int x, y, width, height;
-
+	/*
+	 * x position of the bar.
+	 */
+	protected int x;
+	/*
+	 * y position of the bar.
+	 */
+	protected int y;
+	/*
+	 * bar width.
+	 */
+	protected int width;
+	/*
+	 * bar height.
+	 */
+	protected int height
+	/*
+	 * initialize fields.
+	 */
 	public Bar(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
@@ -14,7 +31,9 @@ public class Bar {
 		this.height = height;
 
 	}
-	
+	/*
+	 * draw a reaction when the button has got an action.
+	 */
 	protected void drawButtonFeedback(GraphicsContext gc, MyButton b) {
 		// MouseOver
 		if (b.isMouseOver()) {

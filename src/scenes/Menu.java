@@ -9,13 +9,30 @@ import javafx.scene.image.Image;
 
 public class Menu extends GameScene implements SceneMethods {
 
-	private MyButton bPlaying, bEdit, bQuit;
+	/*
+	 * playing button.
+	 */
+	private MyButton bPlaying;
+	/*
+	 * edit button.
+	 */
+	private MyButton bEdit;
+	/*
+	 * quit button.
+	 */
+	private MyButton bQuit;
 
+	/*
+	 * initialize fields.
+	 */
 	public Menu(Game game) {
 		super(game);
 		initButtons();
 	}
 
+	/*
+	 * initialize buttons.
+	 */
 	private void initButtons() {
 
 		int w = 150;
@@ -31,13 +48,18 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * render menu.
+	 */
 	public void render(GraphicsContext gc) {
 		gc.drawImage(new Image(ClassLoader.getSystemResource("images/title.jpg").toString()), 0, 0, 640, 800);
 
 		
 		drawButtons(gc);
 	}
-
+	/*
+	 * draw buttons.
+	 */
 	private void drawButtons(GraphicsContext gc) {
 		bPlaying.draw(gc);
 		bEdit.draw(gc);
@@ -46,6 +68,9 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse click.
+	 */
 	public void mouseClicked(int x, int y) {
 
 		if (bPlaying.getBounds().contains(x, y)) {
@@ -59,6 +84,9 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse move.
+	 */
 	public void mouseMoved(int x, int y) {
 		bPlaying.setMouseOver(false);
 		bEdit.setMouseOver(false);
@@ -74,6 +102,9 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle moudse press.
+	 */
 	public void mousePressed(int x, int y) {
 
 		if (bPlaying.getBounds().contains(x, y))
@@ -86,10 +117,15 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse release.
+	 */
 	public void mouseReleased(int x, int y) {
 		resetButtons();
 	}
-
+	/*
+	 * handle reset button clicked.
+	 */
 	private void resetButtons() {
 		bPlaying.resetBooleans();
 		bEdit.resetBooleans();
@@ -98,12 +134,18 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
+	/*
+	 * handle mouse drag.
+	 */
 	public void mouseDragged(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	/*
+	 * handle mouse right clicked.
+	 */
 	public void mouseRightClicked(int x, int y) {
 		// TODO Auto-generated method stub
 		

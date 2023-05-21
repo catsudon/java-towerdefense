@@ -16,24 +16,61 @@ import utilities.Constants;
 public class ActionBar extends Bar {
 	
 	@SuppressWarnings("unused")
+	/*
+	 * represented playing class object.
+	 */
 	private Playing playing;
+	/*
+	 * button object.
+	 */
 	private MyButton bMenu;
 	
+	/*
+	 * tower buttons.
+	 */
 	private MyButton[] towerButtons;
+	/*
+	 * selected tower.
+	 */
 	private Tower selectedTower;
 	
+	/*
+	 * sell tower button.
+	 */
 	private MyButton bSellTower;
-	
+	/*
+	 * displayed tower.
+	 */
 	private Tower displayedTower;
 	
+	/*
+	 * decimal formatter class object.
+	 */
 	private DecimalFormat decimalFormatter;
+	/*
+	 * gold currently have.
+	 */
 	private int gold;
+	/*
+	 * a boolean which determines to show tower cost or not.
+	 */
 	private boolean showTowerCost;
+	/*
+	 * a type of tower player is buying.
+	 */
 	private int buyingTowerType;
+	/*
+	 * pause button.
+	 */
 	private MyButton bPause;
-	
+	/*
+	 * player lives count.
+	 */
 	private int lives;
 	
+	/*
+	 * initialize fields
+	 */
 	public ActionBar(int x, int y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
@@ -43,6 +80,9 @@ public class ActionBar extends Bar {
 		initButtons();
 	}
 	
+	/*
+	 * intitialize buttons on the screen.
+	 */
 	private void initButtons() {
 		bMenu = new MyButton("Menu", 2, 642, 100, 30);
 		bPause = new MyButton("Pause", 2, 682, 100, 30);
@@ -62,6 +102,9 @@ public class ActionBar extends Bar {
 		this.bSellTower = new MyButton("Sell", 420, 702, 80, 25);
 	}
 	
+	/*
+	 * a function for drawing buttons. 
+	 */
 	private void drawButtons(GraphicsContext gc) {
 		bMenu.draw(gc);
 		bPause.draw(gc);
@@ -75,6 +118,9 @@ public class ActionBar extends Bar {
 		}
 	}
 	
+	/*
+	 * a funtion for drawing the game map.
+	 */
 	public void draw(GraphicsContext gc) {
 
 		// Background
@@ -115,6 +161,9 @@ public class ActionBar extends Bar {
 		gc.setFont(oldFont);
 	}
 	
+	/*
+	 * a function for drawing towers cost.
+	 */
 	private void drawTowerCost(GraphicsContext gc) {
 		gc.setFill(Color.GRAY);
 		gc.fillRect(280, 650, 120, 50);
@@ -132,37 +181,52 @@ public class ActionBar extends Bar {
 		}
 	}
 
+	/*
+	 * a function for getting the name of the tower which the player is buying.
+	 */
 	private String getBuyingTowerName() {
 		return Constants.Towers.getConstantTowerName(buyingTowerType);
 	}
-
+	/*
+	 * a function for getting the cost of the tower which the player is buying.
+	 */
 	private int getBuyingTowerCost() {
 		return Constants.Towers.getConstantTowerCost(buyingTowerType);
 	}
-
+	/*
+	 * a function for drawing the gold amount the player had.
+	 */
 	private void drawGoldAmount(GraphicsContext gc) {
 		gc.setFill(Color.GOLD);
 		gc.fillText("Gold: " + gold + "g", 110, 725);
 	}
-
+	/*
+	 * a function for drawing wave information.
+	 */
 	private void drawWaveInfo(GraphicsContext gc) {
 		drawWaveTimerInfo(gc);
 		drawEnemiesLeftInfo(gc);
 		drawWavesLeftInfo(gc);
 	}
-
+	/*
+	 * a function for drawing the wave count.
+	 */
 	private void drawWavesLeftInfo(GraphicsContext gc) {
 		int current = playing.getWaveManager().getWaveIndex();
 		
 		gc.fillText("Wave: " + (current + 1), 425, 770);
 	}
-
+	/*
+	 * a function for drawing how many enemies is left in the wave.
+	 */
 	private void drawEnemiesLeftInfo(GraphicsContext gc) {
 		int remaining = playing.getEnemyManager().getAmountOfAliveEnemies();
 		
 		gc.fillText("Enemies Left: " + remaining, 425, 790);
 	}
-
+	/*
+	 * a function for drawing the time left before the new wave.
+	 */
 	private void drawWaveTimerInfo(GraphicsContext gc) {
 		if(playing.getWaveManager().isWaveTimerStarted()) {
 			float timeLeft = playing.getWaveManager().getTimeLeft();
@@ -170,7 +234,9 @@ public class ActionBar extends Bar {
 			gc.fillText("Time Left : " + formattedText, 425, 750);
 		}
 	}
-
+	/*
+	 * a function for drawing displayed towers.
+	 */
 	private void drawDisplayedTower(GraphicsContext gc) {
 		if(displayedTower == null) {
 			return ;
@@ -209,25 +275,34 @@ public class ActionBar extends Bar {
 			gc.setFont(oldFont);
 		}
 	}
-
+	/*
+	 * a function for drawing border when the tower is selected.
+	 */
 	private void drawSelectedColorBorder(GraphicsContext gc) {
 		gc.setStroke(Color.CYAN);
 		gc.strokeRect(displayedTower.getX(), displayedTower.getY(), 32, 32);
 	}
 
+	/*
+	 * sell the tower.
+	 */
 	private void sellTowerClicked() {
 		playing.getSoundPlayer().sell();
 		playing.getTowerManager().removeTower(displayedTower);
 		addGold(displayedTower.getSellPrice());
 		displayedTower = null;
 	}
-	
+	/*
+	 * upgrade the tower.
+	 */
 	public void upgradeTowerClicked() {
 		playing.getSoundPlayer().lvlUp();
 		playing.getTowerManager().upgradeTower(displayedTower);
 		decreaseGold(displayedTower.getUpgradeCost());
 	}
-	
+	/*
+	 * toggle status of the game.
+	 */
 	private void togglePause() {
 		playing.setGamePaused(!playing.isGamePaused());
 
@@ -237,7 +312,9 @@ public class ActionBar extends Bar {
 			bPause.setText("Pause");
 
 	}
-	
+	/*
+	 * handle moude click.
+	 */
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			bMenu.resetBooleans();
@@ -284,6 +361,9 @@ public class ActionBar extends Bar {
 		}
 	}
 
+	/*
+	 * handle mouse move
+	 */
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
 		bPause.setMouseOver(false);
@@ -318,6 +398,9 @@ public class ActionBar extends Bar {
 		}
 	}
 
+	/* 
+	 * tell if the gold is enough for purchasing.
+	 */
 	private boolean isGoldEnoughForPurchase(int price) {
 		return this.gold - price >= 0;
 	}
@@ -347,6 +430,9 @@ public class ActionBar extends Bar {
 		}
 	}
 
+	/*
+	 * mouse release handler.
+	 */
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
 		bPause.resetBooleans();
@@ -355,39 +441,55 @@ public class ActionBar extends Bar {
 		}
 		bSellTower.resetBooleans();
 	}
-
+	/*
+	 * a function used to display tower.
+	 */
 	public void displayTower(Tower tower) {
 		// TODO Auto-generated method stub
 		displayedTower = tower;
 	}
-
+	/*
+	 * get the gold player currently have.
+	 */
 	public int getGold() {
 		return gold;
 	}
-	
+	/*
+	 * increase gold for the player.
+	 */
 	public void addGold(int gold) {
 		this.gold += gold;
 	}
-	
+	/*
+	 * decrease the player's gold.
+	 */
 	public void decreaseGold(int gold) {
 		this.gold -= gold;
 	}
-	
+	/*
+	 * get tower cost by type.
+	 */
 	public int getTowerCostByType(int towerType) {
 		return Constants.Towers.getConstantTowerCost(towerType);
 	}
-
+	/*
+	 * get live(s) left.
+	 */
 	public int getLives() {
 		return lives;
 	}
-
+	/*
+	 * remove one life from the player.
+	 */
 	public void removeOneLife() {
 		lives--;
 		if(lives <= 0) {
 			setGameState(GAME_OVER);
 		}
 	}
-
+	/*
+	 * reset every thing.
+	 */
 	public void resetEverything() {
 		lives = 10;	
 		showTowerCost = false;

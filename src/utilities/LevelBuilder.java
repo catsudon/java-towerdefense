@@ -8,18 +8,51 @@ import objects.PathPoint;
 
 public class LevelBuilder {
 	
+	/*
+	 * level areas splitted into 2x2 grid.
+	 */
 	private static int lvlGrid[][] = new int[20][20];
 	
+	/*
+	 * a queue for generating paths.
+	 */
 	private static ArrayList<int[]> queue = new ArrayList<int[]>();
 	
-	private static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+	/*
+	 * a variable for determining directions.
+	 */
+	private static final int UP = 0;
+	/*
+	 * a variable for determining directions.
+	 */
+	private static final int RIGHT = 1;
+	/*
+	 * a variable for determining directions.
+	 */
+	private static final int DOWN = 2;
+	/*
+	 * a variable for determining directions.
+	 */
+	private static final int LEFT = 3;
+	/*
+	 * a variable for determining which position on the grid the algorithms are at.
+	 */
 	private static int x, y;
 	
+	/*
+	 * a variable determining startpoint.
+	 */
 	private static PathPoint startPoint;
+	/*
+	 * a variable determining endpoint..
+	 */
 	private static PathPoint endPoint;
 	
 	private static Random random = new Random();
 	
+	/*
+	 * a function for starting the level randomization process.
+	 */
 	public static int[][] getRandomLevelData() {
 		
 		// Initialize lvlGrid
@@ -36,6 +69,9 @@ public class LevelBuilder {
 		return lvlGrid;
 	}
 	
+	/*
+	 * a function for assigning grid to be water
+	 */
 	private static void assignWaterSprite() {
 		// Remove water with 3 open side
 		for(int i = 0; i < 20; i++) {
@@ -119,6 +155,9 @@ public class LevelBuilder {
 		}
 	}
 
+	/*
+	 * a function for initializing grids.
+	 */
 	private static void initializeGrid() {
 		for(int y = 0; y < 20; y++) {
 			for(int x = 0; x < 20; x++) {
@@ -126,7 +165,9 @@ public class LevelBuilder {
 			}
 		}
 	}
-
+	/*
+	 * a function which generate how the water should be placed.
+	 */
 	private static void createWaterTiles() {
 		queue.clear();
 
@@ -152,7 +193,9 @@ public class LevelBuilder {
 				if(lvlGrid[i][j] == 0) lvlGrid[i][j] = 1;
 		}
 	}
-
+	/*
+	 * a function for assinging which grid should be a road path.
+	 */
 	private static void assignRoadSprite() {
 		int lastDir = -1;
 		
@@ -222,7 +265,9 @@ public class LevelBuilder {
 			}		
 		}
 	}
-
+	/*
+	 * a function for generating how the path should look like.
+	 */
 	private static void createRandomPath() {
 		x = 18;
 		y = 1;
@@ -272,10 +317,16 @@ public class LevelBuilder {
 		Collections.reverse(queue);
 	}
 
+
+	/*
+	 * a function for getting start point.
+	 */
 	public static PathPoint getStartPoint() {
 		return startPoint;
 	}
-
+	/*
+	 * a function for getting end point
+	 */
 	public static PathPoint getEndPoint() {
 		return endPoint;
 	}
