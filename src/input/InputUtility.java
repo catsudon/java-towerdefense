@@ -44,9 +44,6 @@ public class InputUtility {
 			case PLAYING:
 				game.getPlaying().mouseClicked(x, y);
 				break;
-			case SETTINGS:
-				game.getSettings().mouseClicked(x, y);
-				break;
 			case EDIT:
 				game.getEditing().mouseClicked(x, y);
 				break;
@@ -67,9 +64,6 @@ public class InputUtility {
 			case PLAYING:
 				game.getPlaying().mousePressed(x, y);
 				break;
-			case SETTINGS:
-				game.getSettings().mousePressed(x, y);
-				break;
 			case EDIT:
 				game.getEditing().mousePressed(x, y);
 				break;
@@ -88,9 +82,6 @@ public class InputUtility {
 				break;
 			case PLAYING:
 				game.getPlaying().mouseReleased(x, y);
-				break;
-			case SETTINGS:
-				game.getSettings().mouseReleased(x, y);
 				break;
 			case EDIT:
 				game.getEditing().mouseReleased(x, y);
@@ -117,9 +108,6 @@ public class InputUtility {
 			case PLAYING:
 				game.getPlaying().mouseMoved(x, y);
 				break;
-			case SETTINGS:
-				game.getSettings().mouseMoved(x, y);
-				break;
 			case EDIT:
 				game.getEditing().mouseMoved(x, y);
 				break;
@@ -137,9 +125,6 @@ public class InputUtility {
 			case PLAYING:
 				game.getPlaying().mouseDragged(x, y);
 				break;
-			case SETTINGS:
-				game.getSettings().mouseDragged(x, y);
-				break;
 			case EDIT:
 				game.getEditing().mouseDragged(x, y);
 				break;
@@ -156,9 +141,6 @@ public class InputUtility {
 				break;
 			case PLAYING:
 				game.getPlaying().mouseRightClicked(x, y);
-				break;
-			case SETTINGS:
-				game.getSettings().mouseRightClicked(x, y);
 				break;
 			case EDIT:
 				game.getEditing().mouseRightClicked(x, y);

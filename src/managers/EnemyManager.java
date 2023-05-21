@@ -16,8 +16,8 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import objects.PathPoint;
 import scenes.Playing;
-import sharedObject.RenderableHolder;
 import utilities.ImageFix;
+import utilities.SpritesHolder;
 
 public class EnemyManager {
 
@@ -42,11 +42,11 @@ public class EnemyManager {
 	}
 
 	private void loadEffectImages() {
-		slowEffectImage = ImageFix.getSubImage(RenderableHolder.mapSprite, 32 * 9, 32 * 2, 32, 32);
+		slowEffectImage = ImageFix.getSubImage(SpritesHolder.getMapSprite(), 32 * 9, 32 * 2, 32, 32);
 	}
 
 	private void loadEnemyImages() {
-		Image atlas = RenderableHolder.mapSprite;
+		Image atlas = SpritesHolder.getMapSprite();
 		for (int i = 0; i < enemyImages.length; ++i) {
 			enemyImages[i] = ImageFix.getSubImage(atlas, 32 * i, 32 * 1, 32, 32);
 		}

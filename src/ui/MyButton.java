@@ -8,7 +8,8 @@ import javafx.scene.text.Text;
 
 public class MyButton {
 
-	public int x, y, width, height, id;
+	private int x, y, width, height, id;
+
 	private String text;
 	private Rectangle bounds;
 	private boolean mouseOver, mousePressed;
@@ -113,7 +114,23 @@ public class MyButton {
 	public Rectangle getBounds() {
 		return bounds;
 	}
+	
+	public int getX() {
+		return x;
+	}
 
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 import objects.Tile;
-import sharedObject.RenderableHolder;
 import utilities.ImageFix;
+import utilities.SpritesHolder;
 
 public class TileManager {
 	
@@ -31,7 +31,7 @@ public class TileManager {
 	public ArrayList<Tile> pathEnd = new ArrayList<>();
 	
 	public TileManager() {
-		atlas = RenderableHolder.mapSprite;
+		atlas = SpritesHolder.getMapSprite();
 		createTiles();
 	}
 	

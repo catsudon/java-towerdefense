@@ -11,12 +11,11 @@ public class Constants {
 		
 
 		public static float getConstantSpeed(int type) {
-			float tmp = 1f;
 			switch (type) {
 				case CUPCAKE:
-					return tmp * 7f;
+					return 7f;
 				case CROISSANT:
-					return tmp * 8f;
+					return 8f;
 			}
 			return 0f;
 		}
@@ -50,16 +49,15 @@ public class Constants {
 		}
 
 		public static float getConstantSpeed(int enemyType) {
-			int tmp = 8;
 			switch (enemyType) {
 			case ORC:
-				return tmp * 0.15f;
+				return 1.2f;
 			case BAT:
-				return tmp * 0.20f;
+				return 1.6f;
 			case KNIGHT:
-				return tmp * 0.30f;
+				return 2.4f;
 			case DRAGON:
-				return tmp * 0.35f;
+				return 2.8f;
 			}
 			return 0;
 		}

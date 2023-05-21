@@ -14,8 +14,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import objects.Projectile;
 import scenes.Playing;
-import sharedObject.RenderableHolder;
 import utilities.ImageFix;
+import utilities.SpritesHolder;
 
 public class ProjectileManager {
 
@@ -35,7 +35,7 @@ public class ProjectileManager {
 	}
 
 	private void importImages() {
-		Image atlas = RenderableHolder.mapSprite;
+		Image atlas = SpritesHolder.getMapSprite();
 		projectileImages = new Image[5];
 
 		for (int i = 0; i < 3; i++) {

@@ -3,8 +3,8 @@ package managers;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import scenes.Playing;
-import sharedObject.RenderableHolder;
 import utilities.ImageFix;
+import utilities.SpritesHolder;
 import utilities.Utility;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class TowerManager {
 	}
 
 	private void loadTowerImages() {
-		Image atlas = RenderableHolder.mapSprite;
+		Image atlas = SpritesHolder.getMapSprite();
 		towerImages = new Image[3][2];
 		
 		for(int i = 0; i < 3; i++) {

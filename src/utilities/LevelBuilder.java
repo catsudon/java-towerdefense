@@ -37,86 +37,86 @@ public class LevelBuilder {
 	}
 	
 	private static void assignWaterSprite() {
-		// remove water with 3 open side
-				for(int i = 0; i < 20; i++) {
-					for(int j = 0; j < 20; j++) {
-						int cnt = 0;
-						if(lvlGrid[i][j] != 1) {
-							continue;
-						}
-						if(i > 0 && lvlGrid[i - 1][j] == 0) {
-							cnt++;
-						}
-						if(j > 0 && lvlGrid[i][j - 1] == 0) {
-							cnt++;
-						}
-						if(i < 19 && lvlGrid[i + 1][j] == 0) {
-							cnt++;
-						}
-						if(i < 19 && lvlGrid[i][j + 1] == 0) {
-							cnt++;
-						}
-						if(cnt >= 3) {
-							lvlGrid[i][j] = 0;
-						}
+		// Remove water with 3 open side
+		for(int i = 0; i < 20; i++) {
+			for(int j = 0; j < 20; j++) {
+				int cnt = 0;
+				if(lvlGrid[i][j] != 1) {
+					continue;
+				}
+				if(i > 0 && lvlGrid[i - 1][j] == 0) {
+					cnt++;
+				}
+				if(j > 0 && lvlGrid[i][j - 1] == 0) {
+					cnt++;
+				}
+				if(i < 19 && lvlGrid[i + 1][j] == 0) {
+					cnt++;
+				}
+				if(i < 19 && lvlGrid[i][j + 1] == 0) {
+					cnt++;
+				}
+				if(cnt >= 3) {
+					lvlGrid[i][j] = 0;
+				}
+			}
+		}
+		
+		// Make lines
+		for(int i = 0; i < 20; i++) {
+			for(int j = 0; j < 20; j++) {
+				if(lvlGrid[i][j] == 1 && j > 0 && lvlGrid[i][j - 1] == 0) {
+					lvlGrid[i][j] = 15;
+				}
+				else if(lvlGrid[i][j] == 1 && j < 19 && lvlGrid[i][j + 1] == 0) {
+					lvlGrid[i][j] = 13;
+				}
+				else if(lvlGrid[i][j] == 1 && i > 0 && lvlGrid[i - 1][j] == 0) {
+					lvlGrid[i][j] = 12;
+				}
+				else if(lvlGrid[i][j] == 1 && i < 19 && lvlGrid[i + 1][j] == 0) {
+					lvlGrid[i][j] = 14;
+				}
+			}
+		}
+		
+		// Fix double line	
+		for(int i = 0; i < 20; i++) {
+			for(int j = 0; j < 20; j++) {
+				if(lvlGrid[i][j] == 12) {
+					if (j > 0 && lvlGrid[i][j - 1] == 0) {
+						lvlGrid[i][j] = 9;
+					}
+					else if (j < 19 && lvlGrid[i][j + 1] == 0) {
+						lvlGrid[i][j] = 10;
 					}
 				}
-				
-				// make line
-				for(int i = 0; i < 20; i++) {
-					for(int j = 0; j < 20; j++) {
-						if(lvlGrid[i][j] == 1 && j > 0 && lvlGrid[i][j - 1] == 0) {
-							lvlGrid[i][j] = 15;
-						}
-						else if(lvlGrid[i][j] == 1 && j < 19 && lvlGrid[i][j + 1] == 0) {
-							lvlGrid[i][j] = 13;
-						}
-						else if(lvlGrid[i][j] == 1 && i > 0 && lvlGrid[i - 1][j] == 0) {
-							lvlGrid[i][j] = 12;
-						}
-						else if(lvlGrid[i][j] == 1 && i < 19 && lvlGrid[i + 1][j] == 0) {
-							lvlGrid[i][j] = 14;
-						}
+				else if(lvlGrid[i][j] == 13) {
+					if (i > 0 && lvlGrid[i - 1][j] == 0) {
+						lvlGrid[i][j] = 10;
+					}
+					else if (i < 19 && lvlGrid[i + 1][j] == 0) {
+						lvlGrid[i][j] = 11;
 					}
 				}
-				
-				// fix double line	
-				for(int i = 0; i < 20; i++) {
-					for(int j = 0; j < 20; j++) {
-						if(lvlGrid[i][j] == 12) {
-							if (j > 0 && lvlGrid[i][j - 1] == 0) {
-								lvlGrid[i][j] = 9;
-							}
-							else if (j < 19 && lvlGrid[i][j + 1] == 0) {
-								lvlGrid[i][j] = 10;
-							}
-						}
-						else if(lvlGrid[i][j] == 13) {
-							if (i > 0 && lvlGrid[i - 1][j] == 0) {
-								lvlGrid[i][j] = 10;
-							}
-							else if (i < 19 && lvlGrid[i + 1][j] == 0) {
-								lvlGrid[i][j] = 11;
-							}
-						}
-						else if(lvlGrid[i][j] == 14) {
-							if (j > 0 && lvlGrid[i][j - 1] == 0) {
-								lvlGrid[i][j] = 8;
-							}
-							else if (j < 19 && lvlGrid[i][j + 1] == 0) {
-								lvlGrid[i][j] = 11;
-							}
-						}
-						else if(lvlGrid[i][j] == 15) {
-							if (i > 0 && lvlGrid[i - 1][j] == 0) {
-								lvlGrid[i][j] = 9;
-							}
-							else if (i < 19 && lvlGrid[i + 1][j] == 0) {
-								lvlGrid[i][j] = 8;
-							}
-						}
+				else if(lvlGrid[i][j] == 14) {
+					if (j > 0 && lvlGrid[i][j - 1] == 0) {
+						lvlGrid[i][j] = 8;
+					}
+					else if (j < 19 && lvlGrid[i][j + 1] == 0) {
+						lvlGrid[i][j] = 11;
 					}
 				}
+				else if(lvlGrid[i][j] == 15) {
+					if (i > 0 && lvlGrid[i - 1][j] == 0) {
+						lvlGrid[i][j] = 9;
+					}
+					else if (i < 19 && lvlGrid[i + 1][j] == 0) {
+						lvlGrid[i][j] = 8;
+					}
+				}
+			}
+		}
 	}
 
 	private static void initializeGrid() {
@@ -155,7 +155,6 @@ public class LevelBuilder {
 
 	private static void assignRoadSprite() {
 		int lastDir = -1;
-		int sz = 0;
 		
 		for (int[] it : queue) {
 			int dis = it[0];

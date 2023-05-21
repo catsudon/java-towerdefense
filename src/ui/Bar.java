@@ -25,12 +25,12 @@ public class Bar {
 		}
 
 		// Border
-		gc.strokeRect(b.x, b.y, b.width, b.height);
+		gc.strokeRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
 
 		// MousePressed
 		if (b.isMousePressed()) {
-			gc.strokeRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
-			gc.strokeRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
+			gc.strokeRect(b.getX() + 1, b.getY() + 1, b.getWidth() - 2, b.getHeight() - 2);
+			gc.strokeRect(b.getX() + 2, b.getY() + 2, b.getWidth() - 4, b.getHeight() - 4);
 		}
 	}
 }

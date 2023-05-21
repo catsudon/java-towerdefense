@@ -22,7 +22,7 @@ public class ActionBar extends Bar {
 	private MyButton[] towerButtons;
 	private Tower selectedTower;
 	
-	private MyButton bSellTower, bUpgradeTower;
+	private MyButton bSellTower;
 	
 	private Tower displayedTower;
 	
@@ -60,7 +60,6 @@ public class ActionBar extends Bar {
 		}
 		
 		this.bSellTower = new MyButton("Sell", 420, 702, 80, 25);
-		this.bUpgradeTower = new MyButton("Upgrade", 545, 702, 80, 24);
 	}
 	
 	private void drawButtons(GraphicsContext gc) {
@@ -69,8 +68,8 @@ public class ActionBar extends Bar {
 		
 		for(MyButton b : towerButtons) {
 			gc.setFill(Color.GRAY);
-			gc.fillRect(b.x, b.y, b.width, b.height);
-			gc.drawImage(playing.getTowerManager().getTowerImages()[b.getId()][0], b.x, b.y, b.width, b.height);
+			gc.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+			gc.drawImage(playing.getTowerManager().getTowerImages()[b.getId()][0], b.getX(), b.getY(), b.getWidth(), b.getHeight());
 		
 			drawButtonFeedback(gc, b);
 		}
@@ -270,13 +269,6 @@ public class ActionBar extends Bar {
 					sellTowerClicked();
 					return ;
 				}
-				else if(bUpgradeTower.getBounds().contains(x, y) && displayedTower.getTier() < 2) {
-					if(!isGoldEnoughForPurchase(displayedTower.getUpgradeCost())) {
-						return ;
-					}
-					//upgradeTowerClicked();
-					return ;
-				}
 			}
 			
 			for(MyButton b : towerButtons) {
@@ -312,7 +304,6 @@ public class ActionBar extends Bar {
 		bMenu.setMouseOver(false);
 		bPause.setMouseOver(false);
 		bSellTower.setMouseOver(false);
-		bUpgradeTower.setMouseOver(false);
 		
 		this.showTowerCost = false;
 		for(MyButton b : towerButtons) {
@@ -329,9 +320,6 @@ public class ActionBar extends Bar {
 			if(displayedTower != null) {
 				if(bSellTower.getBounds().contains(x, y)) {
 					bSellTower.setMouseOver(true);
-				}
-				if(bUpgradeTower.getBounds().contains(x, y)) {
-					bUpgradeTower.setMouseOver(true);
 				}
 			}
 			
@@ -364,10 +352,6 @@ public class ActionBar extends Bar {
 					bSellTower.setMouseOver(true);
 					bSellTower.setMousePressed(true);
 				}
-				if(bUpgradeTower.getBounds().contains(x, y)) {
-					bUpgradeTower.setMouseOver(true);
-					bUpgradeTower.setMousePressed(true);
-				}
 			}
 			
 			for(MyButton b : towerButtons) {
@@ -386,7 +370,6 @@ public class ActionBar extends Bar {
 			b.resetBooleans();
 		}
 		bSellTower.resetBooleans();
-		bUpgradeTower.resetBooleans();
 	}
 
 	public void displayTower(Tower tower) {

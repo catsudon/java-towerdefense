@@ -95,7 +95,6 @@ public class Toolbar extends Bar {
 		bMenu.draw(gc);
 		bSave.draw(gc);
 
-		//drawTileButtons(gc);
 		drawMapButtons(gc);
 		drawSelectedTile(gc);
 
@@ -104,10 +103,8 @@ public class Toolbar extends Bar {
 	private void drawMapButtons(GraphicsContext gc) {
 		for (Map.Entry<MyButton, ArrayList<Tile>> entry : map.entrySet()) {
 			MyButton b = entry.getKey();
-			//System.out.println(b.x + " " + b.y + " " + b.width + " " + b.height);
-
 			// Sprite
-			gc.drawImage(entry.getValue().get(0).getSprite(), b.x, b.y, b.width, b.height);
+			gc.drawImage(entry.getValue().get(0).getSprite(), b.getX(), b.getY(), b.getWidth(), b.getHeight());
 			drawButtonFeedback(gc, b);
 		}
 	}
@@ -190,9 +187,6 @@ public class Toolbar extends Bar {
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
 		bSave.resetBooleans();
-//		for (MyButton b : tileButtons)
-//			b.resetBooleans();
-
 		for(MyButton b : map.keySet()) {
 			b.resetBooleans();
 		}

@@ -1,7 +1,6 @@
 package managers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import events.Wave;
@@ -9,6 +8,7 @@ import scenes.Playing;
 
 public class WaveManager {
 	
+	@SuppressWarnings("unused")
 	private Playing playing;
 	private ArrayList<Wave> waves = new ArrayList<>();
 	

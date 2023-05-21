@@ -29,7 +29,7 @@ public class Editing extends GameScene implements SceneMethods {
 	}
 
 	private void loadDefaultLevel() {
-		lvl = LoadSave.GetLevelData("new_level");
+		lvl = LoadSave.getLevelData("new_level");
 		
 		ArrayList<PathPoint> points = LoadSave.getLevelPathPoints("new_level");
 		start = points.get(0);
@@ -79,7 +79,7 @@ public class Editing extends GameScene implements SceneMethods {
 
 	public void saveLevel() {
 
-		LoadSave.SaveLevel("new_level", lvl, start, end	);
+		LoadSave.saveLevel("new_level", lvl, start, end	);
 		game.getPlaying().setLevel(lvl);
 
 	}

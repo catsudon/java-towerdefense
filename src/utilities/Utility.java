@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Utility {
 
-	public static int[][] ArrayListTo2Dint(ArrayList<Integer> list, int ySize, int xSize) {
+	public static int[][] arrayListTo2Dint(ArrayList<Integer> list, int ySize, int xSize) {
 		int[][] newArr = new int[ySize][xSize];
 
 		for (int j = 0; j < newArr.length; j++) {
@@ -18,7 +18,7 @@ public class Utility {
 
 	}
 
-	public static int[] TwoDto1DintArr(int[][] twoArr) {
+	public static int[] twoDto1DintArr(int[][] twoArr) {
 		int[] oneArr = new int[twoArr.length * twoArr[0].length];
 
 		for (int j = 0; j < twoArr.length; j++)

@@ -18,7 +18,6 @@ public class GameScreen extends Canvas {
 		super(width, height);
 		
 		this.game = game;
-		
 		this.setVisible(true);
 
 		addListener();

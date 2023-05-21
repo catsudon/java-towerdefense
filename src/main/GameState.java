@@ -4,7 +4,6 @@ public enum GameState {
 	
 	PLAYING,
 	MENU,
-	SETTINGS,
 	EDIT,
 	GAME_OVER;
 

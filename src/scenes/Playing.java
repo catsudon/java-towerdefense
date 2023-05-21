@@ -17,7 +17,6 @@ import utilities.Constants;
 import utilities.LoadSave;
 
 import static utilities.Constants.Tiles.*;
-import static utilities.Constants.Towers.OWNER;
 
 import java.util.ArrayList;
 
@@ -57,7 +56,7 @@ public class Playing extends GameScene implements SceneMethods {
 		
 		loadDefaultLevel();
 		
-		lvl = LoadSave.GetLevelData("new_level");
+		lvl = LoadSave.getLevelData("new_level");
 		
 		actionBar = new ActionBar(0, 640, 640, 160, this);
 
@@ -72,7 +71,7 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 	
 	private void loadDefaultLevel() {
-		lvl = LoadSave.GetLevelData("new_level");
+		lvl = LoadSave.getLevelData("new_level");
 		ArrayList<PathPoint> points = LoadSave.getLevelPathPoints("new_level");
 		start = points.get(0);
 		end = points.get(1);

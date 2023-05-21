@@ -10,7 +10,6 @@ import scenes.Editing;
 import scenes.GameOver;
 import scenes.Menu;
 import scenes.Playing;
-import scenes.Settings;
 import utilities.LoadSave;
 import money.Money;
 import javafx.scene.Scene;
@@ -28,7 +27,10 @@ public class Game extends Application {
 	private long lastFrameTime = 0;
 	private long lastUpdateTime = 0;
 	private long lastCheckedTime = 0;
+	
+	@SuppressWarnings("unused")
 	private int frames = 0;
+	@SuppressWarnings("unused")
 	private int updates = 0;
 
 	private GameScreen gameScreen;
@@ -37,7 +39,6 @@ public class Game extends Application {
 
 	private Menu menu;
 	private Playing playing;
-	private Settings settings;
 	private Editing editing;
 
 	private TileManager tileManager;
@@ -49,7 +50,7 @@ public class Game extends Application {
 
 		Scene scene = new Scene(root);
 
-		primaryStage.setTitle("พี่โตจ้องจะเล่นคุณ");
+		primaryStage.setTitle("Croissant VS Salad");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 
@@ -95,8 +96,6 @@ public class Game extends Application {
 		};
 
 		animationTimer.start();
-
-		// gameScreen.drawImage(gc, image);
 	}
 
 	private void updateGame() {
@@ -109,15 +108,13 @@ public class Game extends Application {
 				break;
 			case PLAYING:
 				playing.update();
-			case SETTINGS:
-				break;
 			default:
 				break;
 		}
 	}
 
 	private void createDefaultLevel() {
-		LoadSave.GetRandomLevelData("new_level");
+		LoadSave.getRandomLevelData("new_level");
 	}
 
 	private void initClasses() {
@@ -128,7 +125,6 @@ public class Game extends Application {
 
 		menu = new Menu(this);
 		playing = new Playing(this);
-		settings = new Settings(this);
 		editing = new Editing(this);
 		gameOver = new GameOver(this);
 	}
@@ -138,7 +134,7 @@ public class Game extends Application {
 	}
 
 	private void displayFPSUPS() {
-		System.out.println("FPS: " + frames + " | " + "UPS: " + updates);
+		//System.out.println("FPS: " + frames + " | " + "UPS: " + updates);
 		frames = 0;
 		updates = 0;
 	}
@@ -153,10 +149,6 @@ public class Game extends Application {
 
 	public Playing getPlaying() {
 		return playing;
-	}
-
-	public Settings getSettings() {
-		return settings;
 	}
 
 	public Editing getEditing() {
