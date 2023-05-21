@@ -18,7 +18,6 @@ import utilities.LoadSave;
 
 import static utilities.Constants.Tiles.*;
 import static utilities.Constants.Towers.OWNER;
-import static utilities.Constants.Towers.PRINCESS;
 
 import java.util.ArrayList;
 

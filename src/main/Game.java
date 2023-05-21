@@ -53,8 +53,8 @@ public class Game extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 
-		initClasses();
 		createDefaultLevel();
+		initClasses();
 
 		root.getChildren().add(gameScreen);
 
@@ -117,12 +117,7 @@ public class Game extends Application {
 	}
 
 	private void createDefaultLevel() {
-		int[] arr = new int[400];
-		for (int i = 0; i < arr.length; i++)
-			arr[i] = 0;
-
-		LoadSave.CreateLevel("new_level", arr);
-
+		LoadSave.GetRandomLevelData("new_level");
 	}
 
 	private void initClasses() {

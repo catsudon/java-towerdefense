@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.text.Utilities;
+
 import javafx.scene.image.Image;
 import objects.PathPoint;
 import sharedObject.RenderableHolder;
@@ -114,8 +116,22 @@ public class LoadSave {
 			return null;
 		}
 	}
-
+	
 	public static int[][] GetLevelData(String name) {
-		return LevelBuilder.getLevelData();
+		File lvlFile = new File("res/" + name + ".txt");
+
+		if (lvlFile.exists()) {
+			ArrayList<Integer> list = ReadFromFile(lvlFile);
+			return utilities.Utility.ArrayListTo2Dint(list, 20, 20);
+
+		} else {
+			System.out.println("File: " + name + " does not exists! ");
+			return null;
+		}
+	}
+
+	public static int[][] GetRandomLevelData(String name) {
+		SaveLevel("new_level", LevelBuilder.getLevelData(), LevelBuilder.getStartPoint(), LevelBuilder.getEndPoint());
+		return GetLevelData("new_level");
 	}
 }
