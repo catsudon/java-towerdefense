@@ -131,7 +131,7 @@ public class LoadSave {
 	}
 
 	public static int[][] GetRandomLevelData(String name) {
-		SaveLevel("new_level", LevelBuilder.getLevelData(), LevelBuilder.getStartPoint(), LevelBuilder.getEndPoint());
+		SaveLevel("new_level", LevelBuilder.getRandomLevelData(), LevelBuilder.getStartPoint(), LevelBuilder.getEndPoint());
 		return GetLevelData("new_level");
 	}
 }
