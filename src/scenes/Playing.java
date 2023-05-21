@@ -218,11 +218,22 @@ public class Playing extends GameScene implements SceneMethods {
 			}
 			int xIndex = mouseX / 32;
 			int yIndex = mouseY / 32;
-			if(getTowerAt(32 * xIndex, 32 * yIndex) != null) {
-				return ;
+			Tower t = getTowerAt(32 * xIndex, 32 * yIndex);
+			if(t != null) {
+				if(t.getTowerType() != selectedTower.getTowerType()) {
+					return ;
+				}
+				else if(t.getTier() >= 2) {
+					return ;
+				}
+				t.upgradeTower();
+				soundPlayer.lvlUp();
+				decreaseGold(selectedTower.getCost());
 			}
-			decreaseGold(selectedTower.getCost());
-			towerManager.addTower(selectedTower, xIndex, yIndex);
+			else {
+				towerManager.addTower(selectedTower, xIndex, yIndex);
+				decreaseGold(selectedTower.getCost());
+			}
 			selectedTower = null;
 		}
 		else {
@@ -320,12 +331,11 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 
 	public void shootEnemy(Tower tower, Enemy enemy) {
-		if(tower.getTowerType() == OWNER) {
-			projectileManager.mawarikougeki(tower);
-		}
-		else {
-			projectileManager.newProjectile(tower, enemy);
-		}
+		tower.attack(projectileManager, enemy);
+	}
+
+	public int getGoldTick() {
+		return goldTick;
 	}
 
 	public TowerManager getTowerManager() {

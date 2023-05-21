@@ -22,13 +22,13 @@ public class Menu extends GameScene implements SceneMethods {
 		int w = 150;
 		int h = w / 3;
 		int x = 640 / 2 - w / 2;
-		int y = 150;
+		int y = 275;
 		int yOffset = 100;
 
 		bPlaying = new MyButton("Play", x, y, w, h);
 		bEdit = new MyButton("Edit", x, y + yOffset, w, h);
-		bSettings = new MyButton("Settings", x, y + yOffset * 2, w, h);
-		bQuit = new MyButton("Quit", x, y + yOffset * 3, w, h);
+		bSettings = new MyButton("Settings", x, y + yOffset * 1, w, h);
+		bQuit = new MyButton("Quit", x, y + yOffset * 2, w, h);
 
 	}
 
@@ -44,7 +44,6 @@ public class Menu extends GameScene implements SceneMethods {
 	private void drawButtons(GraphicsContext gc) {
 		bPlaying.draw(gc);
 		bEdit.draw(gc);
-		bSettings.draw(gc);
 		bQuit.draw(gc);
 
 	}
@@ -58,8 +57,6 @@ public class Menu extends GameScene implements SceneMethods {
 		}
 		else if (bEdit.getBounds().contains(x, y))
 			setGameState(EDIT);
-		else if (bSettings.getBounds().contains(x, y))
-			setGameState(SETTINGS);
 		else if (bQuit.getBounds().contains(x, y))
 			System.exit(0);
 	}

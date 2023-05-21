@@ -138,7 +138,6 @@ public class ActionBar extends Bar {
 	}
 
 	private int getBuyingTowerCost() {
-		// TODO Auto-generated method stub
 		return Constants.Towers.getConstantTowerCost(buyingTowerType);
 	}
 
@@ -212,17 +211,19 @@ public class ActionBar extends Bar {
 			gc.setFont(oldFont);
 		}
 		
-		if(displayedTower.getTier() < 2) {
-			// Upgrade
-			bUpgradeTower.draw(gc);
-			drawButtonFeedback(gc, bUpgradeTower);
-			if(bUpgradeTower.isMouseOver()) {
-				gc.setFill(Color.SPRINGGREEN);
-				gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 15));
-				gc.fillText("Upgrade for: " + displayedTower.getUpgradeCost() + "g", 480, 690);
-				gc.setFont(oldFont);
+		/*
+			if(false) {
+				// Upgrade
+				bUpgradeTower.draw(gc);
+				drawButtonFeedback(gc, bUpgradeTower);
+				if(bUpgradeTower.isMouseOver()) {
+					gc.setFill(Color.SPRINGGREEN);
+					gc.setFont(Font.font("LucidaSans", FontWeight.BOLD, 15));
+					gc.fillText("Upgrade for: " + displayedTower.getUpgradeCost() + "g", 480, 690);
+					gc.setFont(oldFont);
+				}
 			}
-		}
+		*/
 		
 	}
 
@@ -238,7 +239,7 @@ public class ActionBar extends Bar {
 		displayedTower = null;
 	}
 	
-	private void upgradeTowerClicked() {
+	public void upgradeTowerClicked() {
 		playing.getSoundPlayer().lvlUp();
 		playing.getTowerManager().upgradeTower(displayedTower);
 		decreaseGold(displayedTower.getUpgradeCost());
@@ -273,7 +274,7 @@ public class ActionBar extends Bar {
 					if(!isGoldEnoughForPurchase(displayedTower.getUpgradeCost())) {
 						return ;
 					}
-					upgradeTowerClicked();
+					//upgradeTowerClicked();
 					return ;
 				}
 			}

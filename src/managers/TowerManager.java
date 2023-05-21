@@ -66,9 +66,6 @@ public class TowerManager {
 					tower.toggleAnimationStatus();
 				}
 			}
-			else {
-				
-			}
 		}
 	}
 

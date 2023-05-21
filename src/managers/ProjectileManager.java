@@ -53,7 +53,7 @@ public class ProjectileManager {
 		
 	}
 
-	public void mawarikougeki(Tower tower) {
+	public void ownerUltimate(Tower tower) {
 
 		int index;
 		int[] typeList = {1,3,4};
@@ -76,17 +76,18 @@ public class ProjectileManager {
 
 	}
 
-	public void newProjectile(Tower t, Enemy e) {
+	public void newProjectile(Tower t, Enemy e, float speedMultiplier) {
 		if (!e.isAlive()) {
 			return;
 		}
-		
 		int type = getProjectileType(t);
-
-		projectiles.add(new Projectile(t.getX() + 16, t.getY() + 16, t.getAtk(), projectile_ID++, type, e));
+		Projectile p = new Projectile(t.getX() + 16, t.getY() + 16, t.getAtk(), projectile_ID++, type, e);
+		p.setSpeedMultiplier(speedMultiplier);
+		projectiles.add(p);
 	}
 
 	public void update() {
+		//System.out.println(projectiles.size());
 		Thread thread = new Thread(() -> {
 			try {
 				Thread.sleep(50);
@@ -109,6 +110,7 @@ public class ProjectileManager {
 									if(p.getProjectileType() == CROISSANT) {
 										playing.getSoundPlayer().whoosh();
 										p.setEnemy(null);
+										p.setSpeedMultiplier((float)-1.25);
 									}
 									else {
 										p.setActive(false);
@@ -173,6 +175,9 @@ public class ProjectileManager {
 				continue ;
 			}
 			if (e.getBounds().contains(p.getPos())) {
+				if(p.getLastEnemy() == e) {
+					return false;
+				}
 				e.hurt(p.getDamage());
 				if (!e.isAlive()) {
 					p.setEnemy(null);
@@ -186,6 +191,7 @@ public class ProjectileManager {
 						e.slow();
 					}
 				}
+				p.setLastEnemy(e);
 				return true;
 			}
 		}
@@ -218,20 +224,8 @@ public class ProjectileManager {
 			if (!p.isActive()) {
 				continue;
 			}
-			if (p.getProjectileType() == CROISSANT) {
-				gc.translate(p.getPos().getX(), p.getPos().getY());
-				gc.rotate(p.getRotationAngle());
-	
-				// -16, -16 is to use the center of the image to be axis of rotation
-				gc.drawImage(projectileImages[p.getProjectileType()], -16, -16);
-	
-				// Restore
-				gc.rotate(-p.getRotationAngle()); // Can't swap order with translate
-				gc.translate(-p.getPos().getX(), -p.getPos().getY());
-			}
-			else {
-				gc.drawImage(projectileImages[p.getProjectileType()], (int)p.getPos().getX() - (32 / 2), (int)p.getPos().getY() - (32 / 2));
-			}
+			
+			gc.drawImage(projectileImages[p.getProjectileType()], (int)p.getPos().getX() - (32 / 2), (int)p.getPos().getY() - (32 / 2));
 		}
 		drawExplosions(gc);
 	}
@@ -258,11 +252,14 @@ public class ProjectileManager {
 		}
 		
 		public void update() {
-			explosionTick++;
-			if(explosionTick >= 4) {
-				explosionTick = 0;
-				explosionIndex++;
-			}
+			Thread thread = new Thread(() -> {
+				explosionTick++;
+				if(explosionTick >= 4) {
+					explosionTick = 0;
+					explosionIndex++;
+				}
+			});
+			thread.start();
 		}
 		
 		public Point2D getPos() {
@@ -283,5 +280,16 @@ public class ProjectileManager {
 		explosions.clear();
 
 		projectile_ID = 0;
+	}
+
+	public void princessUltimate(Tower tower) {
+		for(int i = 0; i <= 90; i += 30) {
+			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, (float)Math.cos(Math.toRadians(i)), (float)Math.sin(Math.toRadians(i)), (float)0.0,
+					tower.getAtk(), projectile_ID++, 2));
+		}
+		for(int i = 180; i <= 270; i += 30) {
+			projectiles.add(new Projectile(tower.getX() + 16, tower.getY() + 16, (float)Math.cos(Math.toRadians(i)), (float)Math.sin(Math.toRadians(i)), (float)0.0,
+					tower.getAtk(), projectile_ID++, 2));
+		}
 	}
 }

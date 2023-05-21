@@ -2,6 +2,9 @@ package entity.tower;
 
 import static utilities.Constants.Towers.*;
 
+import entity.enemy.Enemy;
+import managers.ProjectileManager;
+
 public abstract class Tower {
 	
 	private int x, y, id, towerType;
@@ -80,6 +83,10 @@ public abstract class Tower {
 	}
 	
 	public abstract String getName();
+	
+	public abstract void attack(ProjectileManager pm, Enemy e);
+	
+	public abstract void perfromUltimate(ProjectileManager pm, Enemy e);
 
 	public int getCost() {
 		return getConstantTowerCost(towerType);

@@ -53,12 +53,15 @@ public class EnemyManager {
 	}
 
 	public void update() {
-		for (Enemy enemy : enemies) {
-			if (!enemy.isAlive()) {
-				continue;
+		Thread thread = new Thread(() -> {
+			for (Enemy enemy : enemies) {
+				if (!enemy.isAlive()) {
+					continue;
+				}
+				updateEnemyMove(enemy);
 			}
-			updateEnemyMove(enemy);
-		}
+		});
+		thread.start();
 	}
 
 	public void updateEnemyMove(Enemy e) {
