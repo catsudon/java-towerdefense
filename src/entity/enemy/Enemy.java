@@ -5,7 +5,7 @@ import static utilities.Constants.Direction.*;
 import javafx.scene.shape.Rectangle;
 import utilities.Constants;
 
-public abstract class Enemy {
+public class Enemy {
 
 	private float x, y;
 	private int ID;

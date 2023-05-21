@@ -1,6 +1,5 @@
 package objects;
 
-import static utilities.Constants.Projectiles.CROISSANT;
 import static utilities.Constants.Projectiles.CUPCAKE;
 
 import entity.enemy.Enemy;
@@ -71,14 +70,7 @@ public class Projectile {
 	            }
 	            
 	            this.rotationAngle = 0;
-	
-	            if(projectileType == CROISSANT) {
-	                float arctan = (float) Math.atan((float) yDiff / xDiff);
-	                this.rotationAngle = (float) Math.toDegrees(arctan);
-	                if (xDiff < 0) {
-	                    this.rotationAngle += 180;
-	                }
-	            }
+	            
 	            if(projectileType == CUPCAKE) {
 	            	enemy = null;
 	            }
