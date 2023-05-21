@@ -49,18 +49,18 @@ public class Toolbar extends Bar {
 
 		int id = 0;
 		
-		initMapButton(bGrass, editing.getGame().getTileManager().grass, xStart, yStart, xOffset, w, h, id++);
-		initMapButton(bWater, editing.getGame().getTileManager().water, xStart, yStart, xOffset, w, h, id++);
-		initMapButton(bRoadS, editing.getGame().getTileManager().roadS, xStart, yStart, xOffset, w, h, id++);
-		initMapButton(bRoadC, editing.getGame().getTileManager().roadC, xStart, yStart, xOffset, w, h, id++);
-		initMapButton(bWaterC, editing.getGame().getTileManager().corners, xStart, yStart, xOffset, w, h, id++);
-		initMapButton(bWaterB, editing.getGame().getTileManager().beaches, xStart, yStart, xOffset, w, h, id++);
-		initMapButton(bWaterI, editing.getGame().getTileManager().islands, xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bGrass, editing.getGame().getTileManager().getGrass(), xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bWater, editing.getGame().getTileManager().getWater(), xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bRoadS, editing.getGame().getTileManager().getRoadS(), xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bRoadC, editing.getGame().getTileManager().getRoadC(), xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bWaterC, editing.getGame().getTileManager().getCorners(), xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bWaterB, editing.getGame().getTileManager().getBeaches(), xStart, yStart, xOffset, w, h, id++);
+		initMapButton(bWaterI, editing.getGame().getTileManager().getBeaches(), xStart, yStart, xOffset, w, h, id++);
 		
-		initMapButton(bPathStart, editing.getGame().getTileManager().pathStart, xStart, yStart + xOffset, 0, w, h, id++);
-		initMapButton(bPathEnd, editing.getGame().getTileManager().pathEnd, xStart + xOffset, yStart + xOffset, 0, w, h, id++);
-		startPathImage = editing.getGame().getTileManager().pathStart.get(0).getSprite();
-		endPathImage = editing.getGame().getTileManager().pathEnd.get(0).getSprite();
+		initMapButton(bPathStart, editing.getGame().getTileManager().getPathStart(), xStart, yStart + xOffset, 0, w, h, id++);
+		initMapButton(bPathEnd, editing.getGame().getTileManager().getPathEnd(), xStart + xOffset, yStart + xOffset, 0, w, h, id++);
+		startPathImage = editing.getGame().getTileManager().getPathStart().get(0).getSprite();
+		endPathImage = editing.getGame().getTileManager().getPathEnd().get(0).getSprite();
 	}
 	
 	private void initMapButton(MyButton b, ArrayList<Tile> list, int x, int y, int xOffSet, int w, int h, int id) {

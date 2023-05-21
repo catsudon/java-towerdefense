@@ -17,18 +17,20 @@ public class TileManager {
 	BR_ISLE, BL_ISLE;
 	
 	private Image atlas;
-	public ArrayList<Tile> tiles = new ArrayList<>();
+	private ArrayList<Tile> tiles = new ArrayList<>();
 	
-	public ArrayList<Tile> grass = new ArrayList<>();
-	public ArrayList<Tile> water = new ArrayList<>();
-	public ArrayList<Tile> roadS = new ArrayList<>();
-	public ArrayList<Tile> roadC = new ArrayList<>();
-	public ArrayList<Tile> corners = new ArrayList<>();
-	public ArrayList<Tile> beaches = new ArrayList<>();
-	public ArrayList<Tile> islands = new ArrayList<>();
+	private ArrayList<Tile> grass = new ArrayList<>();
+	private ArrayList<Tile> water = new ArrayList<>();
+	private ArrayList<Tile> roadS = new ArrayList<>();
+	private ArrayList<Tile> roadC = new ArrayList<>();
+	private ArrayList<Tile> corners = new ArrayList<>();
+	private ArrayList<Tile> beaches = new ArrayList<>();
+	private ArrayList<Tile> islands = new ArrayList<>();
 
-	public ArrayList<Tile> pathStart = new ArrayList<>();
-	public ArrayList<Tile> pathEnd = new ArrayList<>();
+	private ArrayList<Tile> pathStart = new ArrayList<>();
+	private ArrayList<Tile> pathEnd = new ArrayList<>();
+
+	private ArrayList<Tile> houses = new ArrayList<>();
 	
 	public TileManager() {
 		atlas = SpritesHolder.getMapSprite();
@@ -68,6 +70,10 @@ public class TileManager {
 		pathStart.add(new Tile(getSprite(7, 2), -1, -1));
 		pathEnd.add(new Tile(getSprite(8, 2), -2, -1));
 		
+		for(int y = 0; y < 4; y++) {
+			houses.add(new Tile(getSprite(y, 4), id++, WATER_TILE));
+		}
+		
 		tiles.addAll(grass);
 		tiles.addAll(water);
 		tiles.addAll(roadS);
@@ -78,6 +84,8 @@ public class TileManager {
 		
 		tiles.addAll(pathStart);
 		tiles.addAll(pathEnd);
+		
+		tiles.addAll(houses);
 	}
 	
 	public Tile getTile(int id) {
@@ -131,5 +139,25 @@ public class TileManager {
 
 	public boolean isSpriteAnimation(int spriteID) {
 		return tiles.get(spriteID).isAnimation();
+	}
+
+	public ArrayList<Tile> getGrass() {
+		return grass;
+	}
+
+	public ArrayList<Tile> getWater() {
+		return water;
+	}
+
+	public ArrayList<Tile> getPathStart() {
+		return pathStart;
+	}
+
+	public ArrayList<Tile> getPathEnd() {
+		return pathEnd;
+	}
+
+	public ArrayList<Tile> getHouses() {
+		return houses;
 	}
 }

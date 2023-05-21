@@ -56,8 +56,6 @@ public class Playing extends GameScene implements SceneMethods {
 		
 		loadDefaultLevel();
 		
-		lvl = LoadSave.getLevelData("new_level");
-		
 		actionBar = new ActionBar(0, 640, 640, 160, this);
 
 		this.tileManager = new TileManager();

@@ -13,6 +13,10 @@ public class Utility {
 				newArr[j][i] = list.get(index);
 			}
 		}
+		newArr[0][18] = 22;
+		newArr[0][19] = 23;
+		newArr[1][18] = 24;
+		newArr[1][19] = 25;
 
 		return newArr;
 
@@ -26,6 +30,7 @@ public class Utility {
 				int index = j * twoArr.length + i;
 				oneArr[index] = twoArr[j][i];
 			}
+		
 
 		return oneArr;
 	}
